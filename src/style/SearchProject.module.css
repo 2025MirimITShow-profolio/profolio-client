@@ -1,0 +1,72 @@
+.searchContainer {
+    width: 254px;
+    height: auto;
+    max-height: 375px;
+    border-radius: 5px;
+    padding: 17px 8px;
+    overflow: hidden;
+    transition: height 0.3s ease;
+}
+
+.searchBox {
+    width: 100%;
+    height: 54px;
+    border-radius: 5px;
+    padding: 11.5px 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 17px;
+}
+
+.searchImg {
+    width: 31px;
+    height: 31px;
+    margin-right: 10px;
+}
+
+.searchInput {
+    width: 100%;
+    height: 100%;
+    font-size: 18px;
+    color: #999999;
+    background-color: transparent;
+}
+
+.projectListContainer {
+    width: 100%;
+    height: auto;
+    max-height: 270px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+}
+.projectListContainer::-webkit-scrollbar {
+    width: 0;
+}
+
+.projectName {
+    width: 238px;
+    height: auto;
+    min-height: 54px;
+    border-radius: 5px;
+    padding: 15.5px 17px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.projectName:hover .text {
+    animation: scrollText linear infinite;
+}
+
+.text {
+    display: inline-block;
+    transform: translateX(0);
+}
+
+@keyframes scrollText {
+    0% {
+        transform: translateX(0px);
+    }
+    100% {
+        transform: translateX(calc(-100% - 34px));
+    }
+}

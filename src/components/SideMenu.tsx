@@ -1,0 +1,76 @@
+import styled from 'styled-components'
+
+const MenuBtn = styled.div<MenuBtnProps>`
+  cursor: pointer;
+  width: 254px;
+  height: 61px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 16.5px 25px;
+  background-color: ${({ active }) => (active ? '#8734FD' : 'undefined')};
+
+  & > div {
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+  }
+  
+  img {
+    width: 30px;
+    height: 30px;
+    fill: ${({ active }) => (active ? '#ffffff' : '#999999')};
+  }
+
+  span {
+    color: ${({ active }) => (active ? '#ffffff' : '#999999')};
+  }
+`
+
+const ToggleIcon = styled.img`
+  width: 20px !important;
+  height: 10px !important;
+`
+
+type MenuBtnProps = {
+  active: boolean
+}
+
+type SideMenuProps = {
+  src: string,
+  title: string,
+  more?: string[],
+  clickedMenu: string,
+  setClickedMenu: (title: string) => void,
+}
+
+export default function SideMenu({
+  src,
+  title,
+  more,
+  clickedMenu,
+  setClickedMenu,
+}: SideMenuProps) {
+  const active = clickedMenu === title
+
+  return (
+    <MenuBtn active={active} onClick={() => setClickedMenu(title)}>
+      <div>
+        <img src={`/images/${src}${active?'Active':''}Icon.svg`} alt={title} />
+        <span>{title}</span>
+      </div>
+      {more && (
+        <ToggleIcon
+          src={`/images/${active ? 'upBtn' : 'downBtn'}.svg`}
+          alt={active ? '접기' : '펼치기'}
+          onClick={(e) => {
+            e.stopPropagation()
+            setClickedMenu(title)
+          }}
+        />
+      )}
+    </MenuBtn>
+  )
+}
