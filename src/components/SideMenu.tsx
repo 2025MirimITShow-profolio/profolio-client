@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 
 const MenuBtn = styled.div<MenuBtnProps>`
@@ -19,7 +18,7 @@ const MenuBtn = styled.div<MenuBtnProps>`
     column-gap: 12px;
   }
   
-  img {
+  & > img {
     width: 30px;
     height: 30px;
   }
