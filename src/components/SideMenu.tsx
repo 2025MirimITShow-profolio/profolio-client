@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import styled from 'styled-components'
 
 const MenuBtn = styled.div<MenuBtnProps>`
@@ -21,7 +22,6 @@ const MenuBtn = styled.div<MenuBtnProps>`
   img {
     width: 30px;
     height: 30px;
-    fill: ${({ active }) => (active ? '#ffffff' : '#999999')};
   }
 
   span {
@@ -29,9 +29,15 @@ const MenuBtn = styled.div<MenuBtnProps>`
   }
 `
 
-const ToggleIcon = styled.img`
+type ToggleIconProps = {
+  active: boolean,
+  open: boolean,
+}
+
+const ToggleIcon = styled.img<ToggleIconProps>`
   width: 20px !important;
   height: 10px !important;
+  transform: ${({ active, open }) => (active&&open?'rotate(180deg)':'undefined')};
 `
 
 type MenuBtnProps = {
@@ -44,6 +50,8 @@ type SideMenuProps = {
   more?: string[],
   clickedMenu: string,
   setClickedMenu: (title: string) => void,
+  open: boolean,
+  setOpen: (val:boolean) => void,
 }
 
 export default function SideMenu({
@@ -52,6 +60,8 @@ export default function SideMenu({
   more,
   clickedMenu,
   setClickedMenu,
+  open,
+  setOpen,
 }: SideMenuProps) {
   const active = clickedMenu === title
 
@@ -68,7 +78,10 @@ export default function SideMenu({
           onClick={(e) => {
             e.stopPropagation()
             setClickedMenu(title)
+            setOpen(!open)
           }}
+          active={active}
+          open={open}
         />
       )}
     </MenuBtn>
