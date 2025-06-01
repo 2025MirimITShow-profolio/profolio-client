@@ -1,0 +1,34 @@
+.ProjectMenu {
+  display: flex;
+  gap: 20px;
+  padding: 12px;
+  background-color: #ffffff;
+}
+
+.menuBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: none;
+  width: 280px;
+  padding: 23px 25px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 20px;
+  box-sizing: border-box;
+}
+
+.menuBtn:hover {
+  background-color: #d1d1d1;
+}
+
+.active {
+  background-color: #666666;
+  color: white;
+}
+
+.btnIcon{
+  margin-right: 23px;
+}
