@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useThemeStore } from "../store/themeStore";
 import styles from '../style/SideBar.module.css'
 import SideMenu from "./SideMenu";
@@ -42,6 +42,11 @@ const menus = [
 export default function SideBar() {
     const isDark = useThemeStore((state) => state.isDark)
     const [clickedMenu, setClickedMenu] = useState('Dashboard')
+    const [open, setOpen] = useState(false)
+
+    useEffect(() => {
+        setOpen(false)
+    }, [clickedMenu])
 
     return (
         <div 
@@ -62,21 +67,13 @@ export default function SideBar() {
                         more={menu.more}
                         clickedMenu={clickedMenu}
                         setClickedMenu={setClickedMenu}
+                        open={open}
+                        setOpen={setOpen}
                     />
-                    <AnimatePresence>
-                        {   
-                            (menu.more && clickedMenu===menu.title) && 
-                            <motion.div
-                                className={styles.motion}
-                                initial={{height: 0}}
-                                animate={{height: 'auto'}}
-                                exit={{height: 0}}
-                                transition={{duration: 1}}
-                            >
-                                <SearchProject projects={menu.more} title={menu.title} clickedMenu={clickedMenu} />
-                            </motion.div>
-                        }
-                    </AnimatePresence>
+                    {
+                        (menu.more && clickedMenu===menu.title && !open) && 
+                        <SearchProject projects={menu.more} title={menu.title} clickedMenu={clickedMenu} />
+                    }
                 </div>
             ))}
             <img

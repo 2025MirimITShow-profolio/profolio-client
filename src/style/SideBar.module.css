@@ -23,12 +23,3 @@
     position: absolute;
     bottom: 70px;
 }
-
-.motion {
-    width: 254px;
-    height: auto;
-    max-height: 375px;
-    margin-bottom: 8.5px;
-    overflow: hidden;
-    border-radius: 5px;
-}
