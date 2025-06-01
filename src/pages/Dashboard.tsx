@@ -1,12 +1,29 @@
 import { useThemeStore } from "../store/themeStore";
 import SideBar from "../components/SideBar";
+import Header from "../components/Header";
 
 export default function Dashboard() {
+    const isDark = useThemeStore((store) => store.isDark)
     return (
         <div
-            style={{width: '100%', height: '100vh', backgroundColor: '#F6F7FB'}}
+            style={{
+                width: '100%', 
+                height: '100vh', 
+                backgroundColor: isDark?'#181822':'#F6F7FB', 
+                display: 'flex',
+                justifyContent: 'space-between'
+            }}
         >
             <SideBar />
+            <div
+                style={{
+                    width: 'calc(100% - 300px)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                }}
+            >
+                <Header />
+            </div>
         </div>
     )
 }
