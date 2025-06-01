@@ -3,7 +3,6 @@ import { useThemeStore } from "../store/themeStore";
 import styles from '../style/SideBar.module.css'
 import SideMenu from "./SideMenu";
 import SearchProject from "./SearchProject";
-import { AnimatePresence, motion } from 'framer-motion';
 
 const menus = [
     {
