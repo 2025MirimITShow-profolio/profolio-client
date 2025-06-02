@@ -1,0 +1,40 @@
+.dashboardContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: scroll;
+}
+.dashboardContainer::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.container {
+    width: 91.7%;
+    aspect-ratio: 1 / 0.764;
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+    padding: 55px 0;
+}
+
+.flexContainer {
+    width: 100%;
+    aspect-ratio: 1 / 0.114;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 1.5%;
+}
+
+.gridContainer {
+    width: 100%;
+    aspect-ratio: 1 / 0.624 ;
+    display: grid;
+    grid-template-columns: 0.691fr 0.279fr;
+    grid-template-rows: 0.508fr 0.449fr;
+    justify-content: space-between;
+    align-content: space-between;
+}
