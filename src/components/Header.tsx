@@ -30,7 +30,8 @@ const Profile = styled.div<ProfileProps>`
     align-items: center;
     column-gap: 19px;
     position: absolute;
-    right: 47px;
+    right: 2.9%;
+    background-color: '#000';
     &:hover {
         background-color: ${({isDark}) => isDark?'#2B2B37':'#F5F6F8'} !important;
     }
@@ -41,7 +42,7 @@ export default function Header() {
     const [search, setSearch] = useState('')
     const [project, setProject] = useState(projects)
     const [click, setClick] = useState(false)
-    const searchRef = useRef<HTMLDivElement>(null)
+    const searchRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
         if(!search){
@@ -74,15 +75,15 @@ export default function Header() {
                 onClick={() => setClick(true)}
             >
                 <div 
-                    ref={searchRef} 
                     className={styles.searchBox}
-                >
+                    >
                     <img 
                         src='/images/searchIcon.svg' 
                         alt="검색" 
                         className={styles.searchImg}
-                    />
+                        />
                     <input 
+                        ref={searchRef} 
                         value={search}
                         onChange={e => setSearch(e.target.value.trim())}
                         placeholder='Searching Project'
