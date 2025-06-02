@@ -1,4 +1,32 @@
+import SimpleBox from './SimpleBox'
 import styles from '../../style/DashboardContainer.module.css'
+
+const simpleItem = [
+    {
+        title: '진행 중인 프로젝트',
+        src: 'ongoingProject',
+        count: 3,
+        color: '#0070FF',
+    },
+    {
+        title: '완료한 프로젝트',
+        src: 'projectsCompleted',
+        count: 6,
+        color: '#03D7C2',
+    },
+    {
+        title: '해야 하는 일',
+        src: 'todo',
+        count: 2,
+        color: '#9385F7',
+    },
+    {
+        title: '완료한 일',
+        src: 'done',
+        count: 1,
+        color: '#FE996B',
+    },
+]
 
 export default function DashboardContainer() {
     return (
@@ -7,10 +35,9 @@ export default function DashboardContainer() {
                 className={styles.container} 
             >
                 <div className={styles.flexContainer}>
-                    <div style={{width: '100%', height: '100%', backgroundColor: '#123123'}}>1</div>
-                    <div style={{width: '100%', height: '100%', backgroundColor: '#321321'}}>2</div>
-                    <div style={{width: '100%', height: '100%', backgroundColor: '#456456'}}>3</div>
-                    <div style={{width: '100%', height: '100%', backgroundColor: '#654654'}}>4</div>
+                    {simpleItem.map((item, i) => (
+                        <SimpleBox key={i} item={item} />
+                    ))}
                 </div>
                 <div className={styles.gridContainer}>
                     <div style={{width: '100%', height: '100%', backgroundColor: '#123123'}}>1</div>

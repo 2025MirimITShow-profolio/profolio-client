@@ -1,0 +1,43 @@
+.boxContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    position: relative;
+}
+
+.box {
+    width: 253px;
+    height: 78px;
+    display: flex;
+    align-items: center;
+    column-gap: 19px;
+}
+
+.imgBox {
+    width: 78px;
+    height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 100px;
+}
+
+.boxInfo {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 12px;
+    color: white;
+}
+
+.lightImg {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
