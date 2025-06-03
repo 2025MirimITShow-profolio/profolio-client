@@ -1,6 +1,7 @@
 import SimpleBox from './SimpleBox'
 import Tasks from './Tasks'
 import Members from './Members'
+import DailyGoals from './DailyGoals'
 import styles from '../../style/DashboardContainer.module.css'
 
 const simpleItem = [
@@ -45,7 +46,7 @@ export default function DashboardContainer() {
                     <div style={{width: '100%', height: '100%', backgroundColor: '#123123'}}>1</div>
                     <Tasks />
                     <Members />
-                    <div style={{width: '100%', height: '100%', backgroundColor: '#456456'}}>3</div>
+                    <DailyGoals />
                 </div>
 
             </div>
