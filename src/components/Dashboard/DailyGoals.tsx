@@ -3,7 +3,12 @@ import { useThemeStore } from '../../store/themeStore'
 import styles from '../../style/DailyGoals.module.css'
 import styled from 'styled-components'
 
-const goalData = [
+type GoalType = {
+    date: string,
+    goals: number
+}
+
+const goalData:GoalType[] = [
     { "date": "2025-05-01", "goals": 3 },
     { "date": "2025-05-02", "goals": 9 },
     { "date": "2025-05-03", "goals": 0 },
@@ -67,8 +72,8 @@ const Goal = styled.div<GoalProps>`
 `
 
 export function GoalsContainer() {
-    const [goals, setGoals] = useState(null)
-    const [rotated, setRotated] = useState([])
+    const [goals, setGoals] = useState<GoalType[] | null>(null)
+    const [rotated, setRotated] = useState<GoalType[]>([])
 
     useEffect(() => {
         setGoals(goalData)
@@ -80,10 +85,10 @@ export function GoalsContainer() {
         const firstDay = firstDate.getDay()
         const paddedGoals = [...goals]
         for (let i = 0; i < firstDay; i++) {
-            paddedGoals.unshift({ goals: -1 })
+            paddedGoals.unshift({ date: '', goals: -1 })
         }
         while (paddedGoals.length < 35) {
-            paddedGoals.push({ goals: -1 })
+            paddedGoals.push({ date: '', goals: -1 })
         }
         const rotatedArr = [];
         for (let i=6; i>=0; i--) {
