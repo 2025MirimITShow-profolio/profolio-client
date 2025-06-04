@@ -3,10 +3,10 @@ import { Document, Page, pdfjs } from "react-pdf";
 import workerSrc from 'pdfjs-dist/build/pdf.worker.min.js?url';
 import axios from "axios";
 import styles from "../../style/PdfFileView.module.css"
+import { FiDelete, FiUpload } from "react-icons/fi";
 
 pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
 
-// 파일 추가 버튼 아이콘 추가 및 파일 삭제 버튼 추가 필요함!
 export default function PdfFileView({projectId} : {projectId:number}){
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
@@ -64,6 +64,17 @@ export default function PdfFileView({projectId} : {projectId:number}){
     }
   };
 
+  const handleDelete = async () => {
+    try{
+      await axios.delete(`http://localhost:3000/api/portfolio/${projectId}`);
+      window.location.reload();
+    }
+    catch(err){
+      console.error(err);
+      alert("포트폴리오 삭제 실패");
+    }
+  }
+
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);
   }
@@ -77,26 +88,35 @@ export default function PdfFileView({projectId} : {projectId:number}){
       `}</style>
     <div>
       {pdfUrl? (
-        <div style={{ height: '80vh', overflowY: 'scroll' }}>
-          <Document
-            file={pdfUrl}
-            onLoadSuccess={onDocumentLoadSuccess}
-            onLoadError={console.error}
-            className={styles.PageContainer}
-          >
-            {Array.from(new Array(numPages), (el, index) => (
-              <Page key={`page_${index + 1}`}
-                pageNumber={index + 1}
-                width={1254}
-                className={styles.Page}/>
-            ))}
-          </Document>
+        <div>
+          <div className={styles.editBtn}
+            onClick={handleDelete}>
+            <FiDelete color="#777777" size={31}/>
+          </div>
+          <div className={styles.PageContainer}>
+            <Document
+              file={pdfUrl}
+              onLoadSuccess={onDocumentLoadSuccess}
+              onLoadError={console.error}
+            >
+              {Array.from(new Array(numPages), (el, index) => (
+                <Page key={`page_${index + 1}`}
+                  pageNumber={index + 1}
+                  width={1254}
+                  className={styles.Page}/>
+              ))}
+            </Document>
+          </div>
         </div>
+
       ) : (
         <div>
           <button onClick={handleUploadClick} className={styles.addFileBtn}>
-            <p>클릭하여 포트폴리오 추가하기</p>
-            <p>(PDF)</p>
+            <div style={{marginBottom: "10px"}}>
+              <FiUpload color="#999999" size={25} style={{margin:"auto", marginBottom:"20px"}}/>
+              <p>클릭하여 포트폴리오 추가하기</p>
+              <p>(PDF)</p>
+            </div>
           </button>
           <input
            type="file"
