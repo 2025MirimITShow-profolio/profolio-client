@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useThemeStore } from "../../store/themeStore";
 import styles from '../../style/ProjectTimeline.module.css'
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 const time = ['Year', 'Month', 'Week']
 const year = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
@@ -32,6 +33,7 @@ const percent= [
     14.28
 ]
 month.push(endDay[1].getDate())
+const msPerDay = 1000 * 60 * 60 * 24;
 
 const data = [
     { project: "Alpha", startDate: "25-06-15", endDate: "25-06-20" },
@@ -43,7 +45,7 @@ const data = [
     { project: "Gamma", startDate: "25-06-02", endDate: "25-06-09" },
     { project: "Gamma", startDate: "25-06-03", endDate: "25-06-30" },
     { project: "Gamma", startDate: "25-06-02", endDate: "25-06-30" },
-    { project: "Gamma", startDate: "25-06-01", endDate: "25-06-30" },
+    { project: "Gamma", startDate: "25-05-01", endDate: "25-06-30" },
 ];
 
 const parsedData = data.map(item => {
@@ -123,47 +125,55 @@ type ProjectProps = {
     timeUnit: number
 }
 export function Project({name, start, end, timeUnit}: ProjectProps) {
-    const daysWidth = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
-    const daysLeft = (start.getTime() - startDay[timeUnit].getTime()) / (1000 * 60 * 60 * 24)
+    const daysWidth = (end.getTime() - start.getTime()) / msPerDay
+    const daysLeft = (start.getTime() - startDay[timeUnit].getTime()) / msPerDay
     const containerWidth = (end>endDay[timeUnit])? 101 : (daysWidth+1) * percent[timeUnit]
     const containerLeft = (start<startDay[timeUnit])? -1 : daysLeft * percent[timeUnit]
+    const [isHovering, setIsHovering] = useState(false);
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        setPosition({ x: e.clientX, y: e.clientY });
+    };
+
     return (
-        <div style={{
-            backgroundColor: '#E8F0FB',
-            width: `${containerWidth}%`,
-            height: '45px',
-            position: 'absolute',
-            left: `${containerLeft}%`,
-            overflow: 'hidden',
-            display: 'flex',
-            alignItems: 'center',
-            ...(containerLeft != -1 ? {
-                borderTopLeftRadius: '5px',
-                borderBottomLeftRadius: '5px',
-            } : {}),
-            ...(containerWidth != 101 ? {
-                borderTopRightRadius: '5px',
-                borderBottomRightRadius: '5px',
-            } : {})
-        }}>
-            {containerLeft ?
-                <div 
+        <div
+            className={styles.timeLine}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+            onMouseMove={handleMouseMove}
+            style={{
+                width: `${containerWidth}%`,
+                left: `${containerLeft}%`,
+                ...(containerLeft != -1 ? {
+                    borderTopLeftRadius: '5px',
+                    borderBottomLeftRadius: '5px',
+                } : {
+                    left: '0px'
+                }),
+                ...(containerWidth != 101 ? {
+                    borderTopRightRadius: '5px',
+                    borderBottomRightRadius: '5px',
+                } : {})
+            }}
+        >
+            {containerLeft != -1 ? <div className={styles.bar} /> : <></>}
+            <p className={styles.name}>{name}</p>
+            {isHovering && (
+                <motion.div
+                    className={styles.floatingBox}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ type: "tween", duration: 0.15 }}
                     style={{
-                        width: '7px',
-                        height: '100%',
-                        background: '#BFDAFF',
-                        borderRadius: '5px',
+                        top: position.y - 30,
+                        left: position.x
                     }}
-                /> : <></>
-            }
-            <p
-                style={{
-                    position: 'absolute',
-                    color: '#000',
-                    left: '17px',
-                    width: 'calc(100% - 24px)'
-                }}
-            >{name}</p>
+                >
+                    {name}
+                </motion.div>
+            )}
         </div>
     )
 }
