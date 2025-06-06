@@ -101,7 +101,9 @@ const UnitBox = styled.div<IsDarkProps>`
     justify-content: space-around;
     margin-top: 33px;
     overflow: hidden;
-    color: ${({isDark}) => isDark?'#777777':'#BBBBBB'}
+    color: ${({isDark}) => isDark?'#777777':'#BBBBBB'};
+    font-weight: 500;
+    font-size: 18px;
 `
 
 const Line = styled.div<IsDarkProps>`

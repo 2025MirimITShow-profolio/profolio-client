@@ -17,8 +17,8 @@ export default function SimpleBox({item}:SimpleBoxProps) {
                     <img src={`/images/${item.src}.svg`} alt={item.title} />
                 </div>
                 <div className={styles.boxInfo}>
-                    <p style={{fontSize: '19px'}}>{item.title}</p>
-                    <div style={{fontSize: '28px'}}>{item.count}</div>
+                    <p style={{ fontWeight: '500', fontSize: '21px'}}>{item.title}</p>
+                    <div style={{ fontWeight: '700', fontSize: '28px'}}>{item.count}</div>
                 </div>
             </div>
             <img src={`/images/${item.src}Light.svg`} alt='lightIcon' className={styles.lightImg}/>
