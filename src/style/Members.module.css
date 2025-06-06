@@ -1,6 +1,7 @@
 .membersContainer {
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
+    aspect-ratio: 1 / 0.405;
     border-radius: 25px;
     padding: 38px 0 40px 49px;
     overflow: hidden;
