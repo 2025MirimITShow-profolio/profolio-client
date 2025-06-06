@@ -42,3 +42,41 @@
 .test:first-child {
     border-top: 1px solid #EEEEEE;
 }
+
+.timeLine {
+    background-color: #E8F0FB;
+    height: 45px;
+    position: absolute;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.bar {
+    width: 7px;
+    height: 100%;
+    background: #BFDAFF;
+    border-radius: 5px;
+}
+
+.name {
+    position: absolute;
+    color: #000;
+    left: 17px;
+    width: calc(100% - 24px);
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
+}
+
+.floatingBox {
+    position: fixed;
+    pointer-events: none;
+    background: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-size: 14px;
+    z-index: 1000;
+}
