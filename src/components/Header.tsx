@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import styles from '../style/Header.module.css'
 import { useEffect, useRef, useState } from 'react'
 import { disassemble } from "es-hangul"
+import ProfileInfo from './ProfileInfo'
 
 const projects = [
     '키오스크 리디자인키오스크 리디자인키오스크 리디자인 키오스크 리디자인키오스크 리디자인키오스크 리디자인',
@@ -31,7 +32,6 @@ const Profile = styled.div<ProfileProps>`
     column-gap: 19px;
     position: absolute;
     right: 2.9%;
-    background-color: '#000';
     &:hover {
         background-color: ${({isDark}) => isDark?'#2B2B37':'#F5F6F8'} !important;
     }
@@ -42,13 +42,15 @@ export default function Header() {
     const [search, setSearch] = useState('')
     const [project, setProject] = useState(projects)
     const [click, setClick] = useState(false)
+    const [showInfo, setShowInfo] = useState(false)
     const searchRef = useRef<HTMLInputElement>(null)
+    const profileRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-        if(!search){
+        if(!search.trim()){
             setProject(projects)
         } else {
-            setProject(projects.filter((pro) => disassemble(pro).includes(disassemble(search))))
+            setProject(projects.filter((pro) => disassemble(pro).includes(disassemble(search.trim()))))
         }
     }, [search])
 
@@ -56,6 +58,9 @@ export default function Header() {
         function clickOutside(e:MouseEvent) {
             if(searchRef.current && !searchRef.current.contains(e.target as Node)){
                 setClick(false)
+            }
+            if(profileRef.current && !profileRef.current.contains(e.target as Node)){
+                setShowInfo(false)
             }
         }
         document.addEventListener('mousedown', clickOutside)
@@ -85,7 +90,7 @@ export default function Header() {
                     <input 
                         ref={searchRef} 
                         value={search}
-                        onChange={e => setSearch(e.target.value.trim())}
+                        onChange={e => setSearch(e.target.value)}
                         placeholder='Searching Project'
                         className={styles.searchInput}
                     />
@@ -99,7 +104,11 @@ export default function Header() {
                     </div>
                 }
             </div>
-            <Profile isDark={isDark}>
+            <Profile 
+                isDark={isDark} 
+                ref={profileRef}
+                onClick={() => setShowInfo(true)}
+            >
                 <img 
                     src='/images/profileImg.png'
                     alt='프로필 이미지'
@@ -110,6 +119,7 @@ export default function Header() {
                     alt='더보기'
                     className={styles.moreBtn}
                 />
+                {showInfo && <ProfileInfo setShowInfo={setShowInfo} />}
             </Profile>
         </div>
     )
