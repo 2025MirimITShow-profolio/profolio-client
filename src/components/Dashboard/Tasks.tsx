@@ -53,7 +53,7 @@ export default function Tasks() {
             style={isDark?{backgroundColor: '#2B2B37', color: '#FFFFFF'}:{backgroundColor: '#FFFFFF', color: '#000000'}}
         >
             <div className={styles.header}>
-                <p style={{fontSize: '25px'}}>Tasks</p>
+                <p style={{ fontWeight: '600', fontSize: '25px'}}>Tasks</p>
                 <img 
                     src='/images/showMore.svg'
                     alt='더보기'

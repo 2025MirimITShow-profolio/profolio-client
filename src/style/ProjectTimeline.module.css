@@ -17,7 +17,7 @@
 
 .title {
     font-size: 25px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .unitContainer {
@@ -26,6 +26,8 @@
     display: flex;
     align-items: center;
     column-gap: 20px;
+    font-weight: 500;
+    font-size: 18px;
 }
 
 .projectContainer {
@@ -68,12 +70,15 @@
     overflow: hidden;
     text-overflow: clip;
     white-space: nowrap;
+    font-weight: 500;
+    font-size: 16px;
 }
 
 .floatingBox {
     position: fixed;
     pointer-events: none;
     background: white;
+    color: #000;
     padding: 8px 16px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
