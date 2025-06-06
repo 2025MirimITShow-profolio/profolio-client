@@ -4,6 +4,8 @@ import styles from '../style/Header.module.css'
 import { useEffect, useRef, useState } from 'react'
 import { disassemble } from "es-hangul"
 import ProfileInfo from './ProfileInfo'
+import ModalPortal from './ModalPortal'
+import ProfileEdit from './ProfileEdit'
 
 const projects = [
     '키오스크 리디자인키오스크 리디자인키오스크 리디자인 키오스크 리디자인키오스크 리디자인키오스크 리디자인',
@@ -43,6 +45,9 @@ export default function Header() {
     const [project, setProject] = useState(projects)
     const [click, setClick] = useState(false)
     const [showInfo, setShowInfo] = useState(false)
+    const [showEdit, setShowEdit] = useState(false)
+    const [name, setName] = useState('이자연')
+    const [job, setJob] = useState('디자이너')
     const searchRef = useRef<HTMLInputElement>(null)
     const profileRef = useRef<HTMLDivElement>(null)
 
@@ -119,8 +124,11 @@ export default function Header() {
                     alt='더보기'
                     className={styles.moreBtn}
                 />
-                {showInfo && <ProfileInfo setShowInfo={setShowInfo} />}
+                {showInfo && <ProfileInfo name={name} job={job} setShowInfo={setShowInfo} setShowEdit={setShowEdit} />}
             </Profile>
+            {showEdit &&
+                <ModalPortal><ProfileEdit name={name} setName={setName} job={job} setJob={setJob} isDark={isDark} setShowEdit={setShowEdit} /></ModalPortal>
+            }
         </div>
     )
 }

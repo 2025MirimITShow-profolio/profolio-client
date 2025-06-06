@@ -2,12 +2,16 @@ import { useThemeStore } from '../store/themeStore'
 import styles from '../style/ProfileInfo.module.css'
 
 type ProfileProps = {
-    setShowInfo: (val:boolean) => void
+    name: string,
+    job: string,
+    setShowInfo: (val:boolean) => void,
+    setShowEdit: (val:boolean) => void
 }
 
-export default function ProfileInfo({setShowInfo}:ProfileProps) {
+export default function ProfileInfo({name, job, setShowInfo, setShowEdit}:ProfileProps) {
     const isDark = useThemeStore((store) => store.isDark)
     const toggleDark = useThemeStore((store) => store.toggleDark)
+
     return (
         <div 
             className={styles.container}
@@ -50,15 +54,21 @@ export default function ProfileInfo({setShowInfo}:ProfileProps) {
                         </div>
                     </div>
                     <div className={styles.nameJob}>
-                        <span className={styles.name} style={{color: isDark?'#FFFFFF':'#000000'}}>이자연</span>
-                        <span className={styles.job} style={{color: isDark?'#AAAAAA':'#777777'}}>디자이너</span>
+                        <span className={styles.name} style={{color: isDark?'#FFFFFF':'#000000'}}>{name}</span>
+                        <span className={styles.job} style={{color: isDark?'#AAAAAA':'#777777'}}>{job}</span>
                     </div>
                 </div>
             </div>
             <div className={styles.info} style={{color: isDark?'#AAAAAA':'#888888'}}>
                 <div>2007.08.06</div>
                 <div>d2331@e-mirim.hs.kr</div>
-                <div className={styles.editBtn} style={{backgroundColor: isDark?'#DDDDDD':'#F5F5F5'}}>수정하기</div>
+                <div
+                    className={styles.editBtn}
+                    style={{backgroundColor: isDark?'#DDDDDD':'#F5F5F5'}}
+                    onClick={(e) => {e.stopPropagation(); setShowInfo(false); setShowEdit(true);}}
+                >
+                    수정하기
+                </div>
             </div>
         </div>
     )
