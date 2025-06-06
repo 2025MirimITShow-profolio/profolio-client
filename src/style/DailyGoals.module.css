@@ -1,6 +1,7 @@
 .dailyGoalsContainer {
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
+    aspect-ratio: 1 / 1.005;
     padding: 28px 35px 21px 27px;
     border-radius: 25px;
     overflow: hidden;
