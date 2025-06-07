@@ -3,6 +3,8 @@ import { useThemeStore } from "../../store/themeStore";
 import styles from '../../style/ProjectTimeline.module.css'
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import ModalPortal from "../ModalPortal";
+import AddTimeline from "../AddTimeline";
 
 const time = ['Year', 'Month', 'Week']
 const year = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
@@ -189,13 +191,18 @@ type Project = {
 export default function ProjectTimeline() {
     const isDark = useThemeStore((store) => store.isDark)
     const [timeUnit, setTimeUnit] = useState(0)
+    const [allProjects, setAllProjects] = useState<Project[]>(parsedData)
     const [projects, setProjects] = useState<Project[]>([])
+    const [add, setAdd] = useState(false)
+    useEffect(() => {
+        console.log(parsedData);
+    }, [parsedData])
 
     useEffect(() => {
         let projectsArr = []
-        for(let i=0; i<parsedData.length; i++) {
-            if(!(parsedData[i].startDate > endDay[timeUnit] || parsedData[i].endDate < startDay[timeUnit])){
-                projectsArr.push(parsedData[i])
+        for(let i=0; i<allProjects.length; i++) {
+            if(!(allProjects[i].startDate > endDay[timeUnit] || allProjects[i].endDate < startDay[timeUnit])){
+                projectsArr.push(allProjects[i])
             }
         }
         setProjects(projectsArr)
@@ -218,7 +225,7 @@ export default function ProjectTimeline() {
                         </span>
 
                     ))}
-                    <span style={{marginLeft: '15px'}}>
+                    <span style={{marginLeft: '15px'}} onClick={() => setAdd(true)}>
                         <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 9.5H17.5" stroke={isDark?'#BBBBBB':'#777777'} stroke-width="1.5"/>
                             <path d="M8.75 0.75L8.75 18.25" stroke={isDark?'#BBBBBB':'#777777'} stroke-width="1.5"/>
@@ -240,6 +247,9 @@ export default function ProjectTimeline() {
                     {unit[timeUnit].map((u, i) => <span key={i}>{u}</span>)}
                 </UnitBox>
             </div>
+            {add &&
+                <ModalPortal><AddTimeline setAllProjects={setAllProjects} setAdd={setAdd} /></ModalPortal>
+            }
         </div>
     )
 }

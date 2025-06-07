@@ -126,3 +126,6 @@ input {
 input:focus {
 	outline: none;
 }
+.rdrDayToday .rdrDayNumber span:after {
+	background-color: rgba(135, 52, 253, 80%) !important;
+}
