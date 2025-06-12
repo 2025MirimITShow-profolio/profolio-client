@@ -1,0 +1,34 @@
+[
+    {
+    	"name": "이자연",
+    	"position": "Designer",
+    	"tag": ["UUIX", "배우려는 자세"],
+        "email": "d2331@e-mirim.hs.kr",
+        "instagram": "@Jayeon3536",
+    	"qr": ["Instagram"]
+    },
+    {
+    	"name": "이소리",
+    	"position": "Full Stack",
+    	"tag": ["Frontend", "열정만땅"],
+        "email": "w2319@e-mirim.hs.kr",
+        "github": "leesori1410",
+    	"qr": ["Github"]
+    },
+    {
+    	"name": "윤주영",
+    	"position": "Full Stack",
+    	"tag": ["Full Stack", "꾸준히 나아가는"],
+        "email": "s2329@e-mirim.hs.kr",
+        "github": "juyoung07",
+    	"qr": ["Github", "Instagram"]
+    },
+    {
+    	"name": "안효주",
+    	"position": "Full Stack",
+    	"tag": ["Full Stack", "매일 노력하는"],
+        "email": "s2309@e-mirim.hs.kr",
+        "github": "anju0210",
+    	"qr": ["Github"]
+    }
+]

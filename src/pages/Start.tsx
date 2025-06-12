@@ -1,6 +1,7 @@
 import { useThemeStore } from "../store/themeStore"
 import styles from '../style/Start.module.css'
 import styled from "styled-components"
+import { useNavigate } from "react-router-dom"
 
 type IsDarkProps = {
     isDark: boolean
@@ -21,6 +22,8 @@ const TextSpan = styled.span<IsDarkProps>`
 export default function Start() {
     const isDark = useThemeStore((store) => store.isDark)
     const toggleDark = useThemeStore((store) => store.toggleDark)
+    const navigate = useNavigate()
+
     return (
         <div className={styles.start} style={{backgroundColor: isDark?'#211E31':'#F5F6F8'}}>
             <div className={styles.toggleContainer} onClick={() => toggleDark()}>
@@ -62,7 +65,7 @@ export default function Start() {
                         }}                        
                     />
                 </div>
-                <div className={styles.member}>
+                <div className={styles.member} onClick={() => navigate('/member')}>
                     <span className={styles.memberDes}>프로폴리오의 팀원을 소개합니다!</span>
                     <span>팀원 소개</span>
                     <img src="/images/cardMember.png" alt="팀원 소개" 

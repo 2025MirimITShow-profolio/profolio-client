@@ -4,7 +4,7 @@ import styles from '../../style/ProjectTimeline.module.css'
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import ModalPortal from "../ModalPortal";
-import AddTimeline from "../AddTimeline";
+import AddTimeline from "./AddTimeline";
 
 const time = ['Year', 'Month', 'Week']
 const year = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']

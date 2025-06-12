@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import styles from '../style/Header.module.css'
 import { useEffect, useRef, useState } from 'react'
 import { disassemble } from "es-hangul"
-import ProfileInfo from './ProfileInfo'
+import ProfileInfo from './Dashboard/ProfileInfo'
 import ModalPortal from './ModalPortal'
-import ProfileEdit from './ProfileEdit'
+import ProfileEdit from './Dashboard/ProfileEdit'
 
 const projects = [
     '키오스크 리디자인키오스크 리디자인키오스크 리디자인 키오스크 리디자인키오스크 리디자인키오스크 리디자인',

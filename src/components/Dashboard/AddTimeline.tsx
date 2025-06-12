@@ -1,5 +1,5 @@
-import styles from '../style/AddTimeline.module.css'
-import { useThemeStore } from '../store/themeStore'
+import styles from '../../style/AddTimeline.module.css'
+import { useThemeStore } from '../../store/themeStore'
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
