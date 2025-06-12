@@ -40,7 +40,7 @@ export default function Start() {
                 <TextSpan isDark={isDark}>프로젝트와</TextSpan>와 <TextSpan isDark={isDark}>포트폴리오</TextSpan> 관리를 한 번에 시작해보세요!
             </p>
             <div className={styles.cardContainer}>
-                <div className={styles.introduce}>
+                <div className={styles.introduce} onClick={() => navigate('/introduce')}>
                     <div className={styles.introduceDes}>
                         <p style={{paddingBottom: '5px'}}>프로폴리오의 기획배경에</p>
                         <p>대해 알아보세요!</p>
