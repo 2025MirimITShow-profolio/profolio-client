@@ -2,6 +2,7 @@ import styles from '../style/MemberCard.module.css'
 import styled from 'styled-components'
 import ReactCardFlip from 'react-card-flip';
 import { useEffect, useState } from 'react';
+import { useThemeStore } from '../store/themeStore';
 
 const Tag = styled.div`
     width: auto;
@@ -27,6 +28,7 @@ type MemberCardProps = {
 
 export default function MemberCard({name, position, tag, email, instagram, github, qr}:MemberCardProps) {
     const [flipped, setFlipped] = useState(false)
+    const isDark = useThemeStore((store) => store.isDark)
 
     const handleClick = () => {
         setFlipped((prev) => !prev);
@@ -60,15 +62,15 @@ export default function MemberCard({name, position, tag, email, instagram, githu
                 <div className={styles.flipFront} onClick={handleClick}>
                     <div>
                         <p className={styles.tagName}>Email</p>
-                        <p className={styles.tagContent}>{email}</p>
+                        <p className={styles.tagContent} style={{color: isDark?'#BBB':'#777'}}>{email}</p>
                     </div>
                     {instagram && <div>
                         <p className={styles.tagName}>Instagram</p>
-                        <p className={styles.tagContent}>{instagram}</p>
+                        <p className={styles.tagContent} style={{color: isDark?'#BBB':'#777'}}>{instagram}</p>
                     </div>}
                     {github && <div>
                         <p className={styles.tagName}>Github</p>
-                        <p className={styles.tagContent}>{github}</p>
+                        <p className={styles.tagContent} style={{color: isDark?'#BBB':'#777'}}>{github}</p>
                     </div>}
                 </div>
 
