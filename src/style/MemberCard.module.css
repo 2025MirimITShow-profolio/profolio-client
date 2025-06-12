@@ -1,0 +1,117 @@
+.memberCard {
+    width: 390px;
+    height: 690px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.profileBox {
+    width: 100%;
+    height: 460px;
+    border-radius: 20px;
+    border: 1px solid #FFF;
+    background: rgba(255, 255, 255, 30%);
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 5%);
+    backdrop-filter: blur(50px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile {
+    width: 171px;
+    height: 171px;
+    border-radius: 100px;
+    background-color: white;
+    margin-top: 55px;
+    overflow: hidden;
+}
+
+.name {
+    font-weight: 700;
+    font-size: 32px;
+    margin-top: 30px;
+}
+
+.position {
+    font-size: 24px;
+    margin-top: 15px;
+}
+
+.tagBox {
+    width: 100%;
+    display: flex;
+    column-gap: 8px;
+    justify-content: center;
+    margin-top: 47px;
+}
+
+.flipBox {
+    width: 100%;
+    height: 210px;
+}
+
+.flipFront {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 36px 50px;
+    border-radius: 20px;
+    border: 1px solid #FFF;
+    background: rgba(255, 255, 255, 30%);
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 5%);
+    backdrop-filter: blur(50px);
+}
+.flipFront:hover {
+    border: 1px solid #8734FD;
+    background: rgba(135, 52, 253, 30%);
+}
+
+.flipBack {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 36px 50px;
+    border-radius: 20px;
+    border: 1px solid #8734FD;
+    background: rgba(135, 52, 253, 30%);
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 5%);
+    backdrop-filter: blur(50px);
+}
+
+.tagName {
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.tagContent {
+    color: #BBB;
+    font-size: 20px;
+    margin-top: 12px;
+}
+
+.flipBack {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 30px;
+}
+
+.infoContainer {
+    width: 125px;
+    height: 153px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+    font-weight: 500;
+    font-size: 15px;
+}

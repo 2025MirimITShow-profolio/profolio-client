@@ -1,4 +1,4 @@
-import styles from '../style/ProfileEdit.module.css'
+import styles from '../../style/ProfileEdit.module.css'
 
 type ProfileEditProps = {
     name: string,

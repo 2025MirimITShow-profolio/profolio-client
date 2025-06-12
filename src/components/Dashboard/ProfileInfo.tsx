@@ -1,5 +1,5 @@
-import { useThemeStore } from '../store/themeStore'
-import styles from '../style/ProfileInfo.module.css'
+import { useThemeStore } from '../../store/themeStore'
+import styles from '../../style/ProfileInfo.module.css'
 
 type ProfileProps = {
     name: string,
