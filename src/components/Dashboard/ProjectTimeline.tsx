@@ -206,7 +206,7 @@ export default function ProjectTimeline() {
             }
         }
         setProjects(projectsArr)
-    }, [timeUnit])
+    }, [timeUnit, allProjects])
 
     return (
         <div 
