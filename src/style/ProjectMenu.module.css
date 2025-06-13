@@ -1,7 +1,8 @@
 .ProjectMenu {
   display: flex;
   gap: 20px;
-  padding: 12px;
+  padding: 35px 0;
+  justify-content: center;
   background-color: #ffffff;
 }
 

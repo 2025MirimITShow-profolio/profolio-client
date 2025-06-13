@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Portfolio from "./pages/Portfolio";
 import Member from "./pages/Member";
 import ProjectIntroduce from "./pages/ProjectIntroduce";
+import Todo from "./pages/Todo";
 
 function App() {
 	return (
@@ -14,6 +15,7 @@ function App() {
         		<Route path="/member" element={<Member />} />
 				<Route path="/dashboard" element={<Dashboard />} />
 				<Route path="portfolio" element={<Portfolio />} />
+				<Route path="/todo" element={<Todo />} />
 			</Routes>
 		</Router>
 	);
