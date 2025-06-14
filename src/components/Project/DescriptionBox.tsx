@@ -1,3 +1,4 @@
+import { useThemeStore } from '../../store/themeStore'
 import { useState,useEffect, useRef } from "react"
 import axios from "axios";
 import { ko } from "date-fns/locale";
@@ -8,6 +9,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { FiCalendar } from "react-icons/fi";
 
 export default function DescriptionBox() {
+  const isDark = useThemeStore((store) => store.isDark)
   const [prjTitle, setPrjTitle] = useState('');
   const [description, setDescription] = useState('');
   const [startDate, setStartDate] = useState(new Date());
@@ -104,7 +106,7 @@ export default function DescriptionBox() {
     <div className={styles.container}>
       <div className={styles.mainbox}>
         <div style={{marginBottom: '22px'}}>
-          <p>프로젝트 명</p>
+          <p className={styles.subtitle}>프로젝트 명</p>
           <input
             className={styles.titleinput}
             value={prjTitle}
@@ -115,7 +117,7 @@ export default function DescriptionBox() {
         </div>
 
         <div>
-          <p>프로젝트 기간</p>
+          <p className={styles.subtitle}>프로젝트 기간</p>
           <div className={styles.datepicker}>
             <DatePicker
               locale={ko}
@@ -202,7 +204,7 @@ export default function DescriptionBox() {
       <div style={{ position: 'relative', display: 'flex' }} ref={memberBoxRef}>
         {isEditMode && isAddingMember && (
           <div className={styles.addBtn} style={{position: 'absolute', left: '-488px', top: '-260px'}}>
-            <p style={{fontSize: '22px', fontWeight: '500', color: 'black', padding: '28px 0 16px 42px'}}>
+            <p style={{fontSize: '22px', fontWeight: '500', color: 'black', padding: '28px 0 24px 42px'}}>
               멤버 추가하기
             </p>
             <hr></hr>
@@ -232,7 +234,7 @@ export default function DescriptionBox() {
       <div style={{ position: 'relative', display: 'flex' }} ref={skillBoxRef}>
         {isEditMode && isAddingSkill && (
           <div className={styles.addBtn} style={{position: 'absolute', left: '-504px', top: '-0px'}}>
-            <p style={{fontSize: '22px', fontWeight: '500', color: 'black', padding: '28px 0 16px 42px'}}>
+            <p style={{fontSize: '22px', fontWeight: '500', color: 'black', padding: '28px 0 24px 42px'}}>
               스킬셋 추가하기
             </p>
             <hr></hr>
@@ -261,7 +263,7 @@ export default function DescriptionBox() {
 
       <div style={{display: 'flex', flexDirection: 'column', gap: '24px'}}>
         <div className={styles.memberbox}>
-          <p style={{marginBottom: '14px'}}>팀원</p>
+          <p className={styles.subtitle} style={{marginBottom: '14px'}}>팀원</p>
           <div className={styles.membercontainer}>
             {teamMembers.map((member, index) => (
               <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -290,7 +292,7 @@ export default function DescriptionBox() {
         </div>
       
         <div className={styles.skillbox}>
-          <p style={{marginBottom: '14px'}}>스킬셋</p>
+          <p className={styles.subtitle} style={{marginBottom: '14px'}}>스킬셋</p>
           <div className={styles.skillcontainer}>
             {skills.length > 0 && (
               skills.map((skill, index) => (
