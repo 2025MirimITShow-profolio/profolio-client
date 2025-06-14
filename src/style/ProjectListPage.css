@@ -1,0 +1,39 @@
+.projectlist-container {
+	display: flex;
+	min-height: 100vh;
+	background: #f7f7fa;
+}
+
+.projectlist-main-wide {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	position: relative;
+	min-width: 0;
+	padding-left: 60px;
+}
+
+.projectlist-header-wide {
+	position: absolute;
+	top: 0px;
+	width: 40%;
+	right: 37px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+    transform: translateY(-5px);
+	gap: 32px;
+	z-index: 10;
+}
+
+.projectlist-circle-section-wide {
+	position: relative;
+	width: 1200px;
+	height: 1000px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+}

@@ -3,6 +3,7 @@ import { useThemeStore } from "../store/themeStore";
 import styles from '../style/SideBar.module.css'
 import SideMenu from "./SideMenu";
 import SearchProject from "./SearchProject";
+import { useLocation } from 'react-router-dom';
 
 const menus = [
     {
@@ -43,6 +44,17 @@ export default function SideBar() {
     const isDark = useThemeStore((state) => state.isDark)
     const [clickedMenu, setClickedMenu] = useState('Dashboard')
     const [open, setOpen] = useState(false)
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.pathname.startsWith('/project')) {
+            setClickedMenu('All projects');
+        } else if (location.pathname === '/dashboard') {
+            setClickedMenu('Dashboard');
+        } else if (location.pathname === '/shared') {
+            setClickedMenu('Shared projects');
+        }
+    }, [location.pathname]);
 
     useEffect(() => {
         setOpen(false)

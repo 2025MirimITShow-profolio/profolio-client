@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
 const MenuBtn = styled.div<MenuBtnProps>`
   cursor: pointer;
@@ -63,9 +64,18 @@ export default function SideMenu({
   setOpen,
 }: SideMenuProps) {
   const active = clickedMenu === title
+  const navigate = useNavigate();
 
   return (
-    <MenuBtn active={active} onClick={() => setClickedMenu(title)}>
+    <MenuBtn
+      active={active}
+      onClick={() => {
+        setClickedMenu(title);
+        if (title === 'All projects') {
+          navigate('/project');
+        }
+      }}
+    >
       <div>
         <img src={`/images/${src}${active?'Active':''}Icon.svg`} alt={title} />
         <span>{title}</span>
