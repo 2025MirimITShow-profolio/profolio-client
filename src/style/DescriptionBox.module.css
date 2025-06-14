@@ -1,0 +1,138 @@
+.container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.mainbox{
+  width: 75%;
+}
+
+p{
+  color: #bbbbbb;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.titleinput{
+  font-size: 29px;
+  font-weight: 600;
+  padding: 17.5px 25px;
+  border-radius: 6px;
+  border: solid 1px #eeeeee;
+  background-color: white;
+}
+
+.linkinput{
+  padding: 14px;
+  background-color: white;
+  border-radius: 6px;
+  font-size: 19px;
+  border: solid 1px #eeeeee;
+}
+
+.datepicker{
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.custominput{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 19px;
+  color: #666666;
+  font-weight: 400;
+  background-color: white;
+  padding: 14px 20px 14px 18px;
+  border-radius: 6px;
+  border: solid 1px #eeeeee;
+}
+
+.btn{
+  position: relative;
+  margin-left: auto;
+  width: fit-content;
+  padding: 15px 26px;
+  background-color: #8734FD;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
+
+.textarea{
+  resize: none;
+  width: 100%;
+  height: 500px;
+  padding: 32px 35px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.addBtn{
+  background-color: white;
+  border: 1px solid #eeeeee;
+  border-radius: 20px;
+  box-shadow: 0 3px 20px rgba(0,0,0,0.05);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+.addbtnInput{
+  padding: 20px 26px;
+  font-size: 17px;
+  border-radius: 10px;
+  background-color: #F5F6F8;
+  border: 1px solid #ccc;
+  width: 428px;
+  margin: 31px 37px 24px 37px;
+}
+
+.memberAddbtn{
+  font-size: 18px;
+  background-color: #8734FD;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 37px 38px auto;
+}
+
+.membercontainer{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 22px 27px;
+  border-radius: 10px;
+  background-color: white;
+  width: 265px;
+  height: 232px;
+}
+
+.skillcontainer{
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 29px 26px;
+  border-radius: 10px;
+  background-color: white;
+  width: 265px;
+  height: 285px;
+}
+
+.skillItem{
+  border-radius: 5px;
+  border: solid 1px #eeeeee;
+  padding: 14.5px 0;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+}

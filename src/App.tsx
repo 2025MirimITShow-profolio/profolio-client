@@ -5,6 +5,7 @@ import Portfolio from "./pages/Portfolio";
 import Member from "./pages/Member";
 import ProjectIntroduce from "./pages/ProjectIntroduce";
 import Todo from "./pages/Todo";
+import ProjectDescription from "./pages/ProjectDescription";
 
 function App() {
 	return (
@@ -15,6 +16,7 @@ function App() {
         		<Route path="/member" element={<Member />} />
 				<Route path="/dashboard" element={<Dashboard />} />
 				<Route path="portfolio" element={<Portfolio />} />
+				<Route path="/description" element={<ProjectDescription />} />
 				<Route path="/todo" element={<Todo />} />
 			</Routes>
 		</Router>
