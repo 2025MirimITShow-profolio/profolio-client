@@ -8,6 +8,7 @@ const menus = [
     {
         src: 'dashboard',
         title: 'Dashboard',
+        path: '/dashboard'
     },
     {
         src: 'allProjects',
@@ -25,6 +26,7 @@ const menus = [
             '투두리스트',
             '프로폴리오',
         ],
+        path: '/'
     },
     {
         src: 'sharedProjects',
@@ -36,6 +38,7 @@ const menus = [
             '투두리스트',
             '프로폴리오',
         ],
+        path: '/'
     }
 ]
 
@@ -65,6 +68,7 @@ export default function SideBar() {
                         src={menu.src}
                         title={menu.title}
                         more={menu.more}
+                        path={menu.path}
                         clickedMenu={clickedMenu}
                         setClickedMenu={setClickedMenu}
                         open={open}
