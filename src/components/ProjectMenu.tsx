@@ -38,7 +38,8 @@ export default function ProjectMenu() {
     const isDark = useThemeStore((state) => state.isDark);
 
     return (
-        <div className={styles.ProjectMenu}>
+        <div className={styles.ProjectMenu}
+          style={{backgroundColor: isDark? '#22222E' : 'white'}}>
           {menus.map((menu) => {
             const isActive = location.pathname.includes(menu.src);
             return (
@@ -46,6 +47,10 @@ export default function ProjectMenu() {
                 key={menu.title}
                 onClick={()=>navigate(`/${menu.src}`)}
                 className={`${styles.menuBtn} ${isActive? styles.active:""}`}
+                style={{
+                  backgroundColor: isDark? isActive? '#DDDDDD' : '#383843': isActive? '#666666': '#f4f4f4',
+                  color: isDark? isActive? 'black': 'white' : isActive? 'white' : 'black'
+                }}
                 >
                   <img src={menu.icon} className={styles.btnIcon}></img>
                   {menu.title}

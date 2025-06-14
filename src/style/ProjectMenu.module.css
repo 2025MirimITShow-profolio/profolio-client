@@ -3,7 +3,6 @@
   gap: 20px;
   padding: 35px 0;
   justify-content: center;
-  background-color: #ffffff;
 }
 
 .menuBtn {
@@ -13,21 +12,11 @@
   border: none;
   width: 280px;
   padding: 23px 25px;
-  background-color: #f4f4f4;
   border-radius: 10px;
   cursor: pointer;
   font-weight: 500;
   font-size: 20px;
   box-sizing: border-box;
-}
-
-.menuBtn:hover {
-  background-color: #d1d1d1;
-}
-
-.active {
-  background-color: #666666;
-  color: white;
 }
 
 .btnIcon{
