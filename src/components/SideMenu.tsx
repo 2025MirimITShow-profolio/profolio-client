@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
 const MenuBtn = styled.div<MenuBtnProps>`
   cursor: pointer;
@@ -47,6 +48,7 @@ type SideMenuProps = {
   src: string,
   title: string,
   more?: string[],
+  path: string
   clickedMenu: string,
   setClickedMenu: (title: string) => void,
   open: boolean,
@@ -57,15 +59,22 @@ export default function SideMenu({
   src,
   title,
   more,
+  path,
   clickedMenu,
   setClickedMenu,
   open,
   setOpen,
 }: SideMenuProps) {
+  const navigate = useNavigate()
   const active = clickedMenu === title
 
+  const handleClick = () => {
+    setClickedMenu(title)
+    navigate(path)
+  }
+
   return (
-    <MenuBtn active={active} onClick={() => setClickedMenu(title)}>
+    <MenuBtn active={active} onClick={handleClick}>
       <div>
         <img src={`/images/${src}${active?'Active':''}Icon.svg`} alt={title} />
         <span>{title}</span>
