@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { AiOutlinePlus } from "react-icons/ai";
 import { FiCalendar } from "react-icons/fi";
 
-export default function DescriptionBox() {
+export default function DescriptionBox({ projectId }: { projectId: number }) {
   const isDark = useThemeStore((store) => store.isDark)
   const [prjTitle, setPrjTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -33,7 +33,7 @@ export default function DescriptionBox() {
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/projects/8"); // project_id 주입 필요
+        const res = await axios.get(`http://localhost:3000/api/projects/${projectId}`); // project_id 주입 필요
         const { title, description, start_date, end_date, links, team_members, skills } = res.data;
 
         setPrjTitle(title || '');
@@ -75,7 +75,7 @@ export default function DescriptionBox() {
 
   const handleSave = async () => {
     try {
-      await axios.patch("http://localhost:3000/api/projects/8", {
+      await axios.patch(`http://localhost:3000/api/projects/${projectId}`, {
         title: prjTitle,
         description: description,
         start_date: startDate.toISOString(),
@@ -176,9 +176,9 @@ export default function DescriptionBox() {
               <input
                 className={styles.linkinput}
                 style={{
-                  backgroundColor: isDark? '#383843' : 'white',
-                  color: isDark? 'white' : 'black',
-                  border: isDark? 'solid 1px #555555' : 'solid 1px #eeeeee'
+                  backgroundColor: 'transparent',
+                  color: isDark? '#B886FF' : '#8734FD',
+                  border: 'none',
                 }}
                 type="text"
                 placeholder="링크 추가하기"

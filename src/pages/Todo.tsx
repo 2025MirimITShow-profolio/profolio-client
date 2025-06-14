@@ -11,14 +11,14 @@ type Todo = {
     date: string;
   };
 
-export default function Todo() {    
+export default function Todo({ projectId }: { projectId: number }) {    
     const isDark = useThemeStore((store) => store.isDark)
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [todos, setTodos] = useState<Todo[]>([]);
 
     useEffect(() => {
         const fetchTodos = async () => {
-          const res = await axios.get('http://localhost:3000/api/tasks/project/7') // projectid 주입 필요
+          const res = await axios.get(`http://localhost:3000/api/tasks/project/${projectId}`) // projectid 주입 필요
           setTodos(res.data)
         }
         fetchTodos()
@@ -33,7 +33,7 @@ export default function Todo() {
 
         try {
           const res = await axios.post('http://localhost:3000/api/tasks', {
-            project_id: 7,
+            project_id: projectId,
             title,
             date: `${year}${month}${day}`,
           })
@@ -94,7 +94,15 @@ export default function Todo() {
     );
 
     return (
-      <div style={{height: '100%', marginBottom: '10px', display: 'flex', gap: '37px', justifyContent: 'center', alignItems: 'center'}}>
+      <div 
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+          paddingTop: '146px',
+          backgroundColor: '#F6F7FB',
+          gap: '37px',
+        }}>
         <Calendar onDateClick={setSelectedDate} />
         <TodoBox
             todos={filteredTodos}

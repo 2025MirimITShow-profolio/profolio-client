@@ -6,7 +6,7 @@
 }
 
 .mainbox{
-  width: 75%;
+  width: 1142px;
 }
 
 .subtitle{
@@ -24,8 +24,6 @@
 }
 
 .linkinput{
-  padding: 14px;
-  border-radius: 6px;
   font-size: 19px;
 }
 

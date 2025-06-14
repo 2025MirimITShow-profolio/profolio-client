@@ -5,27 +5,27 @@ const menus = [
     { 
       menu: 0,
       title: '포트폴리오',
-      icon: 'images/portfolioIcon.svg' 
+      icon: '/images/portfolioIcon.svg' 
      },
     { 
       menu: 1,
       title: '진행과정',
-      icon: 'images/progressIcon.svg' 
+      icon: '/images/progressIcon.svg' 
      },
     { 
       menu: 2,
       title: '프로젝트 설명',
-      icon: 'images/descriptionIcon.svg' 
+      icon: '/images/descriptionIcon.svg' 
     },
     { 
       menu: 3, 
       title: 'AI 피드백',
-      icon: 'images/feedbackIcon.svg' 
+      icon: '/images/feedbackIcon.svg' 
     },
     { 
       menu: 4, 
       title: 'To Do',
-      icon: 'images/todoIcon.svg' 
+      icon: '/images/todoIcon.svg' 
     },
 ]
 
