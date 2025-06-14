@@ -54,7 +54,7 @@ export default function Start() {
                       }}
                   />
               </div>
-              <div className={styles.login}>
+              <div className={styles.login} onClick={() => navigate('/login')}>
                   <span className={styles.loginDes}>로그인하여 시작해보세요</span>
                   <span>로그인/회원가입</span>
                   <img src="/images/cardLogin.png" alt="로그인/회원가입" 
