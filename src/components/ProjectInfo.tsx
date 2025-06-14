@@ -22,6 +22,7 @@ export default function ProjectInfo({title, des, index, show, handleClick, child
                     backgroundColor: show===index?'#8734FD':isDark?'#383843':'#F5F6F8',
                     color: show===index?'#FFF':isDark?'#FFF':'#000'
                 }}
+                onClick={() => handleClick(index)}
             >
                 <div>
                     <p className={styles.title}>{title}</p>
@@ -30,7 +31,6 @@ export default function ProjectInfo({title, des, index, show, handleClick, child
                 <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg"
                     className={styles.showBtn}
                     style={show===index ? {transform: 'rotate(45deg)'}:{}}
-                    onClick={() => handleClick(index)}
                 >
                     <path d="M13.5 0L13.5 27" stroke={show===index?'#FFF':isDark?'#FFF':'#000'} stroke-width="2"/>
                     <path d="M27 13.5L-3.27826e-07 13.5" stroke={show===index?'#FFF':isDark?'#FFF':'#000'} stroke-width="2"/>
