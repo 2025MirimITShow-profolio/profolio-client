@@ -1,0 +1,73 @@
+.container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoContainer {
+    position: fixed;
+    top: 63px;
+    left: 82px;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    font-family: "Pacifico", cursive;
+    font-size: 40px;
+    margin-bottom: 8px;
+    line-height: normal;
+}
+
+.sub {
+    font-size: 20px;
+    color: #777;
+}
+
+.loginContainer {
+    width: 504px;
+    height: 508px;
+    display: flex;
+    flex-direction: column;
+}
+
+.text {
+    font-weight: 600;
+    font-size: 43px;
+    line-height: 140%;
+    margin-bottom: 60px;
+}
+
+.infoInput {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    font-size: 24px;
+}
+
+.noIdContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+    font-size: 21px;
+}
+
+.signupBtn {
+    color: #999;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.goBtn {
+    position: fixed;
+    bottom: 48px;
+    font-weight: 600;
+    font-size: 20px;
+    color: #999;
+    cursor: pointer;
+}
