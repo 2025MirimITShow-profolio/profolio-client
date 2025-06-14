@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Calendar from "../components/Project/Calendar";
-import ProjectMenu from "../components/ProjectMenu";
-import SideBar from "../components/SideBar";
 import { useThemeStore } from "../store/themeStore";
 import TodoBox from "../components/Project/TodoBox";
 
@@ -96,38 +94,15 @@ export default function Todo() {
     );
 
     return (
-        <div
-            style={{
-                width: '100%', 
-                height: '100vh', 
-                backgroundColor: isDark?'#181822':'#F6F7FB', 
-                display: 'flex',
-                justifyContent: 'space-between'
-            }}
-        >
-            <SideBar />
-            <div
-                style={{
-                    width: 'calc(100%)',
-                    height: '100vh',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    backgroundColor: isDark?'#181822':'#F6F7FB',
-                }}
-            >
-              <ProjectMenu />
-              <div style={{height: '100%', marginBottom: '10px', display: 'flex', gap: '37px', justifyContent: 'center', alignItems: 'center'}}>
-                <Calendar onDateClick={setSelectedDate} />
-                <TodoBox
-                    todos={filteredTodos}
-                    onAdd={handleAdd}
-                    onCheck={handleCheck}
-                    onDelete={handleDelete}
-                    onEdit={handleEdit}
-                />
-              </div>
-            
-            </div>
-        </div>
+      <div style={{height: '100%', marginBottom: '10px', display: 'flex', gap: '37px', justifyContent: 'center', alignItems: 'center'}}>
+        <Calendar onDateClick={setSelectedDate} />
+        <TodoBox
+            todos={filteredTodos}
+            onAdd={handleAdd}
+            onCheck={handleCheck}
+            onDelete={handleDelete}
+            onEdit={handleEdit}
+        />
+      </div>
     )
 }

@@ -1,51 +1,51 @@
-import { useEffect, useState } from "react";
 import { useThemeStore } from "../store/themeStore";
 import styles from '../style/ProjectMenu.module.css'
-import { useLocation, useNavigate } from "react-router-dom";
 
 const menus = [
     { 
-      src: 'portfolio',
+      menu: 0,
       title: '포트폴리오',
       icon: 'images/portfolioIcon.svg' 
      },
     { 
-      src: 'progress', 
+      menu: 1,
       title: '진행과정',
       icon: 'images/progressIcon.svg' 
      },
     { 
-      src: 'description', 
+      menu: 2,
       title: '프로젝트 설명',
       icon: 'images/descriptionIcon.svg' 
     },
     { 
-      src: 'feedback', 
+      menu: 3, 
       title: 'AI 피드백',
       icon: 'images/feedbackIcon.svg' 
     },
     { 
-      src: 'todo', 
+      menu: 4, 
       title: 'To Do',
       icon: 'images/todoIcon.svg' 
     },
 ]
 
-export default function ProjectMenu() {
-    const navigate = useNavigate();
-    const location = useLocation();
+type ProjectMenuProps = {
+  click: number
+  setClick: (val:number) => void
+}
 
+export default function ProjectMenu({click, setClick}:ProjectMenuProps) {
     const isDark = useThemeStore((state) => state.isDark);
 
     return (
         <div className={styles.ProjectMenu}
           style={{backgroundColor: isDark? '#22222E' : 'white'}}>
           {menus.map((menu) => {
-            const isActive = location.pathname.includes(menu.src);
+            const isActive = click === menu.menu;
             return (
               <button
                 key={menu.title}
-                onClick={()=>navigate(`/${menu.src}`)}
+                onClick={()=>setClick(menu.menu)}
                 className={`${styles.menuBtn} ${isActive? styles.active:""}`}
                 style={{
                   backgroundColor: isDark? isActive? '#DDDDDD' : '#383843': isActive? '#666666': '#f4f4f4',
