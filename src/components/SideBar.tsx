@@ -8,7 +8,6 @@ const menus = [
     {
         src: 'dashboard',
         title: 'Dashboard',
-        path: '/dashboard'
     },
     {
         src: 'allProjects',
@@ -26,7 +25,6 @@ const menus = [
             '투두리스트',
             '프로폴리오',
         ],
-        path: '/'
     },
     {
         src: 'sharedProjects',
@@ -38,11 +36,14 @@ const menus = [
             '투두리스트',
             '프로폴리오',
         ],
-        path: '/'
     }
 ]
 
-export default function SideBar() {
+type SideBarProps = {
+    setMenu: (val:number) => void
+}
+
+export default function SideBar({setMenu}:SideBarProps) {
     const isDark = useThemeStore((state) => state.isDark)
     const [clickedMenu, setClickedMenu] = useState('Dashboard')
     const [open, setOpen] = useState(false)
@@ -68,11 +69,12 @@ export default function SideBar() {
                         src={menu.src}
                         title={menu.title}
                         more={menu.more}
-                        path={menu.path}
                         clickedMenu={clickedMenu}
                         setClickedMenu={setClickedMenu}
                         open={open}
                         setOpen={setOpen}
+                        idx={idx}
+                        setMenu={setMenu}
                     />
                     {
                         (menu.more && clickedMenu===menu.title && !open) && 

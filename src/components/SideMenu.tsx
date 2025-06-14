@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { useNavigate } from 'react-router-dom'
 
 const MenuBtn = styled.div<MenuBtnProps>`
   cursor: pointer;
@@ -48,29 +47,30 @@ type SideMenuProps = {
   src: string,
   title: string,
   more?: string[],
-  path: string
   clickedMenu: string,
   setClickedMenu: (title: string) => void,
   open: boolean,
   setOpen: (val:boolean) => void,
+  idx: number,
+  setMenu: (val:number) => void
 }
 
 export default function SideMenu({
   src,
   title,
   more,
-  path,
   clickedMenu,
   setClickedMenu,
   open,
   setOpen,
+  idx,
+  setMenu
 }: SideMenuProps) {
-  const navigate = useNavigate()
   const active = clickedMenu === title
 
   const handleClick = () => {
     setClickedMenu(title)
-    navigate(path)
+    setMenu(idx)
   }
 
   return (

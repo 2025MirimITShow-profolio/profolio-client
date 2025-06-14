@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Start from "./pages/Start";
+import Main from "./pages/Main";
 import Dashboard from "./pages/Dashboard";
 import Portfolio from "./pages/Portfolio";
 import Member from "./pages/Member";
@@ -12,9 +13,9 @@ function App() {
 		<Router>
 			<Routes>
 				<Route path="/" element={<Start />} />
+				<Route path="/profolio" element={<Main />} />
 				<Route path="/introduce" element={<ProjectIntroduce />} />
         		<Route path="/member" element={<Member />} />
-				<Route path="/dashboard" element={<Dashboard />} />
 				<Route path="portfolio" element={<Portfolio />} />
 				<Route path="/description" element={<ProjectDescription />} />
 				<Route path="/todo" element={<Todo />} />
