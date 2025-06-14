@@ -109,6 +109,11 @@ export default function DescriptionBox() {
           <p className={styles.subtitle}>프로젝트 명</p>
           <input
             className={styles.titleinput}
+            style={{
+              backgroundColor: isDark? '#383843' : 'white',
+              color: isDark? 'white' : 'black',
+              border: isDark? 'solid 1px #555555' : 'solid 1px #eeeeee'
+            }}
             value={prjTitle}
             onChange={(e) => setPrjTitle(e.target.value)}
             readOnly={!isEditMode}
@@ -127,7 +132,12 @@ export default function DescriptionBox() {
               selectsStart
               disabled={!isEditMode}
               customInput={
-                <div className={styles.custominput}>
+                <div className={styles.custominput}
+                  style={{
+                    backgroundColor: isDark? '#383843' : 'white',
+                    color: isDark? '#999999' : '#666666',
+                    border: isDark? 'solid 1px #555555' : 'solid 1px #eeeeee'
+                  }}>
                   <FiCalendar color="#999999" size={20} />
                   {dateFormat(startDate)}
                 </div>
@@ -145,7 +155,12 @@ export default function DescriptionBox() {
               minDate={startDate}
               disabled={!isEditMode}
               customInput={
-                <div className={styles.custominput}>
+                <div className={styles.custominput}
+                  style={{
+                    backgroundColor: isDark? '#383843' : 'white',
+                    color: isDark? '#999999' : '#666666',
+                    border: isDark? 'solid 1px #555555' : 'solid 1px #eeeeee'
+                  }}>
                   <FiCalendar color="#999999" size={20} />
                   {dateFormat(endDate)}
                 </div>
@@ -160,6 +175,11 @@ export default function DescriptionBox() {
             {isEditMode ? (
               <input
                 className={styles.linkinput}
+                style={{
+                  backgroundColor: isDark? '#383843' : 'white',
+                  color: isDark? 'white' : 'black',
+                  border: isDark? 'solid 1px #555555' : 'solid 1px #eeeeee'
+                }}
                 type="text"
                 placeholder="링크 추가하기"
                 value={links}
@@ -171,13 +191,13 @@ export default function DescriptionBox() {
                     href={links.startsWith('http') ? links : `https://${links}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ fontSize: '19px', fontWeight: 400, color: '#8734FD', textDecoration: 'underline',
+                    style={{ fontSize: '19px', fontWeight: 400, color: isDark? '#B886FF' : '#8734FD', textDecoration: 'underline',
                     }}
                   >
                     {links}
                   </a>
               ) : (
-                <div style={{ fontSize: '19px', color: '#8734FD', textDecoration: 'underline' }}>
+                <div style={{ fontSize: '19px', color: isDark? '#B886FF' : '#8734FD', textDecoration: 'underline' }}>
                   링크 추가하기
                 </div>
               )
@@ -193,6 +213,11 @@ export default function DescriptionBox() {
         <div>
           <textarea
             className={styles.textarea}
+            style={{
+              backgroundColor: isDark? '#383843' : 'white',
+              color: isDark? 'white' : 'black',
+              border: isDark? 'solid 1px #555555' : 'solid 1px #eeeeee'
+            }}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             readOnly={!isEditMode}
@@ -203,13 +228,22 @@ export default function DescriptionBox() {
 
       <div style={{ position: 'relative', display: 'flex' }} ref={memberBoxRef}>
         {isEditMode && isAddingMember && (
-          <div className={styles.addBtn} style={{position: 'absolute', left: '-488px', top: '-260px'}}>
-            <p style={{fontSize: '22px', fontWeight: '500', color: 'black', padding: '28px 0 24px 42px'}}>
+          <div className={styles.addBtn}
+            style={{position: 'absolute', left: '-488px', top: '-260px',
+              border: isDark? '1px solid #333333' : '1px solid #eeeeee',
+              backgroundColor: isDark? '#22222E' : 'white'
+            }}>
+            <p style={{fontSize: '22px', fontWeight: '500', color: isDark? 'white':'black', padding: '28px 0 24px 42px'}}>
               멤버 추가하기
             </p>
-            <hr></hr>
+            <hr style={{height: '1px', border: 0, background: isDark? '#333333' : '#CCCCCC'}}></hr>
             <input
               className={styles.addbtnInput}
+              style={{
+                backgroundColor: isDark? '#383843':'#F5F6F8',
+                border: isDark? '1px solid #555555' : '1px solid #ccc',
+                color: isDark? 'white' : 'black'
+              }}
               type="text"
               value={newMember}
               onChange={(e) => setNewMember(e.target.value)}
@@ -233,13 +267,20 @@ export default function DescriptionBox() {
 
       <div style={{ position: 'relative', display: 'flex' }} ref={skillBoxRef}>
         {isEditMode && isAddingSkill && (
-          <div className={styles.addBtn} style={{position: 'absolute', left: '-504px', top: '-0px'}}>
-            <p style={{fontSize: '22px', fontWeight: '500', color: 'black', padding: '28px 0 24px 42px'}}>
+          <div className={styles.addBtn} style={{position: 'absolute', left: '-504px', top: '-0px',
+              border: isDark? '1px solid #333333' : '1px solid #eeeeee',
+              backgroundColor: isDark? '#22222E' : 'white'}}>
+            <p style={{fontSize: '22px', fontWeight: '500', color: isDark? 'white':'black', padding: '28px 0 24px 42px'}}>
               스킬셋 추가하기
             </p>
-            <hr></hr>
+            <hr style={{height: '1px', border: 0, background: isDark? '#333333' : '#CCCCCC'}}></hr>
             <input
               className={styles.addbtnInput}
+              style={{
+                backgroundColor: isDark? '#383843':'#F5F6F8',
+                border: isDark? '1px solid #555555' : '1px solid #ccc',
+                color: isDark? 'white' : 'black'
+              }}
               type="text"
               value={newSkill}
               onChange={(e) => setNewSkill(e.target.value)}
@@ -262,9 +303,12 @@ export default function DescriptionBox() {
       </div>
 
       <div style={{display: 'flex', flexDirection: 'column', gap: '24px'}}>
-        <div className={styles.memberbox}>
+        <div>
           <p className={styles.subtitle} style={{marginBottom: '14px'}}>팀원</p>
-          <div className={styles.membercontainer}>
+          <div className={styles.membercontainer}
+            style={{
+              backgroundColor: isDark? '#22222E' : 'white',
+            }}>
             {teamMembers.map((member, index) => (
               <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <img
@@ -272,19 +316,19 @@ export default function DescriptionBox() {
                   alt={`프로필 ${member}`}
                   style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }}
                 />
-                <div style={{ width: '60px', textAlign: 'center', marginTop: '10px', fontSize: '15px', color: '#555555' }}>{member}</div>
+                <div style={{ width: '60px', textAlign: 'center', marginTop: '10px', fontSize: '15px', color: isDark? 'white' : '#555555' }}>{member}</div>
               </div>
             ))}
 
             {isEditMode && teamMembers.length<6 && (
               <div
                 onClick={() => setIsAddingMember(true)}
-                style={{ border: 'dashed 1px #EEEEEE',width: '60px', height: '88px', cursor: 'pointer', borderRadius: '10px',
-                          display: 'flex', alignItems: 'center', justifyContent: 'center'
+                style={{ border: isDark? 'dashed 1px #555555' : 'dashed 1px #EEEEEE', width: '60px', height: '88px', cursor: 'pointer', borderRadius: '10px',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: isDark? '#383843' : ''
                 }}>
                 <div
-                  style={{padding: '8px', width: 'fit-content',backgroundColor: '#eeeeee', borderRadius: '50px'}}>
-                  <AiOutlinePlus color='#777777' size={20}/>
+                  style={{padding: '8px', width: 'fit-content',backgroundColor: isDark? '#6C6C73' : '#eeeeee', borderRadius: '50px'}}>
+                  <AiOutlinePlus color={isDark? '#999999' : '#777777'} size={20}/>
                 </div>
               </div>
             )}
@@ -293,10 +337,18 @@ export default function DescriptionBox() {
       
         <div className={styles.skillbox}>
           <p className={styles.subtitle} style={{marginBottom: '14px'}}>스킬셋</p>
-          <div className={styles.skillcontainer}>
+          <div className={styles.skillcontainer}
+            style={{
+              backgroundColor: isDark? '#22222E' : 'white',
+            }}>
             {skills.length > 0 && (
               skills.map((skill, index) => (
-                <div key={index} className={styles.skillItem}>
+                <div key={index} className={styles.skillItem}
+                  style={{
+                    backgroundColor: isDark? '#383843' : '',
+                    border: isDark? 'solid 1px #555555' : 'solid 1px #eeeeee',
+                    color: isDark? 'white' : 'black'
+                  }}>
                   {skill}
                 </div>
             )))}
@@ -304,12 +356,12 @@ export default function DescriptionBox() {
             {isEditMode && skills.length<4 && (
               <div
                 onClick={() => setIsAddingSkill(true)}
-                style={{ border: 'dashed 1px #EEEEEE',width: '213px', height: '50px', cursor: 'pointer', borderRadius: '5px',
-                          display: 'flex', alignItems: 'center', justifyContent: 'center'
+                style={{ border: isDark? 'dashed 1px #555555' : 'dashed 1px #eeeeee',width: '213px', height: '50px', cursor: 'pointer', borderRadius: '5px',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: isDark? '#383843' : ''
                 }}>
                 <div
-                  style={{padding: '7px', width: 'fit-content',backgroundColor: '#eeeeee', borderRadius: '50px'}}>
-                  <AiOutlinePlus color='#777777' size={10}/>
+                  style={{padding: '7px', width: 'fit-content',backgroundColor: isDark? '#6C6C73' : '#eeeeee', borderRadius: '50px'}}>
+                  <AiOutlinePlus color={isDark? '#999999' : '#777777'} size={10}/>
                 </div>
               </div>
             )}

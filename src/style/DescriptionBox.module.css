@@ -21,16 +21,12 @@
   font-weight: 600;
   padding: 17.5px 25px;
   border-radius: 6px;
-  border: solid 1px #eeeeee;
-  background-color: white;
 }
 
 .linkinput{
   padding: 14px;
-  background-color: white;
   border-radius: 6px;
   font-size: 19px;
-  border: solid 1px #eeeeee;
 }
 
 .datepicker{
@@ -44,12 +40,9 @@
   align-items: center;
   gap: 14px;
   font-size: 19px;
-  color: #666666;
   font-weight: 400;
-  background-color: white;
   padding: 14px 20px 14px 18px;
   border-radius: 6px;
-  border: solid 1px #eeeeee;
 }
 
 .btn{
@@ -75,8 +68,6 @@
 }
 
 .addBtn{
-  background-color: white;
-  border: 1px solid #eeeeee;
   border-radius: 20px;
   box-shadow: 0 3px 20px rgba(0,0,0,0.05);
   z-index: 10;
@@ -88,8 +79,6 @@
   padding: 20px 26px;
   font-size: 17px;
   border-radius: 10px;
-  background-color: #F5F6F8;
-  border: 1px solid #ccc;
   width: 428px;
   margin: 31px 37px 24px 37px;
 }
@@ -111,7 +100,6 @@
   gap: 15px;
   padding: 22px 27px;
   border-radius: 10px;
-  background-color: white;
   width: 265px;
   height: 232px;
 }
@@ -122,14 +110,12 @@
   gap: 9px;
   padding: 29px 26px;
   border-radius: 10px;
-  background-color: white;
   width: 265px;
   height: 285px;
 }
 
 .skillItem{
   border-radius: 5px;
-  border: solid 1px #eeeeee;
   padding: 14.5px 0;
   width: 100%;
   text-align: center;
