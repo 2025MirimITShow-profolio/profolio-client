@@ -70,6 +70,7 @@
     margin-left: 152px;
     position: absolute;
     left: 0;
+    z-index: 9;
 }
 .introduce:hover {
     transform: rotate(-40deg) translateY(-100px) scale(1.159);
@@ -141,6 +142,7 @@
     margin-right: 152px;
     position: absolute;
     right: 0;
+    z-index: 9;
 }
 .member:hover {
     transform: rotate(40deg) translateY(-100px) scale(1.159);
@@ -157,4 +159,36 @@
 }
 .member:hover .memberDes {
     display: block;
+}
+
+.light1 {
+  width: 753px;
+  height: 671px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}  
+.light2 {
+  width: 1311px;
+  height: 630px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+.lightPath {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 2000;
+  animation: drawErase 1s linear infinite;
+  stroke-width: 0.7;
+  fill: none;
+}  
+@keyframes drawErase {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: -1000;
+  }
 }
