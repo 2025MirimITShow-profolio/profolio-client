@@ -1,0 +1,194 @@
+.start {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.toggleContainer {
+    width: 238px;
+    height: 47px;
+    border-radius: 100px;
+    background-color: #ACACAC;
+    position: absolute;
+    top: 66px;
+    right: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.toggleItem {
+    font-weight: 500;
+    font-size: 18px;
+    position: absolute;
+    z-index: 2;
+}
+
+.text {
+    font-weight: 500;
+    font-size: 24px;
+    color: #888888;
+    margin-top: 47px;
+}
+
+.cardContainer {
+    min-width: 1071px;
+    min-height: 573px;
+    display: flex;
+    /* column-gap: -152px; */
+    justify-content: center;
+    position: absolute;
+    bottom: -169px;
+    font-family: 'yangjin';
+    font-size: 28px;
+    color: white;
+    overflow: visible;
+}
+
+.introduce {
+    width: 315px;
+    height: 450px;
+    border-radius: 5px;
+    background: linear-gradient(213deg, #03D7C2 7.72%, #41ACD6 92.28%);
+    box-shadow: 0px -4px 4px 0px rgba(0, 0, 0, 0.25) inset, 0px 6px 5px 0px rgba(255, 255, 255, 0.30) inset, -2px 8px 20px 0px rgba(0, 0, 0, 0.50);
+    transform: rotate(-40deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 56px;
+    margin-top: 85px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    margin-left: 152px;
+    position: absolute;
+    left: 0;
+    z-index: 9;
+}
+.introduce:hover {
+    transform: rotate(-40deg) translateY(-100px) scale(1.159);
+}
+
+.introduceDes {
+    display: none;
+    position: absolute;
+    top: -105px;
+    font-family: 'Pretendard';
+    font-weight: 400;
+    font-size: 22px;
+    color: #B5B5B5;
+    flex-direction: column;
+    align-items: center;
+}
+.introduce:hover .introduceDes {
+    display: flex;
+}
+
+.login {
+    width: 315px;
+    height: 450px;
+    border-radius: 5px;
+    background: linear-gradient(164deg, #9385F7 4.79%, #4141B7 111.05%);
+    box-shadow: 0px -3px 4px 0px rgba(0, 0, 0, 0.25) inset, 0px 6px 5px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 56px;
+    cursor: pointer;
+    position: absolute;
+    z-index: 10;
+    transition: transform 0.3s ease;
+}
+.login:hover {
+    transform: translateY(-69px) scale(1.159);
+}
+
+.loginDes {
+    display: none;
+    position: absolute;
+    top: -71px;
+    font-family: 'Pretendard';
+    font-weight: 400;
+    font-size: 22px;
+    color: #B5B5B5;
+}
+.login:hover .loginDes {
+    display: block;
+}
+
+.member {
+    width: 315px;
+    height: 450px;
+    border-radius: 5px;
+    background: linear-gradient(13deg, #FE996B 3.07%, #CF5B5B 96.93%);
+    box-shadow: 0px -4px 4px 0px rgba(0, 0, 0, 0.25) inset, 0px 6px 5px 0px rgba(255, 255, 255, 0.30) inset, 2px 8px 20px 0px rgba(0, 0, 0, 0.50);
+    transform: rotate(40deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 56px;
+    margin-top: 85px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    margin-right: 152px;
+    position: absolute;
+    right: 0;
+    z-index: 9;
+}
+.member:hover {
+    transform: rotate(40deg) translateY(-100px) scale(1.159);
+}
+
+.memberDes {
+    display: none;
+    position: absolute;
+    top: -71px;
+    font-family: 'Pretendard';
+    font-weight: 400;
+    font-size: 22px;
+    color: #B5B5B5;
+}
+.member:hover .memberDes {
+    display: block;
+}
+
+.light1 {
+  width: 753px;
+  height: 671px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}  
+.light2 {
+  width: 1311px;
+  height: 630px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+.lightPath {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 2000;
+  animation: drawErase 1s linear infinite;
+  stroke-width: 0.7;
+  fill: none;
+}  
+@keyframes drawErase {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: -1000;
+  }
+}

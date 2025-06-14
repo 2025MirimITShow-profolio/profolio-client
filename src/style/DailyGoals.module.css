@@ -1,0 +1,57 @@
+.dailyGoalsContainer {
+    width: 100%;
+    /* height: 100%; */
+    aspect-ratio: 1 / 1.005;
+    padding: 28px 35px 21px 27px;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.header {
+    font-weight: 600;
+    font-size: 25px;
+    margin-left: 12px;
+    margin-bottom: 36px;
+}
+
+.container {
+    width: 100%;
+    height: calc(100% - 60px);
+    display: grid;
+    grid-template-columns: 31px 1fr;
+    grid-template-rows: 1fr 18px;
+    align-content: space-between;
+    justify-content: space-between;
+    column-gap: 19px;
+    row-gap: 14px;
+}
+
+.dateContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.goalsContainer {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.weekContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    font-weight: 500;
+    font-size: 15px;
+}

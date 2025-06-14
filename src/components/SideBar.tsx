@@ -40,7 +40,11 @@ const menus = [
     }
 ]
 
-export default function SideBar() {
+type SideBarProps = {
+    setMenu: (val:number) => void
+}
+
+export default function SideBar({setMenu}:SideBarProps) {
     const isDark = useThemeStore((state) => state.isDark)
     const [clickedMenu, setClickedMenu] = useState('Dashboard')
     const [open, setOpen] = useState(false)
@@ -81,6 +85,8 @@ export default function SideBar() {
                         setClickedMenu={setClickedMenu}
                         open={open}
                         setOpen={setOpen}
+                        idx={idx}
+                        setMenu={setMenu}
                     />
                     {
                         (menu.more && clickedMenu===menu.title && !open) && 

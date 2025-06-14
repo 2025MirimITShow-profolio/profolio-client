@@ -1,0 +1,82 @@
+.editContainer {
+    width: 667px;
+    height: 386px;
+    padding: 54px 43px 34px 65px;
+    border-radius: 20px;
+    display: flex;
+    column-gap: 91px;
+    position: relative;
+    color: #999999;
+}
+
+.container1 {
+    width: 169px;
+    height: 251px;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.profileImg {
+    width: 169px;
+    height: 169px;
+    border-radius: 100px;
+    background-color: #D9D9D9;
+    margin-bottom: 32px;
+    overflow: hidden;
+}
+
+.birthday {
+    margin-bottom: 8px;
+}
+
+.email {
+    width: auto;
+    white-space: nowrap;
+}
+
+.editInfo {
+    width: 249px;
+    height: 152px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 16px;
+    
+}
+
+.infoContainer {
+    width: 249px;
+    height: 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.inputBox {
+    width: 100%;
+    font-weight: 600px;
+    font-size: 26px;
+    color: #BBBBBB;
+    padding-bottom: 4px;
+    border-bottom: 0.5px solid rgba(85, 85, 85, 50%);
+    background-color: transparent;
+}
+
+.saveBtn {
+    width: 99px;
+    height: 43px;
+    border-radius: 4px;
+    background-color: #8734FD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: absolute;
+    right: 43px;
+    bottom: 34px;
+    cursor: pointer;
+}

@@ -52,6 +52,8 @@ type SideMenuProps = {
   setClickedMenu: (title: string) => void,
   open: boolean,
   setOpen: (val:boolean) => void,
+  idx: number,
+  setMenu: (val:number) => void
 }
 
 export default function SideMenu({
@@ -62,20 +64,18 @@ export default function SideMenu({
   setClickedMenu,
   open,
   setOpen,
+  idx,
+  setMenu
 }: SideMenuProps) {
   const active = clickedMenu === title
-  const navigate = useNavigate();
+
+  const handleClick = () => {
+    setClickedMenu(title)
+    setMenu(idx)
+  }
 
   return (
-    <MenuBtn
-      active={active}
-      onClick={() => {
-        setClickedMenu(title);
-        if (title === 'All projects') {
-          navigate('/project');
-        }
-      }}
-    >
+    <MenuBtn active={active} onClick={handleClick}>
       <div>
         <img src={`/images/${src}${active?'Active':''}Icon.svg`} alt={title} />
         <span>{title}</span>

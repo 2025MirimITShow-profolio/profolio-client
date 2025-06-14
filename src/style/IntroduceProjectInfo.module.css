@@ -1,0 +1,42 @@
+.container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.mainContainer {
+    width: 100%;
+    height: 150px;
+    padding: 36px 54px 35px 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 140%;
+}
+
+.des {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 140%;
+    margin-top: 6px;
+}
+
+.showBtn{
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.subContainer {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
