@@ -24,7 +24,8 @@ export default function ProgressLog({ projectId }: { projectId: number }) {
   const fetchLogs = useCallback(async () => {
     try {
       const res = await axios.get(`http://localhost:3000/progress-log/project/${projectId}`);
-      setLogs(res.data);
+      const sortedLogs = res.data.sort((a: LogItem, b: LogItem) => b.id - a.id);
+      setLogs(sortedLogs);
     } catch (err) {
       console.error(err);
     }
@@ -98,7 +99,7 @@ export default function ProgressLog({ projectId }: { projectId: number }) {
               </div>
             ):(
               <div style={{position: 'relative'}}>
-                <div style={{ display: "flex", flexDirection: "column", gap: "20px", padding: "20px" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "20px", padding: "20px", minWidth: '70vw' }}>
                   {logs.map((log) => (
                     <div key={log.id} style={{ display: "flex", gap: "50px", width: '70vw', cursor: 'pointer' }} onClick={() => setSelectedLog(log)}>
                       <div style={{ width: "355px", height: "201px", backgroundColor: "#ccc" }}>
@@ -154,7 +155,7 @@ export default function ProgressLog({ projectId }: { projectId: number }) {
                   style={{
                     position: 'absolute',
                     top: '20px',
-                    right: '-90px',
+                    right: '-20px',
                     padding: '15px 26px',
                     backgroundColor: '#8734FD',
                     color: 'white',
