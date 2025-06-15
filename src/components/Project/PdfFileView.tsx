@@ -3,14 +3,19 @@ import { Document, Page, pdfjs } from "react-pdf";
 import workerSrc from 'pdfjs-dist/build/pdf.worker.min.js?url';
 import axios from "axios";
 import styles from "../../style/PdfFileView.module.css"
-import { FiDelete, FiUpload } from "react-icons/fi";
+import { FiEdit , FiUpload } from "react-icons/fi";
+import { useThemeStore } from "../../store/themeStore";
+
 
 pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
 
 export default function PdfFileView({projectId} : {projectId:number}){
+  const isDark = useThemeStore((store) => store.isDark)
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [numPages, setNumPages] = useState<number | null>(null);
+  const [openedMenu, setOpenedMenu] = useState(false);
+
 
   console.log(`project_id : ${projectId}`);
 
@@ -56,7 +61,16 @@ export default function PdfFileView({projectId} : {projectId:number}){
       await axios.post(`http://localhost:3000/api/portfolio`, formData, {
         headers: {"Content-Type": "multipart/form-data"}
       });
-      window.location.reload(); // 파일 저장 후 새로고침
+
+      const response = await axios.get(`http://localhost:3000/api/portfolio/${projectId}`, {
+        responseType: "blob",
+      });
+  
+      if(response.data?.type === "application/json"){
+        setPdfUrl(null);
+      } else {
+        setPdfUrl(URL.createObjectURL(response.data));
+      }
     }
     catch(err){
       console.error(err);
@@ -67,7 +81,7 @@ export default function PdfFileView({projectId} : {projectId:number}){
   const handleDelete = async () => {
     try{
       await axios.delete(`http://localhost:3000/api/portfolio/${projectId}`);
-      window.location.reload();
+      setPdfUrl(null);
     }
     catch(err){
       console.error(err);
@@ -79,19 +93,85 @@ export default function PdfFileView({projectId} : {projectId:number}){
     setNumPages(numPages);
   }
 
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest(".log-menu-button") && !target.closest(".log-menu-popup")) {
+        setOpenedMenu(false);
+      }
+    };
+  
+    if (openedMenu) {
+      document.addEventListener("click", handleClickOutside);
+    }
+  
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [openedMenu]);
+
   return (
     <>
       <style>{`
         .react-pdf__Page__annotations {
           display: none !important;
         }
+
+        .${styles.PageContainer}::-webkit-scrollbar {
+          width: 8px;
+          height: 0;
+        }
+        
+        .${styles.PageContainer}::-webkit-scrollbar-track {
+          background: ${isDark ? '#383843' : '#EEEEEE'};
+          border-radius: 5px;
+        }
+        
+        .${styles.PageContainer}::-webkit-scrollbar-thumb {
+          background: ${isDark ? '#6C6C73' : '#CCCCCC'};
+          height: 130px;
+          border-radius: 5px;
+        }
       `}</style>
+
     <div>
       {pdfUrl? (
         <div>
-          <div className={styles.editBtn}
-            onClick={handleDelete}>
-            <FiDelete color="#777777" size={31}/>
+          <div style={{
+            position: 'relative',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            marginTop: '45px'
+          }}>
+            <FiEdit size={31} color={isDark? '#999':'#777'}
+              className="log-menu-button"
+              style={{ cursor: 'pointer' }} 
+              onClick={() => {
+                setOpenedMenu(true);
+              }}/>
+            {openedMenu && (
+              <button 
+                className="log-menu-popup"
+                onClick={() => {
+                  handleDelete()
+                }}
+                style={{
+                  position: 'absolute',
+                  right: '46px',
+                  backgroundColor: isDark? '#383843' : '#ffffff',
+                  color: isDark? 'white' : 'black',
+                  boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                  padding: '10px 26px',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                  zIndex: 10,
+                  fontSize: '16px',
+                  width: '109px'
+                }}
+              >
+                삭제하기
+              </button>
+            )}
           </div>
           <div className={styles.PageContainer}>
             <Document
@@ -111,7 +191,11 @@ export default function PdfFileView({projectId} : {projectId:number}){
 
       ) : (
         <div>
-          <button onClick={handleUploadClick} className={styles.addFileBtn}>
+          <button onClick={handleUploadClick} className={styles.addFileBtn}
+            style={{
+              backgroundColor: isDark? '#383843': 'white',
+              border: isDark? 'dashed 1px #777777' : 'dashed 1px #eeeeee'
+            }}>
             <div style={{marginBottom: "10px"}}>
               <FiUpload color="#999999" size={25} style={{margin:"auto", marginBottom:"20px"}}/>
               <p>클릭하여 포트폴리오 추가하기</p>
