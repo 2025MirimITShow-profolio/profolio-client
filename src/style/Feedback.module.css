@@ -61,6 +61,7 @@
   flex: 1;
   font-size: 22px;
   margin-left: 12px;
+  background-color: transparent;
 }
 
 .sendbtn {

@@ -1,5 +1,4 @@
 .container{
-  background-color: white;
   height: 610px;
   width: 615px;
   border-radius: 20px;
@@ -32,4 +31,5 @@
   border-bottom: solid 1px #8734FD;
   padding-bottom: 4px;
   width: 378px;
+  background-color: transparent;
 }

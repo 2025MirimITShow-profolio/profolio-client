@@ -1,6 +1,8 @@
+import { useThemeStore } from "../store/themeStore";
 import DescriptionBox from "../components/Project/DescriptionBox";
 
 export default function ProjectDescription({ projectId }: { projectId: number }) {
+  const isDark = useThemeStore((store) => store.isDark)
 
   return(
     <div
@@ -9,7 +11,7 @@ export default function ProjectDescription({ projectId }: { projectId: number })
       justifyContent: 'center',
       alignItems: 'flex-start',
       paddingTop: '67px',
-      backgroundColor: '#F6F7FB',
+      backgroundColor: isDark? '#181822':'#F6F7FB',
     }}>
       <DescriptionBox projectId={projectId}/>
     </div>

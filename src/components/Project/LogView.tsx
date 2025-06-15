@@ -67,7 +67,7 @@ export default function LogView({ log, onClose }: LogViewProps) {
             border: isDark? 'solid 1px #555555' : 'solid 1px #eeeeee',
           }}>
           <FiCalendar color="#999999" size={20} />
-          {log.createdAt}
+          {log.createdAt.slice(0, 10)}
         </div>
 
         {parsedLinks.length > 0 && (
@@ -76,7 +76,7 @@ export default function LogView({ log, onClose }: LogViewProps) {
               className={styles.linkinput}
               style={{
                 backgroundColor: 'transparent',
-                color: '#8734FD',
+                color: isDark? '#B886FF':'#8734FD',
                 border: 'none',
                 textDecoration: 'underline'
               }}

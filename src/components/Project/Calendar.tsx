@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 import styles from "../../style/Calendar.module.css"
+import { useThemeStore } from "../../store/themeStore";
 
 export default function Calendar({ onDateClick }: { onDateClick: (date: Date) => void }) {
+  const isDark = useThemeStore((store) => store.isDark)
+
   const weeks = ["월", "화", "수", "목", "금", "토", "일"];
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -62,11 +65,15 @@ export default function Calendar({ onDateClick }: { onDateClick: (date: Date) =>
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container}
+      style={{
+        backgroundColor: isDark? '#383843' : 'white',
+        border: isDark? 'solid 1px #555555':'solid 1px #EEEEEE'
+      }}>
       <div style={{display: 'flex', alignItems: 'center'}}>
-        <button onClick={handlePrevMonth}><GoChevronLeft size={24}/></button>
-        <span style={{fontWeight: "600", fontSize: "28px", margin: "0 13px"}}>{year}.{String(month + 1).padStart(2, "0")}</span>
-        <button onClick={handleNextMonth}><GoChevronRight size={24}/></button>
+        <button onClick={handlePrevMonth}><GoChevronLeft size={24} color={isDark?"#999999":'black'}/></button>
+        <span style={{fontWeight: "600", fontSize: "28px", margin: "0 13px", color: isDark? 'white':'black'}}>{year}.{String(month + 1).padStart(2, "0")}</span>
+        <button onClick={handleNextMonth}><GoChevronRight size={24} color={isDark?"#999999":'black'}/></button>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", marginTop: "54px", fontWeight: "500" }}>
         {weeks.map((day, i) => (
@@ -74,7 +81,7 @@ export default function Calendar({ onDateClick }: { onDateClick: (date: Date) =>
             style={{
               marginBottom: "26px",
               fontSize: "22px",
-              color: i === 5 ? "#2f85f4" : i === 6 ? "#f85858" : "black"
+              color: i === 5 ? "#2f85f4" : i === 6 ? "#f85858" : isDark? '#BBBBBB':"black"
             }}>
               {day}
           </div>
@@ -89,13 +96,17 @@ export default function Calendar({ onDateClick }: { onDateClick: (date: Date) =>
               key={idx}
               onClick={()=> handleDateClick(date)}
               style={{
-                color: isCurrentMonth?
-                  isSelected
-                  ? "white"
-                  : isSunday
-                  ? "#ff3232"
-                  : "black"
-                  : "rgba(0,0,0,0.3)",
+                color: isSelected?
+                  'white'
+                  :isSunday?
+                  "#ff3232"
+                  : isDark?
+                  isCurrentMonth?
+                  'white'
+                  : 'rgba(255,255,255,0.3)'
+                  : isCurrentMonth?
+                  'black'
+                  :"rgba(0,0,0,0.3)",
                 backgroundColor: isSelected? "#8734fd" : ''
               }}
               className={styles.date}

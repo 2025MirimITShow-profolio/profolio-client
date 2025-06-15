@@ -100,7 +100,7 @@ export default function Todo({ projectId }: { projectId: number }) {
           justifyContent: 'center',
           alignItems: 'flex-start',
           paddingTop: '146px',
-          backgroundColor: '#F6F7FB',
+          backgroundColor: isDark? '#181822':'#F6F7FB',
           gap: '37px',
         }}>
         <Calendar onDateClick={setSelectedDate} />

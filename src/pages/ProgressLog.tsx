@@ -109,7 +109,7 @@ export default function ProgressLog({ projectId }: { projectId: number }) {
                       </div>
                       <div style={{ flex: 1, marginTop: '15px' }}>
                         <div style={{display: 'flex', gap: '25px', alignItems: 'center'}}>
-                          <div style={{ fontSize: "27px", fontWeight: "500" }}>{log.title}</div>
+                          <div style={{ fontSize: "27px", fontWeight: "500", color: isDark? 'white' : 'black' }}>{log.title}</div>
                           <div style={{ position: 'relative' }}>
                             <RxDotsVertical size={17} color='#868686'
                               className="log-menu-button"
@@ -129,7 +129,8 @@ export default function ProgressLog({ projectId }: { projectId: number }) {
                                   position: 'absolute',
                                   top: '-8px',
                                   left: '24px',
-                                  backgroundColor: '#ffffff',
+                                  backgroundColor: isDark? '#383843':'#ffffff',
+                                  color: isDark? 'white' : 'black',
                                   boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
                                   padding: '10px 26px',
                                   borderRadius: '5px',

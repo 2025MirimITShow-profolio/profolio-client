@@ -91,7 +91,7 @@ export default function LogWrite({ onDone, projectId }: LogWriteProps) {
             className={styles.linkinput}
             style={{
               backgroundColor: 'transparent',
-              color: '#8734FD',
+              color: isDark? '#B886FF':'#8734FD',
               border: 'none',
             }}
             type="text"

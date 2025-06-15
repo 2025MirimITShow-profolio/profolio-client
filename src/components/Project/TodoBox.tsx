@@ -3,6 +3,7 @@ import styles from '../../style/TodoBox.module.css'
 import { AiOutlinePlus } from "react-icons/ai";
 import { BiCheck } from "react-icons/bi";
 import { PiDotsThreeBold } from "react-icons/pi";
+import { useThemeStore } from "../../store/themeStore";
 
 type Todo = {
   id: number;
@@ -20,6 +21,7 @@ type TodoBoxProps = {
 };
 
 export default function TodoBox({ todos, onAdd, onCheck, onDelete, onEdit }: TodoBoxProps) {
+  const isDark = useThemeStore((store) => store.isDark)
   const [isAdding, setIsAdding] = useState(false);
   const [input, setInput] = useState("");
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
@@ -57,16 +59,20 @@ export default function TodoBox({ todos, onAdd, onCheck, onDelete, onEdit }: Tod
   const finishedTodos = todos.filter(todo => todo.is_done);
 
   return(
-    <div className={styles.container}>
+    <div className={styles.container}
+      style={{
+        backgroundColor: isDark? '#383843' : 'white',
+        border: isDark? 'solid 1px #555555':'solid 1px #EEEEEE'
+      }}>
       <div className={styles.header}>
-        <p style={{fontSize: '27px', fontWeight: '500', cursor: 'pointer'}}>해야 할 일</p>
+        <p style={{color: isDark? 'white': 'black', fontSize: '27px', fontWeight: '500', cursor: 'pointer'}}>해야 할 일</p>
         <div
           onClick={handleAddClick}
-          style={{padding: '8px', backgroundColor: '#eeeeee', borderRadius: '50%'}}>
-          <AiOutlinePlus color='#777777' size={24}/>
+          style={{padding: '8px', backgroundColor: isDark? '#6C6C73':'#eeeeee', borderRadius: '50%'}}>
+          <AiOutlinePlus color={isDark? '#BBBBBB':'#777777'} size={24}/>
         </div>
       </div>
-      <hr style={{width: '100%', height: '1px', color: '#eeeeee'}}></hr>
+      <hr style={{width: '100%', height: '1px', backgroundColor: isDark? '#555555': '#eeeeee', border: 'none'}}></hr>
       <div>
         <ul className={styles.todoList}>
           {unfinishedTodos.map(todo => (
@@ -104,12 +110,13 @@ export default function TodoBox({ todos, onAdd, onCheck, onDelete, onEdit }: Tod
                     onBlur={() => setEditingId(null)}
                     autoFocus
                     className={styles.input}
+                    style={{ color: isDark ? '#bbb' : 'black' }}
                   />
                 </form>
               ) : (
                 <span style={{
                   fontWeight: '500',
-                  textDecoration: todo.is_done ? 'line-through' : 'none',
+                  color: isDark? '#bbb' : 'white',
                 }}>
                   {todo.title}
                 </span>
@@ -129,10 +136,11 @@ export default function TodoBox({ todos, onAdd, onCheck, onDelete, onEdit }: Tod
                       position: 'absolute',
                       top: '-30px',
                       left: '50px',
-                      backgroundColor: '#fff',
+                      backgroundColor: isDark? '#22222E':'#fff',
                       borderRadius: '6px',
                       boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
                       zIndex: 10,
+                      color: isDark? 'white':'black'
                     }}
                   >
                     <button
@@ -145,7 +153,7 @@ export default function TodoBox({ todos, onAdd, onCheck, onDelete, onEdit }: Tod
                     >
                       수정하기
                     </button>
-                    <hr />
+                    <hr style={{width: '100%', height: '1px', backgroundColor: isDark? '#555555': '#eeeeee', border: 'none'}}></hr>
                     <button
                       style={{ padding: '11px 0', display: 'block', width: '100%', fontSize: '16px' }}
                       onClick={() => {
@@ -178,6 +186,7 @@ export default function TodoBox({ todos, onAdd, onCheck, onDelete, onEdit }: Tod
                   }}
                   className={styles.input}
                   autoFocus
+                  style={{ color: isDark ? '#bbb' : 'black' }}
                 />
               </form>
             </li>
@@ -210,10 +219,11 @@ export default function TodoBox({ todos, onAdd, onCheck, onDelete, onEdit }: Tod
                     onBlur={() => setEditingId(null)}
                     autoFocus
                     className={styles.input}
+                    style={{ color: isDark ? '#bbb' : 'black' }}
                   />
                 </form>
               ) : (
-                <span style={{ fontWeight: '500', textDecoration: 'line-through' }}>
+                <span style={{ fontWeight: '500', textDecoration: 'line-through', color: isDark? '#bbb' : 'white'}}>
                   {todo.title}
                 </span>
               )}
@@ -247,7 +257,7 @@ export default function TodoBox({ todos, onAdd, onCheck, onDelete, onEdit }: Tod
                     >
                       수정하기
                     </button>
-                    <hr />
+                    <hr style={{width: '100%', height: '1px', backgroundColor: isDark? '#555555': '#eeeeee', border: 'none'}}></hr>
                     <button
                       style={{ padding: '11px 0', display: 'block', width: '100%', fontSize: '16px' }}
                       onClick={() => {
