@@ -4,12 +4,9 @@ import Portfolio from "./Portfolio"
 import ProjectDescription from "./ProjectDescription"
 import Todo from "./Todo"
 import ProgressLog from "./ProgressLog"
-import { useParams } from "react-router-dom"
 
-export default function AllProject() {
+export default function AllProject({ projectId }: { projectId: number }) {
     const [menu, setMenu] = useState(0)
-    const {project_id} = useParams();
-    const projectId = Number(project_id);
 
     return (
         <>
