@@ -1,162 +1,162 @@
 .modalOverlay {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0,0,0,0.18);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
-  
-  .modalContent {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 958px;
-    max-height: 80vh;
-    padding: 40px 80px;
-    flex-shrink: 0;
-    border-radius: 20px;
-    background: #FFF;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
-    box-sizing: border-box;
-  }
-  
-  h2 {
-    font-size: 30px;
-    font-weight: 600;
-    color: #111;
-    text-align: center;
-    margin: 0 0 25px 0;
-    font-family: 'Pretendard', sans-serif;
-    line-height: 36px;
-  }
-  
-  .divider {
-    position: absolute;
-    top: 110px;
-    left: 0;
-    right: 0;
-    width: auto;
-    height: 1px;
-    background: #e0dfe6;
-    border: none;
-    margin: 0;
-  }
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.18);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+}
 
-  .inputNameGroup {
-    margin-top: 45px;
-    margin-bottom: 32px;
-  }
-  
-  .inputGroup {
-    margin-bottom: 30px;
-  }
+.modalContent {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 958px;
+	max-height: 80vh;
+	padding: 40px 80px;
+	flex-shrink: 0;
+	border-radius: 20px;
+	background: #fff;
+	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+	box-sizing: border-box;
+}
 
-  .inputNameGroup:last-of-type {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .inputGroup:last-of-type {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .label {
-    display: block;
-    font-size: 16px;
-    font-weight: 500;
-    color: #bbbbbb;
-    margin-bottom: 12px;
-    font-family: 'Pretendard', sans-serif;
-  }
-  
-  .input {
-    width: 100%;
-    height: 55px;
-    background: #fafafd;
-    border-radius: 5px;
-    border: 1.5px solid #eeeeee;
-    font-size: 16px;
-    font-family: 'Pretendard', sans-serif;
-    font-weight: 500;
-    padding: 0 12px;
-    box-sizing: border-box;
-    outline: none;
-    transition: border 0.2s;
-  }
-  
-  .input:focus {
-    border: 1.5px solid #a48cf0;
-  }
-  
-  .textarea {
-    width: 100%;
-    height: 200px;
-    background: #fafafd;
-    border-radius: 5px;
-    border: 1.5px solid #eeeeee;
-    font-size: 16px;
-    font-family: 'Pretendard', sans-serif;
-    font-weight: 500;
-    padding: 12px;
-    box-sizing: border-box;
-    outline: none;
-    resize: vertical;
-    transition: border 0.2s;
-    flex: 1;
-  }
-  
-  .textarea:focus {
-    border: 1.5px solid #a48cf0;
-  }
-  
-  .buttonRow {
-    display: flex;
-    gap: 25px;
-    align-items: center;
-    justify-content: flex-end;
-    margin-top: 40px;
-    padding-top: 0;
-  }
-  
-  .cancelButton,
-  .createButton {
-    height: 55px;
-    min-width: 140px;
-    padding: 0 20px;
-    border-radius: 12px;
-    border: none;
-    font-size: 18px;
-    font-family: 'Pretendard', sans-serif;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: none;
-  }
-  
-  .cancelButton {
-    /* background: #f8f8f8; */
-    color: #666;
-    /* border: 1px solid #e0e0e0; */
-  }
-  
-  .cancelButton:hover {
-    background: #eeeeee;
-    color: #555;
-  }
-  
-  .createButton {
-    background: #8B8B8B;
-    color: #fff;
-  }
-  
-  .createButton:hover {
-    background: #A48CF0;
-  }
+h2 {
+	font-size: 30px;
+	font-weight: 600;
+	color: #111;
+	text-align: center;
+	margin: 0 0 25px 0;
+	font-family: "Pretendard", sans-serif;
+	line-height: 36px;
+}
+
+.divider {
+	position: absolute;
+	top: 110px;
+	left: 0;
+	right: 0;
+	width: auto;
+	height: 1px;
+	background: #e0dfe6;
+	border: none;
+	margin: 0;
+}
+
+.inputNameGroup {
+	margin-top: 45px;
+	margin-bottom: 32px;
+}
+
+.inputGroup {
+	margin-bottom: 30px;
+}
+
+.inputNameGroup:last-of-type {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.inputGroup:last-of-type {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.label {
+	display: block;
+	font-size: 16px;
+	font-weight: 500;
+	color: #bbbbbb;
+	margin-bottom: 12px;
+	font-family: "Pretendard", sans-serif;
+}
+
+.input {
+	width: 100%;
+	height: 55px;
+	background: #fafafd;
+	border-radius: 5px;
+	border: 1.5px solid #eeeeee;
+	font-size: 16px;
+	font-family: "Pretendard", sans-serif;
+	font-weight: 500;
+	padding: 0 12px;
+	box-sizing: border-box;
+	outline: none;
+	transition: border 0.2s;
+}
+
+.input:focus {
+	border: 1.5px solid #a48cf0;
+}
+
+.textarea {
+	width: 100%;
+	height: 200px;
+	background: #fafafd;
+	border-radius: 5px;
+	border: 1.5px solid #eeeeee;
+	font-size: 16px;
+	font-family: "Pretendard", sans-serif;
+	font-weight: 500;
+	padding: 12px;
+	box-sizing: border-box;
+	outline: none;
+	resize: vertical;
+	transition: border 0.2s;
+	flex: 1;
+}
+
+.textarea:focus {
+	border: 1.5px solid #a48cf0;
+}
+
+.buttonRow {
+	display: flex;
+	gap: 25px;
+	align-items: center;
+	justify-content: flex-end;
+	margin-top: 40px;
+	padding-top: 0;
+}
+
+.cancelButton,
+.createButton {
+	height: 55px;
+	min-width: 140px;
+	padding: 0 20px;
+	border-radius: 12px;
+	border: none;
+	font-size: 18px;
+	font-family: "Pretendard", sans-serif;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	box-shadow: none;
+}
+
+.cancelButton {
+	background: none;
+	/* color: #666; */
+	/* border: 1px solid #e0e0e0; */
+}
+
+.cancelButton:hover {
+	background: #eeeeee;
+	color: #555;
+}
+
+.createButton {
+	background: #8b8b8b;
+	color: #fff;
+}
+
+.createButton:hover {
+	background: #8734fd;
+}

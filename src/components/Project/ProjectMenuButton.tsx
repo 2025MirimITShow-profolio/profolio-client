@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "../../style/ProjectMenuButton.module.css";
+import { useThemeStore } from "../../store/themeStore";
 
 interface ProjectMenuButtonProps {
 	onDelete: () => void;
@@ -15,6 +16,7 @@ export default function ProjectMenuButton({
 	const btnRef = useRef<HTMLButtonElement>(null);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const [dropdownLeft, setDropdownLeft] = useState(true);
+	const isDark = useThemeStore((store) => store.isDark);
 
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
@@ -32,9 +34,9 @@ export default function ProjectMenuButton({
 			const btnRect = btnRef.current.getBoundingClientRect();
 			const menuWidth = dropdownRef.current.offsetWidth || 240;
 			if (btnRect.right + menuWidth + 8 > window.innerWidth) {
-				setDropdownLeft(false); // 왼쪽에 붙임
+				setDropdownLeft(false);
 			} else {
-				setDropdownLeft(true); // 오른쪽에 붙임
+				setDropdownLeft(true);
 			}
 		}
 	}, [open]);
@@ -45,31 +47,66 @@ export default function ProjectMenuButton({
 				className={styles.menuButton}
 				ref={btnRef}
 				onClick={() => setOpen((v) => !v)}
+				style={{
+					outline: "none",
+				}}
 			>
-				<span className={styles.dot}></span>
-				<span className={styles.dot}></span>
-				<span className={styles.dot}></span>
+				<span
+					className={styles.dot}
+					style={{ background: isDark ? "#8C8C96" : "#888" }}
+				></span>
+				<span
+					className={styles.dot}
+					style={{ background: isDark ? "#8C8C96" : "#888" }}
+				></span>
+				<span
+					className={styles.dot}
+					style={{ background: isDark ? "#8C8C96" : "#888" }}
+				></span>
 			</button>
 			{open && (
 				<div
 					ref={dropdownRef}
 					className={styles.dropdown}
-					style={
-						dropdownLeft
-							? {
-									left: "calc(100% + 8px)",
-									right: "auto",
-									top: "-12px",
-							  }
-							: {
-									left: "auto",
-									right: "calc(100% + 8px)",
-									top: "-12px",
-							  }
-					}
+					style={{
+						background: isDark ? "#23222B" : "#fff",
+						color: isDark ? "#fff" : "#23222B",
+					}}
 				>
-					<button onClick={onDelete}>삭제하기</button>
-					<button onClick={onShare}>공유하기</button>
+					<button
+						style={{
+							color: isDark ? "#fff" : "#23222B",
+							background: "transparent",
+						}}
+						onMouseEnter={(e) =>
+							(e.currentTarget.style.background = isDark
+								? "#3A3A47"
+								: "#f0f0f0")
+						}
+						onMouseLeave={(e) =>
+							(e.currentTarget.style.background = "transparent")
+						}
+						onClick={onDelete}
+					>
+						삭제하기
+					</button>
+					<button
+						style={{
+							color: isDark ? "#fff" : "#23222B",
+							background: "transparent",
+						}}
+						onMouseEnter={(e) =>
+							(e.currentTarget.style.background = isDark
+								? "#3A3A47"
+								: "#f0f0f0")
+						}
+						onMouseLeave={(e) =>
+							(e.currentTarget.style.background = "transparent")
+						}
+						onClick={onShare}
+					>
+						공유하기
+					</button>
 				</div>
 			)}
 		</div>

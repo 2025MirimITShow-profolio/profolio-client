@@ -4,23 +4,22 @@
 	top: 0;
 	width: 100vw;
 	height: 100vh;
-	background: rgba(0, 0, 0, 0.18);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	z-index: 2000;
 }
+
 .modalBox {
 	width: 470px;
 	height: 249px;
 	flex-shrink: 0;
 	border-radius: 20px;
-	background: #fff;
-	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
 	display: flex;
 	flex-direction: column;
 	padding: 0;
 }
+
 .message {
 	height: 166px;
 	display: flex;
@@ -28,19 +27,20 @@
 	justify-content: center;
 	font-family: Pretendard;
 	font-size: 21px;
-	color: #333;
 	text-align: center;
 	font-weight: 500;
 }
+
 .buttonRow {
 	height: 83px;
 	width: 100%;
 	display: flex;
 	font-family: Pretendard;
-	border-top: 2.5px solid #e0dfe6;
+	border-top: 2.5px solid var(--border-color, #e0dfe6);
 	margin: 0;
 	padding: 0;
 }
+
 .buttonRow button {
 	flex: 1;
 	height: 100%;
@@ -58,16 +58,17 @@
 	padding: 0;
 	overflow: hidden;
 }
+
 .buttonRow button:not(:last-child) {
-	border-right: 1.5px solid #e0dfe6;
+	border-right: 1.5px solid var(--border-color, #e0dfe6);
 }
+
 .cancelBtn {
-	color: #888;
 	background: none;
 	border-bottom-left-radius: 20px;
 }
+
 .confirmBtn {
-	color: #a48cf0;
 	background: none;
 	border-bottom-right-radius: 20px;
 }

@@ -1,27 +1,27 @@
 .circleNavContainer {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 0;
+	pointer-events: none;
+	overflow: hidden;
 }
 .circleSvg {
-  width: 100vw;
-  height: 100vh;
-  overflow: visible;
+	width: 100vw;
+	height: 100vh;
+	overflow: visible;
 }
 .circleNumber:hover {
-  fill: #b7a3e6;
+	fill: #b7a3e6 !important;
 }
 .sidebarCover {
-  position: absolute;
-  left: 0;
-  top: 0;
-  background: #f7f7fa;
-  z-index: 10;
-  height: 100vh;
-  pointer-events: none;
-} 
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: #f7f7fa;
+	z-index: 10;
+	height: 100vh;
+	pointer-events: none;
+}

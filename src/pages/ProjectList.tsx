@@ -5,9 +5,11 @@ import ProjectAddButton from "../components/Project/ProjectAddButton";
 import ProjectAddModal from "../components/Project/ProjectAddModal";
 import ProjectDeleteModal from "../components/Project/ProjectDeleteModal";
 import "../style/ProjectListPage.css";
-import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import AllProject from "./AllProject";
+import { useThemeStore } from "../store/themeStore";
+import SearchBar from "../components/SearchBar";
+import ProfileOnly from "../components/ProfileOnly";
 
 interface Project {
 	id: number;
@@ -55,8 +57,11 @@ const ProjectList = () => {
 	const wheelCooldown = useRef(false);
 	const [deleteOpen, setDeleteOpen] = useState(false);
 	const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
-	const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
+	const [selectedProjectId, setSelectedProjectId] = useState<number | null>(
+		null
+	);
 	const navigate = useNavigate();
+	const isDark = useThemeStore((state) => state.isDark);
 
 	const filteredProjects = useMemo(
 		() =>
@@ -129,7 +134,7 @@ const ProjectList = () => {
 			wheelCooldown.current = true;
 			setTimeout(() => {
 				wheelCooldown.current = false;
-			}, 30); // 부드럽게
+			}, 30);
 			setAngle((prev) => prev + e.deltaY * 0.25); // 감도 조절
 		};
 		window.addEventListener("wheel", onWheel, { passive: false });
@@ -141,7 +146,6 @@ const ProjectList = () => {
 		setSelectedProjectId(id);
 	};
 
-	// 뒤로가기(목록으로) 기능도 필요하다면
 	const handleBack = () => setSelectedProjectId(null);
 
 	if (selectedProjectId !== null) {
@@ -149,20 +153,22 @@ const ProjectList = () => {
 		return <AllProject projectId={selectedProjectId} onBack={handleBack} />;
 	}
 
-	// 기존 ProjectList 화면
 	return (
 		<>
-			<div className="projectlist-container">
+			<div
+				className={`projectlist-container${
+					isDark ? "#18182" : "#F6F7FB"
+				}`}
+			>
 				<div
 					style={{
 						position: "relative",
 						zIndex: 1000,
-						background: "#f7f7fa",
+						background: isDark ? "#181828" : "#F6F7FB",
 					}}
-				>
-				</div>
+				></div>
 				<div className="projectlist-header-wide">
-					<Header />
+					<ProfileOnly />
 				</div>
 				<div className="projectlist-main-wide">
 					<div>
@@ -181,7 +187,9 @@ const ProjectList = () => {
 								description={centerProject.description}
 								onDelete={() => handleDelete(centerProject.id)}
 								onShare={() => handleShare(centerProject.id)}
-								onTitleClick={() => handleProjectClick(centerProject.id)}
+								onTitleClick={() =>
+									handleProjectClick(centerProject.id)
+								}
 							/>
 						)}
 						<ProjectDeleteModal

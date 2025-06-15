@@ -1,47 +1,46 @@
 .mainInfoContainer {
-  position: absolute;
-  left: 50%;
-  top: 65%;
-  transform: translate(-10%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 24px;
-  z-index: 10;
+	position: absolute;
+	left: 50%;
+	top: 65%;
+	transform: translate(-10%, -50%);
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 24px;
+	z-index: 10;
 }
 .projectNumber {
-  font-family: "Roboto Mono";
-  font-size: 95px;
-  font-weight: 700;
-  color: #111;
-  margin-right: 24px;
-  min-width: 110px;
+	font-family: "Roboto Mono";
+	font-size: 95px;
+	font-weight: 700;
+	color: #111;
+	margin-right: 24px;
+	min-width: 110px;
 }
 .projectName {
-  font-size: 5rem;
-  font-weight: 900;
-  color: #111;
-  margin-right: 32px;
-  min-width: 400px;
-  cursor: pointer;
+	font-size: 72px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: color 0.2s;
 }
+
 .projectDesc {
-  font-size: 1.3rem;
-  color: #888;
-  font-weight: 400;
-  margin-top: 18px;
-  width: 100%;
-  white-space: pre-line;
-  line-height: 2;
+	font-size: 1.3rem;
+	color: #888;
+	font-weight: 400;
+	margin-top: 18px;
+	width: 100%;
+	white-space: pre-line;
+	line-height: 2;
 }
 .row {
-  display: flex;
-  align-items: center;
-  gap: 165px;
+	display: flex;
+	align-items: center;
+	gap: 165px;
 }
 .projectlist-header-wide {
-  display: flex;
-  align-items: center;
-  gap: 26px;
-  width: 100%;
-} 
+	display: flex;
+	align-items: center;
+	gap: 26px;
+	width: 100%;
+}
