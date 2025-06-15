@@ -19,7 +19,7 @@ export default function AllProject() {
             }
 
             {menu===1 && 
-                <ProgressLog />
+                <ProgressLog projectId={projectId}/>
             }
 
             {menu===2 && 
