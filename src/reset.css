@@ -144,3 +144,9 @@ input:focus {
 .rdrDayToday .rdrDayNumber span:after {
 	background-color: rgba(135, 52, 253, 80%) !important;
 }
+.rdrSelected, .rdrInRange, .rdrStartEdge, .rdrEndEdge {
+	background-color: rgba(135, 52, 253, 80%) !important;
+}
+.rdrDayHovered, .rdrDayStartPreview, .rdrDayEndPreview {
+	color: rgba(135, 52, 253, 80%) !important;
+}
