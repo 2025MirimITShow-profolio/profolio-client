@@ -29,7 +29,7 @@
 
 .loginContainer {
     width: 504px;
-    height: 508px;
+    height: auto;
     display: flex;
     flex-direction: column;
 }
