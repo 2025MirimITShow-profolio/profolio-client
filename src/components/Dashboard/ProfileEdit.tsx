@@ -5,22 +5,25 @@ type ProfileEditProps = {
     setName: (val:string) => void,
     job: string,
     setJob: (val:string) => void,
+    birth: string,
+    email: string,
+    profileImg: string,
     isDark: boolean,
     setShowEdit: (val:boolean) => void
 }
 
-export default function ProfileEdit({name, setName, job, setJob, isDark, setShowEdit}:ProfileEditProps) {
+export default function ProfileEdit({name, setName, job, setJob, birth, email, profileImg, isDark, setShowEdit}:ProfileEditProps) {
     return (
         <div className={styles.editContainer} style={{backgroundColor: isDark?'#181822':'#FFFFFF'}}>
             <div className={styles.container1}>
                 <div className={styles.profileImg}>
                     <img 
-                        src='/images/profileImg.png'
+                        src={`/images/profile/profile${profileImg}.png`}
                         alt='프로필 이미지'
                     />
                 </div>
-                <div className={styles.birthday}>2007.08.06</div>
-                <div className={styles.email}>d2331@e-mirim.hs.kr</div>
+                <div className={styles.birthday}>{birth}</div>
+                <div className={styles.email}>{email}</div>
             </div>
             <div className={styles.editInfo}>
                 <div className={styles.infoContainer}>

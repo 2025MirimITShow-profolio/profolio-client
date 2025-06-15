@@ -6,6 +6,8 @@ import { disassemble } from "es-hangul"
 import ProfileInfo from './Dashboard/ProfileInfo'
 import ModalPortal from './ModalPortal'
 import ProfileEdit from './Dashboard/ProfileEdit'
+import { useUserStore } from '../store/userStore'
+import axios from 'axios'
 
 const projects = [
     '키오스크 리디자인키오스크 리디자인키오스크 리디자인 키오스크 리디자인키오스크 리디자인키오스크 리디자인',
@@ -41,13 +43,17 @@ const Profile = styled.div<ProfileProps>`
 
 export default function Header() {
     const isDark = useThemeStore((store) => store.isDark)
+    const token = useUserStore((store) => store.token)
     const [search, setSearch] = useState('')
     const [project, setProject] = useState(projects)
     const [click, setClick] = useState(false)
     const [showInfo, setShowInfo] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
-    const [name, setName] = useState('이자연')
-    const [job, setJob] = useState('디자이너')
+    const [name, setName] = useState('')
+    const [job, setJob] = useState('')
+    const [birth, setBirth] = useState('')
+    const [email, setEmail] = useState('')
+    const [profileImg, setProfileImg] = useState('')
     const searchRef = useRef<HTMLInputElement>(null)
     const profileRef = useRef<HTMLDivElement>(null)
 
@@ -73,6 +79,55 @@ export default function Header() {
             document.removeEventListener('mousedown', clickOutside)
         }
     }, [])
+
+    const getUser = async() => {
+        try {
+            const res = await axios.get('http://localhost:3000/api/users', {
+                headers : {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            const data = res.data
+            console.log(data);
+            setName(data.name)
+            setJob(data.job)
+            setBirth((data.birth_date).split('T')[0].replace(/-/g, '.'))
+            setEmail(data.email)
+            setProfileImg(data.profile_image)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const patchUser = async() => {
+        try {
+            const res = await axios.patch('http://localhost:3000/api/users', 
+                {
+                    name,
+                    job
+                },
+                {
+                    headers : {
+                        Authorization: `Bearer ${token}`
+                }
+            })
+            const data = res.data
+            console.log(data);
+            setName(data.name)
+            setJob(data.job)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getUser()
+    }, [])
+
+    useEffect(() => {
+        if(name==='' || job==='') return
+        patchUser()
+    }, [showEdit])
 
     return (
         <div 
@@ -115,7 +170,7 @@ export default function Header() {
                 onClick={() => setShowInfo(true)}
             >
                 <img 
-                    src='/images/profileImg.png'
+                    src={`/images/profile/profile${profileImg}.png`}
                     alt='프로필 이미지'
                     className={styles.profileImg}
                 />
@@ -124,10 +179,10 @@ export default function Header() {
                     alt='더보기'
                     className={styles.moreBtn}
                 />
-                {showInfo && <ProfileInfo name={name} job={job} setShowInfo={setShowInfo} setShowEdit={setShowEdit} />}
+                {showInfo && <ProfileInfo name={name} job={job} birth={birth} email={email} profileImg={profileImg} setShowInfo={setShowInfo} setShowEdit={setShowEdit} />}
             </Profile>
             {showEdit &&
-                <ModalPortal><ProfileEdit name={name} setName={setName} job={job} setJob={setJob} isDark={isDark} setShowEdit={setShowEdit} /></ModalPortal>
+                <ModalPortal><ProfileEdit name={name} setName={setName} job={job} birth={birth} email={email} profileImg={profileImg} setJob={setJob} isDark={isDark} setShowEdit={setShowEdit} /></ModalPortal>
             }
         </div>
     )
