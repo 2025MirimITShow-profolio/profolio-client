@@ -7,13 +7,14 @@ interface ProjectMainInfoProps {
   description: string;
   onDelete: () => void;
   onShare: () => void;
+  onTitleClick: () => void;
 }
 
-export default function ProjectMainInfo({ name, description, onDelete, onShare }: ProjectMainInfoProps) {
+export default function ProjectMainInfo({ name, description, onDelete, onShare, onTitleClick }: ProjectMainInfoProps) {
   return (
     <div className={styles.mainInfoContainer}>
       <div className={styles.row}>
-        <span className={styles.projectName}>{name}</span>
+        <span className={styles.projectName} onClick={onTitleClick}>{name}</span>
         <ProjectMenuButton onDelete={onDelete} onShare={onShare} />
       </div>
       <div className={styles.projectDesc}>{description}</div>

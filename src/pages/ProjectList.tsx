@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
-import SideBar from "../components/SideBar";
 import ProjectCircleNav from "../components/Project/ProjectCircleNav";
 import ProjectMainInfo from "../components/Project/ProjectMainInfo";
 import ProjectAddButton from "../components/Project/ProjectAddButton";
@@ -7,6 +6,8 @@ import ProjectAddModal from "../components/Project/ProjectAddModal";
 import ProjectDeleteModal from "../components/Project/ProjectDeleteModal";
 import "../style/ProjectListPage.css";
 import Header from "../components/Header";
+import { useNavigate } from "react-router-dom";
+import AllProject from "./AllProject";
 
 interface Project {
 	id: number;
@@ -48,12 +49,14 @@ const initialProjects: Project[] = [
 
 const ProjectList = () => {
 	const [projects, setProjects] = useState<Project[]>(initialProjects);
-	const [angle, setAngle] = useState(0); // 회전 각도
+	const [angle, setAngle] = useState(0);
 	const [search, setSearch] = useState("");
 	const [addOpen, setAddOpen] = useState(false);
 	const wheelCooldown = useRef(false);
 	const [deleteOpen, setDeleteOpen] = useState(false);
 	const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
+	const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
+	const navigate = useNavigate();
 
 	const filteredProjects = useMemo(
 		() =>
@@ -133,53 +136,68 @@ const ProjectList = () => {
 		return () => window.removeEventListener("wheel", onWheel);
 	}, [filteredProjects.length]);
 
-	return (
-		<div className="projectlist-container">
-			<div
-				style={{
-					position: "relative",
-					zIndex: 1000,
-					background: "#f7f7fa",
-				}}
-			>
-				<SideBar />
-			</div>
-			<div className="projectlist-header-wide">
-				<Header />
-			</div>
+	// 프로젝트 제목 클릭 시
+	const handleProjectClick = (id: number) => {
+		setSelectedProjectId(id);
+	};
 
-			<div className="projectlist-main-wide">
-				<div>
-					<ProjectAddButton onClick={() => setAddOpen(true)} />
+	// 뒤로가기(목록으로) 기능도 필요하다면
+	const handleBack = () => setSelectedProjectId(null);
+
+	if (selectedProjectId !== null) {
+		// AllProject만 보이게
+		return <AllProject projectId={selectedProjectId} onBack={handleBack} />;
+	}
+
+	// 기존 ProjectList 화면
+	return (
+		<>
+			<div className="projectlist-container">
+				<div
+					style={{
+						position: "relative",
+						zIndex: 1000,
+						background: "#f7f7fa",
+					}}
+				>
 				</div>
-				<section className="projectlist-circle-section-wide">
-					<ProjectCircleNav
-						count={filteredProjects.length}
-						activeIdx={centerIdx}
-						onChange={handleCircleChange}
-						angle={angle}
-					/>
-					{centerProject && (
-						<ProjectMainInfo
-							name={centerProject.name}
-							description={centerProject.description}
-							onDelete={() => handleDelete(centerProject.id)}
-							onShare={() => handleShare(centerProject.id)}
+				<div className="projectlist-header-wide">
+					<Header />
+				</div>
+				<div className="projectlist-main-wide">
+					<div>
+						<ProjectAddButton onClick={() => setAddOpen(true)} />
+					</div>
+					<section className="projectlist-circle-section-wide">
+						<ProjectCircleNav
+							count={filteredProjects.length}
+							activeIdx={centerIdx}
+							onChange={handleCircleChange}
+							angle={angle}
 						/>
-					)}
-					<ProjectDeleteModal
-						open={deleteOpen}
-						onCancel={handleDeleteCancel}
-						onConfirm={handleDeleteConfirm}
+						{centerProject && (
+							<ProjectMainInfo
+								name={centerProject.name}
+								description={centerProject.description}
+								onDelete={() => handleDelete(centerProject.id)}
+								onShare={() => handleShare(centerProject.id)}
+								onTitleClick={() => handleProjectClick(centerProject.id)}
+							/>
+						)}
+						<ProjectDeleteModal
+							open={deleteOpen}
+							onCancel={handleDeleteCancel}
+							onConfirm={handleDeleteConfirm}
+						/>
+					</section>
+					<ProjectAddModal
+						open={addOpen}
+						onClose={() => setAddOpen(false)}
+						onCreate={handleCreate}
 					/>
-				</section>
-				<ProjectAddModal
-					open={addOpen}
-					onClose={() => setAddOpen(false)}
-					onCreate={handleCreate}
-				/>
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
