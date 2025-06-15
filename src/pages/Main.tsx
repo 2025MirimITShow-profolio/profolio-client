@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useThemeStore } from "../store/themeStore";
 import Dashboard from "./Dashboard";
 import ProjectList from "./ProjectList";
+import SharedProjects from "./SharedProjects";
 
 export default function Main() {
 	const [menu, setMenu] = useState(0);
@@ -32,6 +33,7 @@ export default function Main() {
 			>
 				{menu === 0 && <Dashboard />}
 				{menu === 1 && <ProjectList />}
+				{menu === 2 && <SharedProjects/>}
 			</div>
 		</div>
 	);
