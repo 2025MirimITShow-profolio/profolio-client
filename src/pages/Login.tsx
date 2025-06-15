@@ -25,8 +25,8 @@ export default function Login() {
                     Authorization: `Bearer ${token}`
                 }
             })
-            const data = userRes.data
-            setToken(data.accessToken)
+            console.log(userRes.data)
+            setToken(token)
             navigate('/profolio')
         } catch (error) {
             console.log(error);
