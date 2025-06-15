@@ -4,11 +4,14 @@ import styles from '../../style/ProfileInfo.module.css'
 type ProfileProps = {
     name: string,
     job: string,
+    birth: string,
+    email: string,
+    profileImg: string,
     setShowInfo: (val:boolean) => void,
     setShowEdit: (val:boolean) => void
 }
 
-export default function ProfileInfo({name, job, setShowInfo, setShowEdit}:ProfileProps) {
+export default function ProfileInfo({name, job, birth, email, profileImg, setShowInfo, setShowEdit}:ProfileProps) {
     const isDark = useThemeStore((store) => store.isDark)
     const toggleDark = useThemeStore((store) => store.toggleDark)
 
@@ -28,7 +31,7 @@ export default function ProfileInfo({name, job, setShowInfo, setShowEdit}:Profil
             <div className={styles.container1}>
                 <div className={styles.profileImg}>
                     <img 
-                        src='/images/profileImg.png'
+                        src={`/images/profile/profile${profileImg}.png`}
                         alt='프로필 이미지'
                     />
                 </div>
@@ -60,8 +63,8 @@ export default function ProfileInfo({name, job, setShowInfo, setShowEdit}:Profil
                 </div>
             </div>
             <div className={styles.info} style={{color: isDark?'#AAAAAA':'#888888'}}>
-                <div>2007.08.06</div>
-                <div>d2331@e-mirim.hs.kr</div>
+                <div>{birth}</div>
+                <div>{email}</div>
                 <div
                     className={styles.editBtn}
                     style={{backgroundColor: isDark?'#DDDDDD':'#F5F5F5'}}
