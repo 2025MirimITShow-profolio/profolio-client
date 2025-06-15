@@ -4,12 +4,14 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import LoginContainer, {InputBox, NextBtn} from '../components/LonginContainer'
 import axios from 'axios'
+import { useUserStore } from '../store/userStore'
 
 export default function Login() {
     const navigate = useNavigate()
     const isDark = useThemeStore((store) => store.isDark)
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmailState] = useState('')
+    const [password, setPasswordState] = useState('')
+    const {setToken} = useUserStore()
 
     const postLogin = async() => {
         try {
@@ -17,8 +19,14 @@ export default function Login() {
                 email,
                 password
             })
-            const data = res.data
-            console.log(data);
+            const token = res.data.accessToken
+            const userRes = await axios.get('http://localhost:3000/api/users', {
+                headers : {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            const data = userRes.data
+            setToken(data.accessToken)
             navigate('/profolio')
         } catch (error) {
             console.log(error);
@@ -36,7 +44,7 @@ export default function Login() {
                 <input
                     className={styles.infoInput}
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => setEmailState(e.target.value)}
                     placeholder='이메일을 입력하세요'
                 />
             </InputBox>
@@ -44,7 +52,7 @@ export default function Login() {
                 <input
                     className={styles.infoInput}
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => setPasswordState(e.target.value)}
                     placeholder='비밀번호를 입력하세요'
                 />
             </InputBox>
