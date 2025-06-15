@@ -3,12 +3,31 @@ import { useThemeStore } from '../store/themeStore'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import LoginContainer, {InputBox, NextBtn} from '../components/LonginContainer'
+import axios from 'axios'
 
 export default function Login() {
     const navigate = useNavigate()
     const isDark = useThemeStore((store) => store.isDark)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const postLogin = async() => {
+        try {
+            const res = await axios.post('http://localhost:3000/api/auth/login', {
+                email,
+                password
+            })
+            const data = res.data
+            console.log(data);
+            navigate('/profolio')
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleClick = () => {
+        postLogin()
+    }
 
     return (
         <LoginContainer>
@@ -32,7 +51,7 @@ export default function Login() {
             <NextBtn 
                 isDark={isDark}
                 disabled={email===''||password===''?true:false}
-                onClick={() => navigate('/profolio')}
+                onClick={handleClick}
             >
                 다음
             </NextBtn>

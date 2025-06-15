@@ -8,19 +8,22 @@ import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 import { ko } from 'date-fns/locale'
 import { PiArrowFatLinesLeftDuotone } from 'react-icons/pi'
+import axios from 'axios'
 
 type SetStepProps = {
     setStep: (val: number) => void
 }
 
-export function Id({setStep}:SetStepProps) {
+export function Id({setStep, email, setEmail}:SetStepProps & {
+    email: string,
+    setEmail: (val:string) => void
+}) {
     const navigate = useNavigate()
     const isDark = useThemeStore((store) => store.isDark)
-    const [email, setEmail] = useState('')
 
     return (
         <>
-            <span className={styles.text}>아이디를 만들어보세요</span>
+            <span className={styles.text}>이메일을 입력해주세요</span>
             <span className={styles.subText}>로그인 시 사용할 메일을 입력해주세요</span>
             <InputBox isDark={isDark}>
                 <input
@@ -120,9 +123,11 @@ export function Authentication({setStep}:SetStepProps) {
     )
 }
 
-export function Password({setStep}:SetStepProps) {
+export function Password({setStep, password, setPassword}:SetStepProps & {
+    password: string,
+    setPassword: (val: string) => void
+}) {
     const isDark = useThemeStore((store) => store.isDark)
-    const [password1, setPassword1] = useState('')
     const [password2, setPassword2] = useState('')
 
     return (
@@ -132,8 +137,8 @@ export function Password({setStep}:SetStepProps) {
             <InputBox isDark={isDark}>
                 <input
                     placeholder='비밀번호를 입력하세요'
-                    value={password1}
-                    onChange={(e) => setPassword1(e.target.value)}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
             </InputBox>
             <InputBox isDark={isDark}>
@@ -145,9 +150,9 @@ export function Password({setStep}:SetStepProps) {
             </InputBox>
             <NextBtn 
                 isDark={isDark} 
-                disabled={(password1===''||password2==='')?true:false}
+                disabled={(password===''||password2==='')?true:false}
                 onClick={() => {
-                    if(password1 != password2){alert('비밀번호가 일치하지 않습니다')}
+                    if(password != password2){alert('비밀번호가 일치하지 않습니다')}
                     else {setStep(3)}
                 }}
             >
@@ -157,15 +162,19 @@ export function Password({setStep}:SetStepProps) {
     )
 }
 
-export function Profile({setStep}:SetStepProps) {
-    const navigate = useNavigate()
+export function Profile({setStep, profileImg, setProfileImg, name, setName, job, setJob, birth, setBirth}:SetStepProps & {
+    profileImg: number
+    setProfileImg: (val:number) => void
+    name: string
+    setName: (val: string) => void
+    job: string
+    setJob: (val: string) => void
+    birth: Date| null
+    setBirth: (val: Date) => void
+}) {
     const isDark = useThemeStore((store) => store.isDark)
     const profileNumber = Array.from({length: 13}, (_, i) => i+1)
     const [showProfile, setShowProfile] = useState(false)
-    const [profileImg, setProfileImg] = useState(1)
-    const [name, setName] = useState('')
-    const [job, setJob] = useState('')
-    const [birth, setBirth] = useState<Date | null>(null)
     const [showCalendar, setShowCalendar] = useState(false)
 
     const handleSelect = (date: Date) => {
@@ -228,16 +237,18 @@ export function Profile({setStep}:SetStepProps) {
                 />
             </InputBox>
             <p className={styles.option}>생년월일</p>
-            <div className={styles.birthdayContainer} onClick={() => setShowCalendar(pre => !pre)}>
-                <InputBox isDark={isDark}>
-                    <span style={{fontSize: '27px', ...(birth ? {} : { color: '#999' })}}>{birth?.getFullYear() ?? 'YYYY'}</span>
-                </InputBox>
-                <InputBox isDark={isDark}>
-                    <span style={{fontSize: '27px', ...(birth ? {} : { color: '#999' })}}>{birth ? birth.getMonth()+1 : 'MM'}</span>
-                </InputBox>
-                <InputBox isDark={isDark}>
-                    <span style={{fontSize: '27px', ...(birth ? {} : { color: '#999' })}}>{birth?.getDate() ?? 'DD'}</span>
-                </InputBox>
+            <div className={styles.birthdayContainer}>
+                <div className={styles.birthdayContainer} onClick={() => setShowCalendar(pre => !pre)}>
+                    <InputBox isDark={isDark}>
+                        <span style={{fontSize: '27px', ...(birth ? {} : { color: '#999' })}}>{birth?.getFullYear() ?? 'YYYY'}</span>
+                    </InputBox>
+                    <InputBox isDark={isDark}>
+                        <span style={{fontSize: '27px', ...(birth ? {} : { color: '#999' })}}>{birth ? birth.getMonth()+1 : 'MM'}</span>
+                    </InputBox>
+                    <InputBox isDark={isDark}>
+                        <span style={{fontSize: '27px', ...(birth ? {} : { color: '#999' })}}>{birth?.getDate() ?? 'DD'}</span>
+                    </InputBox>
+                </div>
                 {showCalendar && (
                     <Calendar 
                         date={birth ?? new Date()} 
@@ -251,7 +262,7 @@ export function Profile({setStep}:SetStepProps) {
             <NextBtn 
                 isDark={isDark} 
                 disabled={(name===''||job===''||birth===null)?true:false}
-                onClick={() => navigate('/profolio')}
+                onClick={() => setStep(4)}
             >
                 다음
             </NextBtn>
@@ -260,21 +271,53 @@ export function Profile({setStep}:SetStepProps) {
 }
 
 export default function SignUp() {
+    const navigate = useNavigate()
     const [step, setStep] = useState(0)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [profileImg, setProfileImg] = useState(1)
+    const [name, setName] = useState('')
+    const [job, setJob] = useState('')
+    const [birth, setBirth] = useState<Date | null>(null)
+
+    const postSignUp = async() => {
+        try {
+            console.log(step);
+            const res = await axios.post('http://localhost:3000/api/auth/signup', {
+                profile_image: profileImg.toString(),
+                email,
+                password,
+                name,
+                job,
+                birth_date: birth,
+            })
+            const data = res.data;
+            console.log(data);
+            navigate('/login')
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        if(step >= 4) {
+            postSignUp()
+        }
+    }, [step])
 
     return (
         <LoginContainer>
             {step===0 && (
-                <Id setStep={setStep} />
+                <Id setStep={setStep} email={email} setEmail={setEmail} />
             )}
             {step===1 && (
                 <Authentication setStep={setStep} />
             )}
             {step===2 && (
-                <Password setStep={setStep} />
+                <Password setStep={setStep} password={password} setPassword={setPassword} />
             )}
-            {step===3 && (
-                <Profile setStep={setStep} />
+            {(step===3||step===4) && (
+                <Profile setStep={setStep} profileImg={profileImg} setProfileImg={setProfileImg} name={name} setName={setName} job={job} setJob={setJob} birth={birth} setBirth={setBirth} />
             )}
         </LoginContainer>
     )
