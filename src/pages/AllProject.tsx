@@ -4,6 +4,7 @@ import Portfolio from "./Portfolio"
 import ProjectDescription from "./ProjectDescription"
 import Todo from "./Todo"
 import ProgressLog from "./ProgressLog"
+import Feedback from "./Feedback"
 
 export default function AllProject({ projectId }: { projectId: number }) {
     const [menu, setMenu] = useState(0)
@@ -21,6 +22,10 @@ export default function AllProject({ projectId }: { projectId: number }) {
 
             {menu===2 && 
                 <ProjectDescription projectId={projectId}/>
+            }
+
+            {menu===3 && 
+                <Feedback projectId={projectId}/>
             }
 
             {menu===4 &&
