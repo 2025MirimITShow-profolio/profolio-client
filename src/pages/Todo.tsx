@@ -3,6 +3,7 @@ import axios from "axios";
 import Calendar from "../components/Project/Calendar";
 import { useThemeStore } from "../store/themeStore";
 import TodoBox from "../components/Project/TodoBox";
+import { useUserStore } from "../store/userStore";
 
 type Todo = {
     id: number;
@@ -11,14 +12,19 @@ type Todo = {
     date: string;
   };
 
-export default function Todo({ projectId }: { projectId: number }) {    
+export default function Todo({ projectId }: { projectId: number }) {
+    const token = useUserStore((store) => store.token)  
     const isDark = useThemeStore((store) => store.isDark)
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [todos, setTodos] = useState<Todo[]>([]);
 
     useEffect(() => {
         const fetchTodos = async () => {
-          const res = await axios.get(`http://localhost:3000/api/tasks/project/${projectId}`) // projectid 주입 필요
+          const res = await axios.get(`http://localhost:3000/api/tasks/project/${projectId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
           setTodos(res.data)
         }
         fetchTodos()
@@ -36,7 +42,11 @@ export default function Todo({ projectId }: { projectId: number }) {
             project_id: projectId,
             title,
             date: `${year}${month}${day}`,
-          })
+          }, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
           setTodos(prev => [...prev, res.data])
         } catch (err) {
           console.error('todo 추가 실패:', err)
@@ -53,7 +63,11 @@ export default function Todo({ projectId }: { projectId: number }) {
         );
 
         try {
-          await axios.patch(`http://localhost:3000/api/tasks/${id}/status`);
+          await axios.patch(`http://localhost:3000/api/tasks/${id}/status`, null, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
         } catch (err) {
           console.error('todo 상태 변경 실패:', err)
           setTodos(prevTodos);
@@ -62,7 +76,11 @@ export default function Todo({ projectId }: { projectId: number }) {
 
     const handleDelete = async (id: number) => {
         try {
-          await axios.delete(`http://localhost:3000/api/tasks/${id}`);
+          await axios.delete(`http://localhost:3000/api/tasks/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
           setTodos(prev => prev.filter(todo => todo.id !== id));
         } catch (err) {
           console.error('todo 삭제 실패:', err);
@@ -73,6 +91,10 @@ export default function Todo({ projectId }: { projectId: number }) {
         try {
           const res = await axios.patch(`http://localhost:3000/api/tasks/${id}`, {
             title: newTitle,
+          }, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           });
           setTodos(prev =>
             prev.map(todo => (todo.id === id ? { ...todo, title: res.data.title } : todo))

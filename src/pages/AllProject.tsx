@@ -3,8 +3,8 @@ import ProjectMenu from "../components/ProjectMenu"
 import Portfolio from "./Portfolio"
 import ProjectDescription from "./ProjectDescription"
 import Todo from "./Todo"
-// import ProgressLog from "./ProgressLog"
-// import Feedback from "./Feedback"
+import ProgressLog from "./ProgressLog"
+import Feedback from "./Feedback"
 
 export default function AllProject({ projectId }: { projectId: number }) {
     const [menu, setMenu] = useState(0)
@@ -16,17 +16,17 @@ export default function AllProject({ projectId }: { projectId: number }) {
                 <Portfolio projectId={projectId}/>
             }
 
-            {/* {menu===1 && 
+            {menu===1 && 
                 <ProgressLog projectId={projectId}/>
-            } */}
+            }
 
             {menu===2 && 
                 <ProjectDescription projectId={projectId}/>
             }
 
-            {/* {menu===3 && 
+            {menu===3 && 
                 <Feedback projectId={projectId}/>
-            } */}
+            }
 
             {menu===4 &&
                 <Todo projectId={projectId}/>

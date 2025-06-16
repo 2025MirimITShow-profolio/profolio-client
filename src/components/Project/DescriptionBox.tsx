@@ -7,8 +7,10 @@ import DatePicker from "react-datepicker"
 import 'react-datepicker/dist/react-datepicker.css';
 import { AiOutlinePlus } from "react-icons/ai";
 import { FiCalendar } from "react-icons/fi";
+import { useUserStore } from "../../store/userStore";
 
 export default function DescriptionBox({ projectId }: { projectId: number }) {
+  const token = useUserStore((store) => store.token)
   const isDark = useThemeStore((store) => store.isDark)
   const [prjTitle, setPrjTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -33,16 +35,21 @@ export default function DescriptionBox({ projectId }: { projectId: number }) {
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/projects/${projectId}`); // project_id 주입 필요
+        const res = await axios.get(`http://localhost:3000/api/projects/${projectId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
         const { title, description, start_date, end_date, links, team_members, skills } = res.data;
 
         setPrjTitle(title || '');
         setDescription(description || '');
-        setStartDate(new Date(start_date.replace(" ", "T")));
-        setEndDate(new Date(end_date.replace(" ", "T")));
+        setStartDate(start_date ? new Date(start_date.replace(" ", "T")) : new Date());
+        setEndDate(end_date ? new Date(end_date.replace(" ", "T")) : new Date());
         setLinks(links || '');
         setTeamMembers(team_members ? team_members.split(',') : []);
         setSkills(skills ? skills.split(',') : []);
+        console.log(title, description);
       } catch (err) {
         console.error("프로젝트 데이터 불러오기 실패", err);
       }
@@ -83,6 +90,10 @@ export default function DescriptionBox({ projectId }: { projectId: number }) {
         links,
         team_members: teamMembers.join(','),
         skills: skills.join(',')
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
       setIsEditMode(false);
     } catch (err) {
