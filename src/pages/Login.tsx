@@ -20,12 +20,13 @@ export default function Login() {
                 password
             })
             const token = res.data.accessToken
-            const userRes = await axios.get('http://localhost:3000/api/users', {
-                headers : {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            console.log(userRes.data)
+            console.log(token);
+            // const userRes = await axios.get('http://localhost:3000/api/users', {
+            //     headers : {
+            //         Authorization: `Bearer ${token}`
+            //     }
+            // })
+            // console.log(userRes.data)
             setToken(token)
             navigate('/profolio')
         } catch (error) {

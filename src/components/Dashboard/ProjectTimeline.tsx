@@ -195,7 +195,7 @@ export default function ProjectTimeline() {
     const [projects, setProjects] = useState<Project[]>([])
     const [add, setAdd] = useState(false)
     useEffect(() => {
-        console.log(parsedData);
+        // console.log(parsedData);
     }, [parsedData])
 
     useEffect(() => {

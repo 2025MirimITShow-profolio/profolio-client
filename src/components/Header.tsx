@@ -88,7 +88,7 @@ export default function Header() {
                 }
             })
             const data = res.data
-            console.log(data);
+            // console.log(data);
             setName(data.name)
             setJob(data.job)
             setBirth((data.birth_date).split('T')[0].replace(/-/g, '.'))
@@ -112,7 +112,7 @@ export default function Header() {
                 }
             })
             const data = res.data
-            console.log(data);
+            // console.log(data);
             setName(data.name)
             setJob(data.job)
         } catch (error) {
