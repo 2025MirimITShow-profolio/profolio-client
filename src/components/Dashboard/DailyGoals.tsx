@@ -70,7 +70,7 @@ export function GoalsContainer() {
 
     const getDailyTask = async() => {
         try {
-            console.log(token);
+            // console.log(token);
             const res = await axios.get('http://localhost:3000/api/daily-tasks', {
                 headers : {
                     Authorization: `Bearer ${token}`
