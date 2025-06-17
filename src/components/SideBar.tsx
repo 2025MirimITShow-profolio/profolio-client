@@ -3,7 +3,8 @@ import { useThemeStore } from "../store/themeStore";
 import styles from '../style/SideBar.module.css'
 import SideMenu from "./SideMenu";
 import SearchProject from "./SearchProject";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useUserStore } from "../store/userStore";
 
 const menus = [
     {
@@ -45,6 +46,8 @@ type SideBarProps = {
 }
 
 export default function SideBar({setMenu}:SideBarProps) {
+    const navigate = useNavigate()
+    const setToken = useUserStore((store) => store.setToken)
     const isDark = useThemeStore((state) => state.isDark)
     const [clickedMenu, setClickedMenu] = useState('Dashboard')
     const [open, setOpen] = useState(false)
@@ -63,6 +66,11 @@ export default function SideBar({setMenu}:SideBarProps) {
     useEffect(() => {
         setOpen(false)
     }, [clickedMenu])
+
+    const logOut = () => {
+        setToken('')
+        navigate('/')
+    }
 
     return (
         <div 
@@ -98,6 +106,7 @@ export default function SideBar({setMenu}:SideBarProps) {
                 src='/images/logoutBtn.png'
                 alt='Log out'
                 className={styles.logout}
+                onClick={logOut}
             />
         </div>
     )
