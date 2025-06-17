@@ -6,11 +6,12 @@ import axios from 'axios'
 
 type TaskProps = {
     task: TaskType,
+    getTasks: () => Promise<void>,
     edit: boolean,
     isDark: boolean
 }
 
-export function Task({task, edit, isDark}:TaskProps) {
+export function Task({task, getTasks, edit, isDark}:TaskProps) {
     const token = useUserStore((store) => store.token)
     const [done, setDone] = useState(false)
     const [hovered, setHovered] = useState(false)
@@ -21,22 +22,11 @@ export function Task({task, edit, isDark}:TaskProps) {
                 headers : {
                     Authorization: `Bearer ${token}`
                 }
-            })            
+            })
         } catch (error) {
             console.log(error);
         }
-    }
-
-    const editClick = async() => {
-        try {
-            const res = await axios.patch(`http://localhost:3000/api/tasks/${task.id}`, {
-                headers : {
-                    Authorization: `Bearer ${token}`
-                }
-            })            
-        } catch (error) {
-            console.log(error);
-        }
+        getTasks()
     }
 
     const doneClick = async() => {
@@ -45,14 +35,15 @@ export function Task({task, edit, isDark}:TaskProps) {
                 headers : {
                     Authorization: `Bearer ${token}`
                 }
-            })            
+            })
+            // getTasks()   
         } catch (error) {
             console.log(error);
         }
     }
 
     return (
-        <div className={styles.task} style={(!edit && hovered)?{backgroundColor: '#F5F6F8', padding: '10px 13px', width: '100%', borderRadius: '6px', cursor: 'pointer'}:{}} onMouseMove={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+        <div className={styles.task} style={(!edit && hovered)?{backgroundColor: '#F5F6F8', padding: '10px 13px', width: '100%', borderRadius: '6px', cursor: 'pointer'}:{}} onMouseMove={() => {setHovered(true)}} onMouseLeave={() => {setHovered(false)}}>
             {edit && <div 
                 className={styles.doneBtn}
                 style={{backgroundColor: done?'#8734FD':isDark?'#41414E':'#EEEEEE'}}
@@ -69,7 +60,6 @@ export function Task({task, edit, isDark}:TaskProps) {
             </div>
             {!edit && hovered && (
                 <div className={styles.itemContainer}>
-                    <img src='/images/edit.svg' alt='수정하기' onClick={editClick}/>
                     <img src='/images/delete.svg' alt='삭제하기' onClick={deleteClick}/>
                 </div>
             )}
@@ -111,16 +101,18 @@ export default function Tasks() {
     }, [token])
 
     const addTask = async() => {
+        if(addText.trim() === '') return 
         try {
             const res = await axios.post('http://localhost:3000/api/tasks', {
-                project_id: "test"
-            },{
+                title: addText,
+                date: new Date()
+            }, {
                 headers : {
                     Authorization: `Bearer ${token}`
                 }
             })
-            const data:TaskType = res.data
-            setTask([data, ...task])
+            setAddText('')
+            getTasks()
         } catch (error) {
             console.log(error);
         }
@@ -185,7 +177,7 @@ export default function Tasks() {
                 </div>
             )}
             <div className={styles.taskList}>
-                {task.map((t, i) => <Task key={i} task={t} edit={edit<3} isDark={isDark} />)}
+                {task.map((t, i) => <Task key={t.id} getTasks={getTasks} task={t} edit={edit<3} isDark={isDark} />)}
             </div>
         </div>
     )
