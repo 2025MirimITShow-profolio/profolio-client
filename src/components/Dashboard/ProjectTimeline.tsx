@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import ModalPortal from "../ModalPortal";
 import AddTimeline from "./AddTimeline";
+import axios from "axios";
+import { useUserStore } from "../../store/userStore";
 
 const time = ['Year', 'Month', 'Week']
 const year = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
@@ -141,69 +143,99 @@ export function Project({name, start, end, timeUnit}: ProjectProps) {
     };
 
     return (
-        <div
-            className={styles.timeLine}
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-            onMouseMove={handleMouseMove}
-            style={{
-                width: `${containerWidth}%`,
-                left: `${containerLeft}%`,
-                ...(containerLeft != -1 ? {
-                    borderTopLeftRadius: '5px',
-                    borderBottomLeftRadius: '5px',
-                } : {
-                    left: '0px'
-                }),
-                ...(containerWidth != 101 ? {
-                    borderTopRightRadius: '5px',
-                    borderBottomRightRadius: '5px',
-                } : {})
-            }}
-        >
-            {containerLeft != -1 ? <div className={styles.bar} /> : <></>}
-            <p className={styles.name}>{name}</p>
-            {isHovering && (
-                <motion.div
-                    className={styles.floatingBox}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ type: "tween", duration: 0.15 }}
-                    style={{
-                        top: position.y - 30,
-                        left: position.x
-                    }}
-                >
-                    {name}
-                </motion.div>
-            )}
-        </div>
+        (name != '') ? (
+            <div
+                className={styles.timeLine}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+                onMouseMove={handleMouseMove}
+                style={{
+                    width: `${containerWidth}%`,
+                    left: `${containerLeft}%`,
+                    ...(containerLeft != -1 ? {
+                        borderTopLeftRadius: '5px',
+                        borderBottomLeftRadius: '5px',
+                    } : {
+                        left: '0px'
+                    }),
+                    ...(containerWidth != 101 ? {
+                        borderTopRightRadius: '5px',
+                        borderBottomRightRadius: '5px',
+                    } : {})
+                }}
+            >
+                {containerLeft != -1 ? <div className={styles.bar} /> : <></>}
+                <p className={styles.name}>{name}</p>
+                {isHovering && (
+                    <motion.div
+                        className={styles.floatingBox}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ type: "tween", duration: 0.15 }}
+                        style={{
+                            top: position.y - 30,
+                            left: position.x
+                        }}
+                    >
+                        {name}
+                    </motion.div>
+                )}
+            </div>
+
+        ) : (
+            <div className={styles.timeLine} />
+        )
     )
 }
 
 type Project = {
-    startDate: Date,
-    endDate: Date,
-    project: string
+    startDate: string,
+    endDate: string,
+    title: string
 }
 
 export default function ProjectTimeline() {
+    const token = useUserStore((store) => store.token)
     const isDark = useThemeStore((store) => store.isDark)
     const [timeUnit, setTimeUnit] = useState(0)
-    const [allProjects, setAllProjects] = useState<Project[]>(parsedData)
+    const [allProjects, setAllProjects] = useState<Project[]>([])
     const [projects, setProjects] = useState<Project[]>([])
     const [add, setAdd] = useState(false)
+
+    const getProject = async() => {
+        try {
+            const res = await axios.get('http://localhost:3000/api/projects/timeline', {
+                headers : {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            const data = res.data
+            setAllProjects(data)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
-        // console.log(parsedData);
-    }, [parsedData])
+        getProject()
+    }, [])
 
     useEffect(() => {
         let projectsArr = []
+        const end = endDay[timeUnit].toLocaleDateString()
+        const start = startDay[timeUnit].toLocaleDateString()
         for(let i=0; i<allProjects.length; i++) {
-            if(!(allProjects[i].startDate > endDay[timeUnit] || allProjects[i].endDate < startDay[timeUnit])){
+            if(!(allProjects[i].startDate > end || allProjects[i].endDate < start)){
                 projectsArr.push(allProjects[i])
             }
+        }
+        while(projectsArr.length < 4){
+            projectsArr.push({
+                title: '',
+                startDate: '2025-06-17',
+                endDate: '2025-06-17',
+            })
         }
         setProjects(projectsArr)
     }, [timeUnit, allProjects])
@@ -218,7 +250,7 @@ export default function ProjectTimeline() {
                 <div className={styles.unitContainer}>
                     {time.map((t, i) => (
                         <span
-                            style={timeUnit===i?{color: isDark?'#FFF':'#000'}:{color: '#999999'}}
+                            style={{color: timeUnit===i?isDark?'#FFF':'#000':'#999', cursor: 'pointer'}}
                             onClick={() => setTimeUnit(i)}
                         >
                             {t}
@@ -238,7 +270,7 @@ export default function ProjectTimeline() {
                 <ProcessContainer isDark={isDark}>
                     {projects.map((project, i) =>  (
                         <Line isDark={isDark}>
-                            <Project name={project.project} start={project.startDate} end={project.endDate} timeUnit={timeUnit} />
+                            <Project name={project.title} start={new Date(project.startDate)} end={new Date(project.endDate)} timeUnit={timeUnit} />
                         </Line>
                     ))}
                 </ProcessContainer>  
