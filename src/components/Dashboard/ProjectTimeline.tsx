@@ -143,6 +143,7 @@ export function Project({name, start, end, timeUnit}: ProjectProps) {
     };
 
     return (
+        (name !== '')?
         <div
             className={styles.timeLine}
             onMouseEnter={() => setIsHovering(true)}
@@ -181,6 +182,7 @@ export function Project({name, start, end, timeUnit}: ProjectProps) {
                 </motion.div>
             )}
         </div>
+        : <div className={styles.timeLine}/>
     )
 }
 
@@ -224,8 +226,15 @@ export default function ProjectTimeline() {
                 projectsArr.push(allProjects[i])
             }
         }
+        while(projectsArr.length < 4) {
+            projectsArr.push({
+                title: '',
+                start_date: new Date(),
+                end_date: new Date()
+            })
+        }
         setProjects(projectsArr)
-    }, [timeUnit])
+    }, [timeUnit, allProjects])
 
     return (
         <div 
