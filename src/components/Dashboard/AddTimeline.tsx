@@ -26,8 +26,8 @@ const Cancel = styled.div<CancelProps>`
 `
 
 type Project = {
-    startDate: Date,
-    endDate: Date,
+    startDate: string,
+    endDate: string,
     project: string
 }
 type AddTimelineProps = {
@@ -49,8 +49,8 @@ export default function AddTimeline({setAllProjects, setAdd}:AddTimelineProps) {
             ...prev,
             {
                 project,
-                startDate: range[0].startDate as Date,
-                endDate: range[0].endDate as Date,
+                startDate: range[0].startDate.toLocaleDateString(),
+                endDate: range[0].endDate.toLocaleDateString(),
             }
         ]);
         setAdd(false)
