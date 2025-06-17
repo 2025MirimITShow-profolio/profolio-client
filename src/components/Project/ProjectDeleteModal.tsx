@@ -1,10 +1,13 @@
 import React from "react";
 import styles from "../../style/ProjectDeleteModal.module.css";
 import { useThemeStore } from "../../store/themeStore";
+import { useUserStore } from "../../store/userStore";
+import axios from "axios";
 
 interface ProjectDeleteModalProps {
 	open: boolean;
 	message?: string;
+	projectId: number | null;
 	onCancel: () => void;
 	onConfirm: () => void;
 }
@@ -12,10 +15,28 @@ interface ProjectDeleteModalProps {
 export default function ProjectDeleteModal({
 	open,
 	message,
-	onCancel,
+	projectId,
 	onConfirm,
+	onCancel,
 }: ProjectDeleteModalProps) {
 	const isDark = useThemeStore((store) => store.isDark);
+	const token = useUserStore((store) => store.token);
+
+	const deleteProject = async () => {
+		try {
+			const res = await axios.delete(
+				`${import.meta.env.VITE_BASE_URL}/projects/${projectId}`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			onConfirm();
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	if (!open) return null;
 
@@ -63,7 +84,7 @@ export default function ProjectDeleteModal({
 						style={{
 							color: isDark ? "#6C63FF" : "#a48cf0",
 						}}
-						onClick={onConfirm}
+						onClick={deleteProject}
 					>
 						확인
 					</button>

@@ -4,7 +4,7 @@ import ProjectMenuButton from "./ProjectMenuButton";
 import { useThemeStore } from "../../store/themeStore";
 
 interface ProjectMainInfoProps {
-	name: string;
+	title: string;
 	description: string;
 	onDelete: () => void;
 	onShare: () => void;
@@ -12,7 +12,7 @@ interface ProjectMainInfoProps {
 }
 
 export default function ProjectMainInfo({
-	name,
+	title,
 	description,
 	onDelete,
 	onShare,
@@ -35,7 +35,7 @@ export default function ProjectMainInfo({
 						transition: "color 0.2s",
 					}}
 				>
-					{name}
+					{title}
 				</span>
 				<ProjectMenuButton onDelete={onDelete} onShare={onShare} />
 			</div>

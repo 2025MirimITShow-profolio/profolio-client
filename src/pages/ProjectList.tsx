@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import ProjectCircleNav from "../components/Project/ProjectCircleNav";
 import ProjectMainInfo from "../components/Project/ProjectMainInfo";
 import ProjectAddButton from "../components/Project/ProjectAddButton";
@@ -8,49 +8,12 @@ import "../style/ProjectListPage.css";
 import { useNavigate } from "react-router-dom";
 import AllProject from "./AllProject";
 import { useThemeStore } from "../store/themeStore";
-import SearchBar from "../components/SearchBar";
 import ProfileOnly from "../components/ProfileOnly";
-
-interface Project {
-	id: number;
-	name: string;
-	description: string;
-}
-
-const initialProjects: Project[] = [
-	{
-		id: 1,
-		name: "Profolio",
-		description: "프로젝트와 포트폴리오를 한번에 관리할 수 있는 팀 서비스",
-	},
-	{
-		id: 2,
-		name: "GulLap",
-		description:
-			"문해력이 부족한 MZ세대를 위하여 문학작품에서 발췌한 글을 통해 언어학습을 돕는 앱",
-	},
-	{
-		id: 3,
-		name: "Momenpick!",
-		description:
-			"디자이너와 개발자의 공감을 담은 프레임과 여름 감성 프레임으로, ITShow에 방문한 사람들이 추억을 간직할 수 있는 인생네컷 촬영 서비스",
-	},
-	{ id: 4, name: "Sample Project", description: "샘플 프로젝트 설명" },
-	{ id: 5, name: "Test Project", description: "테스트 프로젝트 설명" },
-	{ id: 6, name: "Final Project", description: "마지막 프로젝트 설명" },
-	{ id: 7, name: "Sample Project", description: "샘플 프로젝트 설명" },
-	{ id: 8, name: "Test Project", description: "테스트 프로젝트 설명" },
-	{ id: 9, name: "Final Project", description: "마지막 프로젝트 설명" },
-	{ id: 10, name: "Sample Project", description: "샘플 프로젝트 설명" },
-	{ id: 11, name: "Test Project", description: "테스트 프로젝트 설명" },
-	{ id: 12, name: "Final Project", description: "마지막 프로젝트 설명" },
-	{ id: 13, name: "Sample Project", description: "샘플 프로젝트 설명" },
-	{ id: 14, name: "Test Project", description: "테스트 프로젝트 설명" },
-	{ id: 15, name: "Final Project", description: "마지막 프로젝트 설명" },
-];
+import axios from "axios";
+import { useUserStore } from "../store/userStore";
 
 const ProjectList = () => {
-	const [projects, setProjects] = useState<Project[]>(initialProjects);
+	const [projects, setProjects] = useState<Project[]>([]);
 	const [angle, setAngle] = useState(0);
 	const [search, setSearch] = useState("");
 	const [addOpen, setAddOpen] = useState(false);
@@ -60,13 +23,50 @@ const ProjectList = () => {
 	const [selectedProjectId, setSelectedProjectId] = useState<number | null>(
 		null
 	);
+
 	const navigate = useNavigate();
 	const isDark = useThemeStore((state) => state.isDark);
+	const token = useUserStore((store) => store.token);
+
+	interface Project {
+		id: number;
+		title: string;
+		description: string;
+	}
+
+	useEffect(() => {
+		document.body.style.overflow = "hidden";
+		return () => {
+			document.body.style.overflow = "";
+		};
+	}, []);
+
+	const getProjects = async () => {
+		try {
+			const res = await axios.get(
+				`${import.meta.env.VITE_BASE_URL}/projects`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			console.log(res.data);
+			setProjects(res.data);
+		} catch (e) {
+			console.error("프로젝트 불러오기 실패 : ", e);
+		} finally {
+		}
+	};
+
+	useEffect(() => {
+		getProjects();
+	}, []);
 
 	const filteredProjects = useMemo(
 		() =>
 			projects.filter((p) =>
-				p.name.toLowerCase().includes(search.toLowerCase())
+				p.title.toLowerCase().includes(search.toLowerCase())
 			),
 		[projects, search]
 	);
@@ -91,8 +91,8 @@ const ProjectList = () => {
 	const centerProject = filteredProjects[centerIdx];
 
 	// 프로젝트 추가
-	const handleCreate = (name: string, description: string) => {
-		setProjects((prev) => [...prev, { id: Date.now(), name, description }]);
+	const handleCreate = (title: string, description: string) => {
+		getProjects();
 		setAddOpen(false);
 	};
 
@@ -102,12 +102,10 @@ const ProjectList = () => {
 		setDeleteOpen(true);
 	};
 
-	const handleDeleteConfirm = () => {
-		if (deleteTargetId !== null) {
-			setProjects((prev) => prev.filter((p) => p.id !== deleteTargetId));
-		}
+	const handleDeleteConfirm = async () => {
 		setDeleteOpen(false);
 		setDeleteTargetId(null);
+		await getProjects();
 	};
 
 	const handleDeleteCancel = () => {
@@ -183,7 +181,7 @@ const ProjectList = () => {
 						/>
 						{centerProject && (
 							<ProjectMainInfo
-								name={centerProject.name}
+								title={centerProject.title}
 								description={centerProject.description}
 								onDelete={() => handleDelete(centerProject.id)}
 								onShare={() => handleShare(centerProject.id)}
@@ -196,6 +194,7 @@ const ProjectList = () => {
 							open={deleteOpen}
 							onCancel={handleDeleteCancel}
 							onConfirm={handleDeleteConfirm}
+							projectId={deleteTargetId}
 						/>
 					</section>
 					<ProjectAddModal

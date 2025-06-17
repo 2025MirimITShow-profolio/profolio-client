@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styles from "../../style/ProjectAddModal.module.css";
 import { useThemeStore } from "../../store/themeStore";
+import axios from "axios";
+import { useUserStore } from "../../store/userStore";
 
 interface ProjectAddModalProps {
 	open: boolean;
@@ -16,6 +18,26 @@ export default function ProjectAddModal({
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const isDark = useThemeStore((store) => store.isDark);
+	const token = useUserStore((store) => store.token);
+
+	const postProject = async () => {
+		try {
+			const res = await axios.post(
+				`${import.meta.env.VITE_BASE_URL}/projects`,
+				{
+					title,
+					description,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	if (!open) return null;
 
@@ -31,7 +53,6 @@ export default function ProjectAddModal({
 				style={{
 					background: isDark ? "#23222B" : "#fff",
 					color: isDark ? "#fff" : "#111",
-					boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.25)",
 				}}
 			>
 				<h2 style={{ color: isDark ? "#fff" : "#111" }}>
@@ -101,8 +122,8 @@ export default function ProjectAddModal({
 						className={`${styles.createButton} ${
 							isDark ? styles.dark : ""
 						}`}
-						onClick={() => {
-							onCreate(title, description);
+						onClick={async () => {
+							await postProject(), onCreate(title, description);
 							setTitle("");
 							setDescription("");
 						}}
