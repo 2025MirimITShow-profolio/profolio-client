@@ -59,7 +59,10 @@ export function Project({project, process, color, date, allMember, isDark}:Proje
             element.push(
                 <div className={styles.profile}>
                     {/* todo : 프로필 이미지로 변경 */}
-                    {member[i]}
+                    <img 
+                        src={`/images/profile/profile${Math.floor(Math.random() * 13) + 1}.png`}
+                        alt='프로필'
+                    />
                 </div>
             )
         }
@@ -75,11 +78,11 @@ export function Project({project, process, color, date, allMember, isDark}:Proje
             </div>
             <div  style={{width: '26.7%'}}>
                 <div className={styles.processBar} style={{backgroundColor: isDark?'#6C6C73':'#EEEEEE'}}>
-                    <div style={{width: `${process}%`, height: '100%', backgroundColor: `${color}`}}/>
+                    <div style={{width: `${Math.floor(Math.random() * 100)}%`, height: '100%', backgroundColor: `${color}`}}/>
                 </div>
             </div>
             <div className={styles.date} style={{width: '19.1%'}}>
-                {date}
+                {date.split('T')[0].replace(/-/g, '.')}
             </div>
             <div className={styles.memberProfile} style={{width: '28.6%'}}>
                 {memberProfile()}
@@ -122,8 +125,8 @@ export default function Members() {
             <div className={styles.container}>
                 <div className={styles.header}>
                     <p style={{width: '25%'}}>프로젝트 명</p>
-                    <p style={{width: '26.7%'}}>진행율</p>
-                    <p style={{width: '19.1%'}}>대드라인</p>
+                    <p style={{width: '26.3%'}}>진행율</p>
+                    <p style={{width: '19.5%'}}>대드라인</p>
                     <p style={{width: '28.6%'}}>팀원</p>
                 </div>
                 <ProjectContainer isDark={isDark}>
