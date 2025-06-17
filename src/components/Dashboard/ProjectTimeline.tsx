@@ -131,10 +131,14 @@ type ProjectProps = {
     timeUnit: number
 }
 export function Project({name, start, end, timeUnit}: ProjectProps) {
+    start.setHours(0, 0, 0, 0)
+    end.setHours(0, 0, 0, 0)
     const daysWidth = (end.getTime() - start.getTime()) / msPerDay
     const daysLeft = (start.getTime() - startDay[timeUnit].getTime()) / msPerDay
-    const containerWidth = (end>endDay[timeUnit])? 101 : (daysWidth+1) * percent[timeUnit]
-    const containerLeft = (start<startDay[timeUnit])? -1 : daysLeft * percent[timeUnit]
+    const widthBool = (end>endDay[timeUnit])
+    const leftBool = (start<startDay[timeUnit])
+    const containerWidth = widthBool ? 100 : (daysWidth+1) * percent[timeUnit]
+    const containerLeft = leftBool ? 0 : daysLeft * percent[timeUnit]
     const [isHovering, setIsHovering] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -152,19 +156,9 @@ export function Project({name, start, end, timeUnit}: ProjectProps) {
             style={{
                 width: `${containerWidth}%`,
                 left: `${containerLeft}%`,
-                ...(containerLeft != -1 ? {
-                    borderTopLeftRadius: '5px',
-                    borderBottomLeftRadius: '5px',
-                } : {
-                    left: '0px'
-                }),
-                ...(containerWidth != 101 ? {
-                    borderTopRightRadius: '5px',
-                    borderBottomRightRadius: '5px',
-                } : {})
             }}
         >
-            {containerLeft != -1 ? <div className={styles.bar} /> : <></>}
+            <div className={styles.bar} />
             <p className={styles.name}>{name}</p>
             {isHovering && (
                 <motion.div
@@ -219,22 +213,31 @@ export default function ProjectTimeline() {
         getAll()
     }, [])
 
+    function isDateInRange(date:Date) {
+        date.setHours(0, 0, 0, 0)
+        console.log(date);
+        console.log(date >= startDay[timeUnit]);
+        console.log(date <= endDay[timeUnit]);
+        return date >= startDay[timeUnit] && date <= endDay[timeUnit];
+    }
+
     useEffect(() => {
-        let projectsArr = []
-        for(let i=0; i<allProjects.length; i++) {
-            if(!(allProjects[i].start_date > endDay[timeUnit] || allProjects[i].end_date < startDay[timeUnit])){
+        const projectsArr = []
+        for(let i=0; i<allProjects.length; i++){
+            if(isDateInRange(new Date(allProjects[i].start_date)) || isDateInRange(new Date(allProjects[i].end_date)))
                 projectsArr.push(allProjects[i])
-            }
         }
+
         while(projectsArr.length < 4) {
             projectsArr.push({
                 title: '',
                 start_date: new Date(),
                 end_date: new Date()
-            })
+            });
         }
-        setProjects(projectsArr)
-    }, [timeUnit, allProjects])
+
+        setProjects(projectsArr);
+    }, [timeUnit, allProjects]);
 
     return (
         <div 
