@@ -2,48 +2,41 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { useThemeStore } from "../store/themeStore";
 import styles from '../style/SharedProjects.module.css'
+import axios from "axios";
+import { useUserStore } from "../store/userStore";
 
 interface Project {
   id: number;
   title: string;
-  date: string;
-  imageUrl: string;
+  created_at: Date;
 }
-
-const dummyProjects: Project[] = [
-  {
-    id: 1,
-    title: "프로필이오",
-    date: "2024.01.06",
-    imageUrl: "/images/thumbnail.png",
-  },
-  {
-    id: 2,
-    title: "Projects",
-    date: "2024.01.06",
-    imageUrl: "/images/thumbnail.png",
-  },
-  {
-    id: 3,
-    title: "Nuto",
-    date: "2024.01.06",
-    imageUrl: "/images/thumbnail.png",
-  },
-  {
-    id: 4,
-    title: "GulLap",
-    date: "2024.01.06",
-    imageUrl: "/images/thumbnail.png",
-  },
-];
 
 export default function SharedProjects() {    
   const isDark = useThemeStore((store) => store.isDark)
+  const token = useUserStore((store) => store.token)
   const [projects, setProjects] = useState<Project[]>([]);
 
-  useEffect(() => {
-    setProjects(dummyProjects);
-  }, []);
+  useEffect(()=>{
+    const fetchProject = async () => {
+      try{
+        const res = await axios.get(`http://localhost:3000/api/projects/shared`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        setProjects(res.data);
+      } catch (err) {
+        console.error("공유된 프로젝트 데이터 불러오기 실패", err);
+      }
+    };
+
+    fetchProject();
+  },[]);
+
+  const dateFormat = (date: string | Date) => {
+    const d = new Date(date);
+    return `${d.getFullYear()}.${(d.getMonth() + 1).toString().padStart(2, '0')}.${d.getDate().toString().padStart(2, '0')}`;
+  }
 
   return (
       <>
@@ -53,7 +46,7 @@ export default function SharedProjects() {
               marginTop: '61px',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center'
+              justifyContent: 'flex-start'
             }}>
             <div className={styles.container}>
               {projects.map((project) => (
@@ -61,14 +54,12 @@ export default function SharedProjects() {
                   style={{
                     backgroundColor: isDark? '#383843':'white'
                   }}>
-                  <img
-                    src={project.imageUrl}
-                    alt={project.title}
+                  <div
                     className={styles.image}
                   />
                   <div className={styles.info}>
                     <div className={styles.title} style={{color: isDark? 'white':'black'}}>{project.title}</div>
-                    <div className={styles.date}>{project.date}</div>
+                    <div className={styles.date}>{dateFormat(project.created_at)}</div>
                   </div>
                 </div>
               ))}
