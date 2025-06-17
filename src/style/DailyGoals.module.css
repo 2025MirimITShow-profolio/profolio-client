@@ -12,6 +12,9 @@
     font-size: 25px;
     margin-left: 12px;
     margin-bottom: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .container {
@@ -54,4 +57,15 @@
     justify-content: space-around;
     font-weight: 500;
     font-size: 15px;
+}
+
+.btnContainer {
+    width: auto;
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+.btnContainer > img {
+    width: 20px;
+    height: 20px;
 }
