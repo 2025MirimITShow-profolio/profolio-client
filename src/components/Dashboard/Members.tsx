@@ -1,46 +1,17 @@
-import type { ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import styled from 'styled-components'
 import { useThemeStore } from '../../store/themeStore'
 import styles from '../../style/Members.module.css'
+import axios from 'axios'
+import { useUserStore } from '../../store/userStore'
 
-const data = [
-    {
-        project: '키오스크 리디자인 키오스크 리디자인',
-        process: 30,
-        date: '2025.01.31',
-        member: ['A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', 'C'],
-    },
-    {
-        project: '키오스크 리디자인',
-        process: 70,
-        date: '2025.01.31',
-        member: ['A', 'B', 'C'],
-    },
-    {
-        project: '키오스크 리디자인',
-        process: 20,
-        date: '2025.01.31',
-        member: ['A', 'B'],
-    },
-    {
-        project: '키오스크 리디자인 키오스크 리디자인',
-        process: 30,
-        date: '2025.01.31',
-        member: [],
-    },
-    {
-        project: '키오스크 리디자인',
-        process: 70,
-        date: '2025.01.31',
-        member: ['A'],
-    },
-    {
-        project: '키오스크 리디자인',
-        process: 20,
-        date: '2025.01.31',
-        member: ['A', 'B', 'C'],
-    },
-]
+type dataType = {
+    title: string,
+    process: number,
+    end_date: string,
+    team_members: string,
+    color: string
+}
 
 type ProjectContainerProps = {
     isDark: boolean
@@ -70,16 +41,18 @@ const ProjectContainer = styled.div<ProjectContainerProps>`
     }
 `;
 
-type ProjectProps = {
+type ProjectType = {
     project: string,
     process: number,
+    color: string,
     date: string,
-    member: string[],
+    allMember: string,
     isDark: boolean,
 }
 
 const MAX_PROFILE = 4;
-export function Project({project, process, date, member, isDark}:ProjectProps) {
+export function Project({project, process, color, date, allMember, isDark}:ProjectType) {
+    const member = allMember.split(' ')
     const memberProfile = () => {
         const element: ReactNode[] = []
         for(let i=0; i<member.length && i<MAX_PROFILE; i++){
@@ -102,7 +75,7 @@ export function Project({project, process, date, member, isDark}:ProjectProps) {
             </div>
             <div  style={{width: '26.7%'}}>
                 <div className={styles.processBar} style={{backgroundColor: isDark?'#6C6C73':'#EEEEEE'}}>
-                    <div style={{width: `${process}%`, height: '100%', backgroundColor: '#450923'}}/>
+                    <div style={{width: `${process}%`, height: '100%', backgroundColor: `${color}`}}/>
                 </div>
             </div>
             <div className={styles.date} style={{width: '19.1%'}}>
@@ -119,7 +92,27 @@ export function Project({project, process, date, member, isDark}:ProjectProps) {
 }
 
 export default function Members() {
+    const token = useUserStore((store) => store.token)
     const isDark = useThemeStore((stroe) => stroe.isDark)
+    const [data, setData] = useState<dataType[]>([])
+
+    const getProject = async() => {
+        try {
+            const res = await axios.get('http://localhost:3000/api/projects', {
+                headers : {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            setData(res.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        getProject()
+    }, [])
+
     return (
         <div 
             className={styles.membersContainer}
@@ -134,8 +127,8 @@ export default function Members() {
                     <p style={{width: '28.6%'}}>팀원</p>
                 </div>
                 <ProjectContainer isDark={isDark}>
-                    {data.map((d, i) => (
-                        <Project key={d.project+i} project={d.project} process={d.process} date={d.date} member={d.member} isDark={isDark} />
+                    {data.length>0 && data.map((d, i) => (
+                        <Project key={d.title+i} project={d.title} process={d.process} color={d.color} date={d.end_date} allMember={d.team_members} isDark={isDark} />
                     ))}
                 </ProjectContainer>
             </div>
