@@ -7,12 +7,8 @@ import { useUserStore } from '../../store/userStore'
 
 type GoalType = {
     date: string,
-    goals: number
+    task_count: number
 }
-
-const goalData:GoalType[] = [
-    { "date": "2025-05-01", "goals": 3 }
-]
 
 const date = [
     'Sun', 'Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon'
@@ -43,21 +39,30 @@ const Goal = styled.div<GoalProps>`
     }}
 `
 
-export function GoalsContainer() {
+type GoalsContainerProps = {
+  currentDate: Date;
+}
+
+export function GoalsContainer({currentDate}: GoalsContainerProps) {
     const token = useUserStore((store) => store.token)
     const [goals, setGoals] = useState<GoalType[] | null>(null)
     const [rotated, setRotated] = useState<GoalType[]>([])
 
     useEffect(() => {
-        if (!goals) return
-        const firstDate = new Date()
+        if (goals===null) return
+        const firstDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)
+
+        const rawDate = goals[0]?.date
+        const formattedDate = rawDate ? `${rawDate.slice(0, 4)}-${rawDate.slice(4, 6)}-${rawDate.slice(6, 8)}` : ''
+        const firstTask = formattedDate ? new Date(formattedDate).getDate() - 1 : 0
+
         const firstDay = firstDate.getDay()
         const paddedGoals = [...goals]
-        for (let i = 0; i < firstDay; i++) {
-            paddedGoals.unshift({ date: '', goals: -1 })
+        for (let i = 0; i < firstDay+firstTask; i++) {
+            paddedGoals.unshift({ date: '', task_count: -1 })
         }
         while (paddedGoals.length < 35) {
-            paddedGoals.push({ date: '', goals: -1 })
+            paddedGoals.push({ date: '', task_count: -1 })
         }
         const rotatedArr = [];
         for (let i=6; i>=0; i--) {
@@ -71,7 +76,7 @@ export function GoalsContainer() {
     const getDailyTask = async() => {
         try {
             // console.log(token);
-            const res = await axios.get('http://localhost:3000/api/daily-tasks', {
+            const res = await axios.get(`http://localhost:3000/api/daily-tasks?date=${currentDate.getFullYear()}${String(currentDate.getMonth() + 1).padStart(2, '0')}`, {
                 headers : {
                     Authorization: `Bearer ${token}`
                 }
@@ -79,7 +84,7 @@ export function GoalsContainer() {
             let data = res.data
             if (data.length < 35) {
                 const diff = 35 - data.length
-                data = data.concat(Array(diff).fill({date: '', goals: -1}))
+                data = data.concat(Array(diff).fill({date: '', task_count: -1}))
             }
             setGoals(data)
         } catch (error) {
@@ -89,23 +94,53 @@ export function GoalsContainer() {
 
     useEffect(() => {
         getDailyTask()
-    }, [token])
+        // alert(currentDate);
+    }, [currentDate])
 
     return (
         <div className={styles.goalsContainer} style={{color: '#000'}}>
-            {rotated.map((g, i) => <Goal key={i} goal={g.goals} />)}
+            {rotated.map((g, i) => <Goal key={i} goal={g.task_count} />)}
         </div>
     )
 }
 
 export default function DailyGoals() {
     const isDark = useThemeStore((store) => store.isDark)
+    const [currentDate, setCurrentDate] = useState<Date>(new Date())
+
+    const preMonth = () => {
+        const newDate = new Date(currentDate);
+        newDate.setMonth(newDate.getMonth() - 1);
+        setCurrentDate(newDate);
+    }
+    const nextMonth = () => {
+        const newDate = new Date(currentDate);
+        newDate.setMonth(newDate.getMonth() + 1);
+        setCurrentDate(newDate);
+    }
+
     return (
         <div 
             className={styles.dailyGoalsContainer}
             style={isDark?{backgroundColor: '#2B2B37', color: '#FFFFFF'}:{backgroundColor: '#FFFFFF', color: '#333333'}}
         >
-            <div className={styles.header}>Daily Goals</div>
+            <div className={styles.header}>
+                Daily Goals
+                <div className={styles.btnContainer}>
+                    {/* <img
+                        src='/images/downBtn.svg'
+                        alt='이전달'
+                        style={{transform: 'rotate(90deg)', cursor: 'pointer'}}
+                        onClick={preMonth}
+                    />
+                    <img
+                        src='/images/downBtn.svg'
+                        alt='다음달'
+                        style={{transform: 'rotate(-90deg)', cursor: 'pointer'}}
+                        onClick={nextMonth}
+                    /> */}
+                </div>
+            </div>
             <div 
                 className={styles.container}
                 style={{color: isDark?'#777777':'#BBBBBB'}}
@@ -113,7 +148,7 @@ export default function DailyGoals() {
                 <div className={styles.dateContainer}>
                     {date.map((d, i) => <p key={i}>{d}</p>)}
                 </div>
-                <GoalsContainer />
+                <GoalsContainer currentDate={currentDate} />
                 <div />
                 <div className={styles.weekContainer}>
                     {week.map((w, i) => <p key={i}>{w}</p>)}

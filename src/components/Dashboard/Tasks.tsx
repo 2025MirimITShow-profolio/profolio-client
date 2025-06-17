@@ -31,7 +31,7 @@ export function Task({task, getTasks, edit, isDark}:TaskProps) {
 
     const doneClick = async() => {
         try {
-            const res = await axios.patch(`http://localhost:3000/api/tasks/${task.id}/status`, {
+            const res = await axios.patch(`http://localhost:3000/api/tasks/${task.id}/status`,{}, {
                 headers : {
                     Authorization: `Bearer ${token}`
                 }
