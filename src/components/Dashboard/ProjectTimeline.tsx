@@ -39,32 +39,32 @@ const percent= [
 month.push(endDay[1].getDate())
 const msPerDay = 1000 * 60 * 60 * 24;
 
-const data = [
-    { project: "Alpha", startDate: "25-06-15", endDate: "25-06-20" },
-    { project: "Beta", startDate: "25-06-28", endDate: "25-06-30" },
-    { project: "Gamma", startDate: "25-06-10", endDate: "25-07-01" },
-    { project: "Gamma", startDate: "25-06-01", endDate: "25-06-30" },
-    { project: "Gamma", startDate: "25-06-01", endDate: "25-06-05" },
-    { project: "Gamma", startDate: "25-06-02", endDate: "25-06-08" },
-    { project: "Gamma", startDate: "25-06-02", endDate: "25-06-09" },
-    { project: "Gamma", startDate: "25-06-03", endDate: "25-06-30" },
-    { project: "Gamma", startDate: "25-06-02", endDate: "25-06-30" },
-    { project: "Gamma", startDate: "25-05-01", endDate: "25-06-30" },
-];
+// const data = [
+//     { project: "Alpha", start_date: "25-06-15", end_date: "25-06-20" },
+//     { project: "Beta", start_date: "25-06-28", end_date: "25-06-30" },
+//     { project: "Gamma", start_date: "25-06-10", end_date: "25-07-01" },
+//     { project: "Gamma", start_date: "25-06-01", end_date: "25-06-30" },
+//     { project: "Gamma", start_date: "25-06-01", end_date: "25-06-05" },
+//     { project: "Gamma", start_date: "25-06-02", end_date: "25-06-08" },
+//     { project: "Gamma", start_date: "25-06-02", end_date: "25-06-09" },
+//     { project: "Gamma", start_date: "25-06-03", end_date: "25-06-30" },
+//     { project: "Gamma", start_date: "25-06-02", end_date: "25-06-30" },
+//     { project: "Gamma", start_date: "25-05-01", end_date: "25-06-30" },
+// ];
 
-const parsedData = data.map(item => {
-    const parseDate = (str:string) => {
-        const [yy, mm, dd] = str.split('-').map(Number);
-        const fullYear = 2000 + yy; // "25" → 2025
-        return new Date(fullYear, mm - 1, dd); // 월은 0부터 시작
-    };
+// const parsedData = data.map(item => {
+//     const parseDate = (str:string) => {
+//         const [yy, mm, dd] = str.split('-').map(Number);
+//         const fullYear = 2000 + yy; // "25" → 2025
+//         return new Date(fullYear, mm - 1, dd); // 월은 0부터 시작
+//     };
 
-    return {
-        ...item,
-        startDate: parseDate(item.startDate),
-        endDate: parseDate(item.endDate)
-    };
-});;
+//     return {
+//         ...item,
+//         start_date: parseDate(item.start_date),
+//         end_date: parseDate(item.end_date)
+//     };
+// });;
 
 type IsDarkProps = {
     isDark: boolean
@@ -143,55 +143,50 @@ export function Project({name, start, end, timeUnit}: ProjectProps) {
     };
 
     return (
-        (name != '') ? (
-            <div
-                className={styles.timeLine}
-                onMouseEnter={() => setIsHovering(true)}
-                onMouseLeave={() => setIsHovering(false)}
-                onMouseMove={handleMouseMove}
-                style={{
-                    width: `${containerWidth}%`,
-                    left: `${containerLeft}%`,
-                    ...(containerLeft != -1 ? {
-                        borderTopLeftRadius: '5px',
-                        borderBottomLeftRadius: '5px',
-                    } : {
-                        left: '0px'
-                    }),
-                    ...(containerWidth != 101 ? {
-                        borderTopRightRadius: '5px',
-                        borderBottomRightRadius: '5px',
-                    } : {})
-                }}
-            >
-                {containerLeft != -1 ? <div className={styles.bar} /> : <></>}
-                <p className={styles.name}>{name}</p>
-                {isHovering && (
-                    <motion.div
-                        className={styles.floatingBox}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        transition={{ type: "tween", duration: 0.15 }}
-                        style={{
-                            top: position.y - 30,
-                            left: position.x
-                        }}
-                    >
-                        {name}
-                    </motion.div>
-                )}
-            </div>
-
-        ) : (
-            <div className={styles.timeLine} />
-        )
+        <div
+            className={styles.timeLine}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+            onMouseMove={handleMouseMove}
+            style={{
+                width: `${containerWidth}%`,
+                left: `${containerLeft}%`,
+                ...(containerLeft != -1 ? {
+                    borderTopLeftRadius: '5px',
+                    borderBottomLeftRadius: '5px',
+                } : {
+                    left: '0px'
+                }),
+                ...(containerWidth != 101 ? {
+                    borderTopRightRadius: '5px',
+                    borderBottomRightRadius: '5px',
+                } : {})
+            }}
+        >
+            {containerLeft != -1 ? <div className={styles.bar} /> : <></>}
+            <p className={styles.name}>{name}</p>
+            {isHovering && (
+                <motion.div
+                    className={styles.floatingBox}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ type: "tween", duration: 0.15 }}
+                    style={{
+                        top: position.y - 30,
+                        left: position.x
+                    }}
+                >
+                    {name}
+                </motion.div>
+            )}
+        </div>
     )
 }
 
 type Project = {
-    startDate: string,
-    endDate: string,
+    start_date: Date,
+    end_date: Date,
     title: string
 }
 
@@ -203,7 +198,7 @@ export default function ProjectTimeline() {
     const [projects, setProjects] = useState<Project[]>([])
     const [add, setAdd] = useState(false)
 
-    const getProject = async() => {
+    const getAll = async() => {
         try {
             const res = await axios.get('http://localhost:3000/api/projects/timeline', {
                 headers : {
@@ -211,6 +206,7 @@ export default function ProjectTimeline() {
                 }
             })
             const data = res.data
+            console.log(data)
             setAllProjects(data)
         } catch (error) {
             console.log(error);
@@ -218,27 +214,18 @@ export default function ProjectTimeline() {
     }
 
     useEffect(() => {
-        getProject()
+        getAll()
     }, [])
 
     useEffect(() => {
         let projectsArr = []
-        const end = endDay[timeUnit].toLocaleDateString()
-        const start = startDay[timeUnit].toLocaleDateString()
         for(let i=0; i<allProjects.length; i++) {
-            if(!(allProjects[i].startDate > end || allProjects[i].endDate < start)){
+            if(!(allProjects[i].start_date > endDay[timeUnit] || allProjects[i].end_date < startDay[timeUnit])){
                 projectsArr.push(allProjects[i])
             }
         }
-        while(projectsArr.length < 4){
-            projectsArr.push({
-                title: '',
-                startDate: '2025-06-17',
-                endDate: '2025-06-17',
-            })
-        }
         setProjects(projectsArr)
-    }, [timeUnit, allProjects])
+    }, [timeUnit])
 
     return (
         <div 
@@ -259,8 +246,8 @@ export default function ProjectTimeline() {
                     ))}
                     <span style={{marginLeft: '15px'}} onClick={() => setAdd(true)}>
                         <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 9.5H17.5" stroke={isDark?'#BBBBBB':'#777777'} stroke-width="1.5"/>
-                            <path d="M8.75 0.75L8.75 18.25" stroke={isDark?'#BBBBBB':'#777777'} stroke-width="1.5"/>
+                            <path d="M0 9.5H17.5" stroke={isDark?'#BBBBBB':'#777777'} strokeWidth="1.5"/>
+                            <path d="M8.75 0.75L8.75 18.25" stroke={isDark?'#BBBBBB':'#777777'} strokeWidth="1.5"/>
                         </svg>
                     </span>
                 </div>
@@ -269,8 +256,8 @@ export default function ProjectTimeline() {
             <div className={styles.projectContainer}>
                 <ProcessContainer isDark={isDark}>
                     {projects.map((project, i) =>  (
-                        <Line isDark={isDark}>
-                            <Project name={project.title} start={new Date(project.startDate)} end={new Date(project.endDate)} timeUnit={timeUnit} />
+                        <Line key={i} isDark={isDark}>
+                            <Project name={project.title} start={new Date(project.start_date)} end={new Date(project.end_date)} timeUnit={timeUnit} />
                         </Line>
                     ))}
                 </ProcessContainer>  
