@@ -159,13 +159,13 @@ const ProjectList = () => {
 				}`}
 			>
 				<div
+					className="projectlist-header-wide"
 					style={{
 						position: "relative",
 						zIndex: 1000,
 						background: isDark ? "#181828" : "#F6F7FB",
 					}}
-				></div>
-				<div className="projectlist-header-wide">
+				>
 					<ProfileOnly />
 				</div>
 				<div className="projectlist-main-wide">
