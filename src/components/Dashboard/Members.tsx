@@ -48,16 +48,27 @@ type ProjectType = {
     date: string,
     allMember: string,
     isDark: boolean,
+    myProfile: string
 }
 
 const MAX_PROFILE = 4;
-export function Project({project, process, color, date, allMember, isDark}:ProjectType) {
-    console.log('allMember : ', allMember.length)
-    const member = (allMember.length === 0)? [] :allMember.split(',');
+export function Project({project, process, color, date, allMember, isDark, myProfile}:ProjectType) {
+    console.log(allMember)
+    const member = (allMember==null||allMember.length === 0)? [] :allMember.split(',');
 
+    console.log('myprofile : ', myProfile)
     console.log('member : ', member);
     const memberProfile = () => {
         const element: ReactNode[] = []
+        element.push(
+            <div className={styles.profile}>
+                {/* 내 프로필 */}
+                <img 
+                    src={`/images/profile/profile${myProfile}.png`}
+                    alt='내 프로필'
+                />
+            </div>
+        )
         for(let i=0; i<member.length && i<MAX_PROFILE; i++){
             element.push(
                 <div className={styles.profile}>
@@ -85,7 +96,7 @@ export function Project({project, process, color, date, allMember, isDark}:Proje
                 </div>
             </div>
             <div className={styles.date} style={{width: '19.1%'}}>
-                {date.split('T')[0].replace(/-/g, '.')}
+                {!date || date.split('T')[0].replace(/-/g, '.')}
             </div>
             <div className={styles.memberProfile} style={{width: '28.6%'}}>
                 {memberProfile()}
@@ -100,7 +111,25 @@ export function Project({project, process, color, date, allMember, isDark}:Proje
 export default function Members() {
     const token = useUserStore((store) => store.token)
     const isDark = useThemeStore((stroe) => stroe.isDark)
-    const [data, setData] = useState<dataType[]>([])
+    const [data, setData] = useState<dataType[]>([])	
+    const [profileImg, setProfileImg] = useState("");
+
+
+    const getUser = async () => {
+		try {
+			const res = await axios.get(
+				`${import.meta.env.VITE_BASE_URL}/users`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			setProfileImg(res.data.profile_image)
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
     const getProject = async() => {
         try {
@@ -117,6 +146,7 @@ export default function Members() {
 
     useEffect(() => {
         getProject()
+        getUser()
     }, [])
 
     return (
@@ -134,7 +164,7 @@ export default function Members() {
                 </div>
                 <ProjectContainer isDark={isDark}>
                     {data.length>0 && data.map((d, i) => (
-                        <Project key={d.title+i} project={d.title} process={d.process} color={d.color} date={d.end_date} allMember={d.team_members} isDark={isDark} />
+                        <Project key={d.title+i} project={d.title} process={d.process} color={d.color} date={d.end_date} allMember={d.team_members} isDark={isDark} myProfile={profileImg}/>
                     ))}
                 </ProjectContainer>
             </div>
