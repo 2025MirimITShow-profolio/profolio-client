@@ -8,14 +8,17 @@
 	pointer-events: none;
 	overflow: hidden;
 }
+
 .circleSvg {
 	width: 100vw;
 	height: 100vh;
 	overflow: visible;
 }
+
 .circleNumber:hover {
 	fill: #b7a3e6 !important;
 }
+
 .sidebarCover {
 	position: absolute;
 	left: 0;
