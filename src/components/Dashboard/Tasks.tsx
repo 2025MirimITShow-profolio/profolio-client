@@ -18,11 +18,13 @@ export function Task({task, getTasks, edit, isDark}:TaskProps) {
 
     const deleteClick = async() => {
         try {
+            console.log("task id :", task.id);
             const res = await axios.delete(`http://localhost:3000/api/tasks/${task.id}`, {
                 headers : {
                     Authorization: `Bearer ${token}`
                 }
             })
+            getTasks();
         } catch (error) {
             console.log(error);
         }
@@ -36,7 +38,7 @@ export function Task({task, getTasks, edit, isDark}:TaskProps) {
                     Authorization: `Bearer ${token}`
                 }
             })
-            // getTasks()   
+            getTasks()   
         } catch (error) {
             console.log(error);
         }
@@ -46,16 +48,16 @@ export function Task({task, getTasks, edit, isDark}:TaskProps) {
         <div className={styles.task} style={(!edit && hovered)?{backgroundColor: '#F5F6F8', padding: '10px 13px', width: '100%', borderRadius: '6px', cursor: 'pointer'}:{}} onMouseMove={() => {setHovered(true)}} onMouseLeave={() => {setHovered(false)}}>
             {edit && <div 
                 className={styles.doneBtn}
-                style={{backgroundColor: done?'#8734FD':isDark?'#41414E':'#EEEEEE'}}
+                style={{backgroundColor: task.is_done?'#8734FD':isDark?'#41414E':'#EEEEEE'}}
                 onClick={() => {setDone(pre => !pre); doneClick()}}
             >
-                {edit && done && 
+                {edit && task.is_done && 
                     <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1 6.26316L5.5 11L15 1" stroke="white" stroke-width="2.5"/>
                     </svg>
                 }
             </div>}
-            <div className={styles.text} style={done?{textDecoration: 'line-through'}:{}}>
+            <div className={styles.text} style={task.is_done?{textDecoration: 'line-through'}:{}}>
                 {task.title}
             </div>
             {!edit && hovered && (
@@ -70,6 +72,7 @@ export function Task({task, getTasks, edit, isDark}:TaskProps) {
 type TaskType = {
     id: number
     title: string,
+    is_done: boolean;
 }
 
 export default function Tasks() {
@@ -83,7 +86,7 @@ export default function Tasks() {
     const getTasks = async() => {
         try {
             console.log(token);
-            const res = await axios.get('http://localhost:3000/api/tasks', {
+            const res = await axios.get('http://localhost:3000/api/tasks/all', {
                 headers : {
                     Authorization: `Bearer ${token}`
                 }
