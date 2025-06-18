@@ -34,6 +34,7 @@ const ProjectList = () => {
       id: number;
       title: string;
       description: string;
+			is_shared: boolean;
    }
 
    useEffect(() => {
@@ -60,6 +61,25 @@ const ProjectList = () => {
       } finally {
       }
    };
+
+	 const updateProject = async () => {
+		try {
+			const res = await axios.patch(
+				`${import.meta.env.VITE_BASE_URL}/projects/${
+					centerProject.id
+				}/status`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+
+			getProjects();
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
    useEffect(() => {
       getProjects();
@@ -91,6 +111,8 @@ const filteredProjects = useMemo(() => {
    }, [angle, filteredProjects.length]);
 
    const centerProject = filteredProjects[centerIdx];
+	 console.log('centerProject : ', centerProject)
+	 //console.log('centerProject.is_shared : ', centerProject.is_shared)
 
    // 프로젝트 추가
    const handleCreate = (title: string, description: string) => {
@@ -117,7 +139,7 @@ const filteredProjects = useMemo(() => {
 
    // 공유
    const handleShare = (id: number) => {
-      alert(`프로젝트 ${id} 공유!`);
+			updateProject();
    };
 
    // 반원에서 인덱스 클릭 시 해당 각도로 이동
@@ -187,6 +209,7 @@ const filteredProjects = useMemo(() => {
                         description={centerProject.description}
                         onDelete={() => handleDelete(centerProject.id)}
                         onShare={() => handleShare(centerProject.id)}
+												shared={centerProject.is_shared}
                         onTitleClick={() =>
                            handleProjectClick(centerProject.id)
                         }

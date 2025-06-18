@@ -6,11 +6,13 @@ import { useUserStore } from "../../store/userStore";
 interface ProjectMenuButtonProps {
 	onDelete: () => void;
 	onShare: () => void;
+	shared: boolean
 }
 
 export default function ProjectMenuButton({
 	onDelete,
 	onShare,
+	shared
 }: ProjectMenuButtonProps) {
 	const [open, setOpen] = useState(false);
 	const ref = useRef<HTMLDivElement>(null);
@@ -91,6 +93,7 @@ export default function ProjectMenuButton({
 					>
 						삭제하기
 					</button>
+
 					<button
 						style={{
 							color: isDark ? "#fff" : "#23222B",
@@ -106,7 +109,7 @@ export default function ProjectMenuButton({
 						}
 						onClick={onShare}
 					>
-						공유하기
+						{shared? '공유 중지하기':'공유하기'}
 					</button>
 				</div>
 			)}

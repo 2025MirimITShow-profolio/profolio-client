@@ -9,6 +9,7 @@ interface ProjectMainInfoProps {
 	onDelete: () => void;
 	onShare: () => void;
 	onTitleClick: () => void;
+	shared: boolean
 }
 
 export default function ProjectMainInfo({
@@ -17,8 +18,10 @@ export default function ProjectMainInfo({
 	onDelete,
 	onShare,
 	onTitleClick,
+	shared
 }: ProjectMainInfoProps) {
 	const isDark = useThemeStore((store) => store.isDark);
+	console.log(shared)
 
 	return (
 		<div
@@ -37,7 +40,7 @@ export default function ProjectMainInfo({
 				>
 					{title}
 				</span>
-				<ProjectMenuButton onDelete={onDelete} onShare={onShare} />
+				<ProjectMenuButton onDelete={onDelete} onShare={onShare} shared={shared}/>
 			</div>
 			<div className={styles.projectDesc}>{description}</div>
 		</div>
