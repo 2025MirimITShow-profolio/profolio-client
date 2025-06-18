@@ -24,20 +24,14 @@
 }
 
 .projectlist-header-wide {
-	position: absolute;
-	top: -6px;
-	/* width: 40%; */
-	right: 50px;
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-	gap: 32px;
-	z-index: 10;
+	margin-top: 26px;
+	margin-right: 9px;
+	z-index: 1000;
 }
 
-.projectlist-container.dark .projectlist-header-wide {
+/* .projectlist-container.dark .projectlist-header-wide {
 	background: #181822 !important;
-}
+} */
 
 .projectlist-circle-section-wide {
 	position: relative;
