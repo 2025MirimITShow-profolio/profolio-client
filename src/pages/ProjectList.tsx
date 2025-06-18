@@ -170,9 +170,9 @@ const ProjectList = () => {
 
 	const handleBack = () => setSelectedProjectId(null);
 
-	if (selectedProjectId !== null) {
+	if (projectId !== null) {
 		// AllProject만 보이게
-		return <AllProject projectId={selectedProjectId} onBack={handleBack} />;
+		return <AllProject key={projectId} projectId={projectId} onBack={handleBack} />;
 	}
 
 	return (
