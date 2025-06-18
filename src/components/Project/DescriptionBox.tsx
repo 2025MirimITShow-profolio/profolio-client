@@ -29,6 +29,7 @@ export default function DescriptionBox({ projectId, readonly }: { projectId: num
   const [isAddingSkill, setIsAddingSkill] = useState(false)
   const [newSkill, setNewSkill] = useState('');
   const [isEditMode, setIsEditMode] = useState(false);
+  const [profile, setProfile] = useState<string[]>([])
   const memberBoxRef = useRef<HTMLDivElement>(null);
   const skillBoxRef = useRef<HTMLDivElement>(null);
 
@@ -40,14 +41,14 @@ export default function DescriptionBox({ projectId, readonly }: { projectId: num
             Authorization: `Bearer ${token}`
           }
         })
-        const { title, description, start_date, end_date, links, team_members, skills } = res.data;
-
+        const { title, description, start_date, end_date, links, team_members, member_profile, skills } = res.data;
         setPrjTitle(title || '');
         setDescription(description || '');
         setStartDate(start_date ? new Date(start_date.replace(" ", "T")) : new Date());
         setEndDate(end_date ? new Date(end_date.replace(" ", "T")) : new Date());
         setLinks(links || '');
         setTeamMembers(team_members ? team_members.split(',') : []);
+        setProfile(member_profile ? member_profile.split(',') : []);
         setSkills(skills ? skills.split(',') : []);
         console.log(title, description);
       } catch (err) {
@@ -274,6 +275,8 @@ export default function DescriptionBox({ projectId, readonly }: { projectId: num
             <button
               onClick={() => {
                 if (newMember.trim()) {
+                  const num = `${Math.floor(Math.random() * 12) + 2}`
+                  setProfile([...profile, num])
                   setTeamMembers([...teamMembers, newMember.trim()]);
                   setNewMember('');
                   setIsAddingMember(false);
@@ -334,7 +337,7 @@ export default function DescriptionBox({ projectId, readonly }: { projectId: num
             {teamMembers.map((member, index) => (
               <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <img
-                  src={profileImages[index % profileImages.length]}
+                  src={`/images/profile/profile${profile[index]}.png`}
                   alt={`프로필 ${member}`}
                   style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }}
                 />
