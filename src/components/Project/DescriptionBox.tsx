@@ -90,6 +90,7 @@ export default function DescriptionBox({ projectId, readonly }: { projectId: num
         end_date: endDate.toISOString(),
         links,
         team_members: teamMembers.join(','),
+        member_profile: profile.join(','),
         skills: skills.join(',')
       }, {
         headers: {
