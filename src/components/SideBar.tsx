@@ -82,13 +82,23 @@ export default function SideBar({setMenu}:SideBarProps) {
     }
     const allSharedProject = async() => {
         try {
-            const res = await axios.get('http://localhost:3000/api/shared-projects', {
+            const res = await axios.get('http://localhost:3000/api/projects/shared', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
+
+            console.log(res.data)
+
+            
+            const sharedprojectres = res.data.map((project: any) => ({
+                title: project.title,
+                id: project.id
+            }));
+
             let menu = [...menus]
-            menu[2].more = res.data
+            menu[2].more = sharedprojectres
+            console.log('sharedprojectres : ', sharedprojectres)
             setMenus(menu)
         } catch (error) {
             console.log(error);
