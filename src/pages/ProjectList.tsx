@@ -20,9 +20,8 @@ const ProjectList = () => {
 	const wheelCooldown = useRef(false);
 	const [deleteOpen, setDeleteOpen] = useState(false);
 	const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
-	const [selectedProjectId, setSelectedProjectId] = useState<number | null>(
-		null
-	);
+	const projectId = useUserStore((store) => store.projectId)
+	const setProjectId = useUserStore((store) => store.setProjectId)
 
 	const navigate = useNavigate();
 	const isDark = useThemeStore((state) => state.isDark);
@@ -63,13 +62,12 @@ const ProjectList = () => {
 		getProjects();
 	}, []);
 
-	const filteredProjects = useMemo(
-		() =>
-			projects.filter((p) =>
-				p.title.toLowerCase().includes(search.toLowerCase())
-			),
-		[projects, search]
-	);
+const filteredProjects = useMemo<Project[]>(() => {
+    if (!Array.isArray(projects)) return [];
+    return projects.filter((p) =>
+        p.title.toLowerCase().includes(search.toLowerCase())
+    );
+}, [projects, search]);
 
 	// 중앙(270도)에 가장 가까운 프로젝트 인덱스 계산
 	const centerIdx = useMemo(() => {
@@ -141,14 +139,14 @@ const ProjectList = () => {
 
 	// 프로젝트 제목 클릭 시
 	const handleProjectClick = (id: number) => {
-		setSelectedProjectId(id);
+		setProjectId(id);
 	};
 
-	const handleBack = () => setSelectedProjectId(null);
+	const handleBack = () => setProjectId(null);
 
-	if (selectedProjectId !== null) {
+	if (projectId !== null) {
 		// AllProject만 보이게
-		return <AllProject projectId={selectedProjectId} onBack={handleBack} />;
+		return <AllProject projectId={projectId} onBack={handleBack} />;
 	}
 
 	return (

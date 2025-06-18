@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import styles from '../style/SearchProject.module.css'
 import { useThemeStore } from "../store/themeStore"
+import { useUserStore } from "../store/userStore"
 
 type ProjectNameProps = {
     name: string,
@@ -10,6 +11,7 @@ type ProjectNameProps = {
 }
 
 export function ProjectName({name, idx, selectProject, setSelectProject}:ProjectNameProps) {
+    const setProjectId = useUserStore((store) => store.setProjectId)
     const [color, setColor] = useState('')
     const isDark = useThemeStore((state) => state.isDark)
     const textRef = useRef<HTMLSpanElement>(null)
@@ -38,7 +40,7 @@ export function ProjectName({name, idx, selectProject, setSelectProject}:Project
         <div 
             className={styles.empty}
             style={{backgroundColor: idx === selectProject ? (isDark ? '#DDDDDD' : '#555555') : undefined, color: color}}
-            onClick={() => setSelectProject?.(idx)}
+            onClick={() => {setSelectProject?.(idx); setProjectId(idx)}}
         >
             <div
                 ref={containerRef}
