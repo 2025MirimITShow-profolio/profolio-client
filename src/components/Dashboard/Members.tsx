@@ -145,11 +145,14 @@ export default function Members() {
 
 	const getProject = async () => {
 		try {
-			const res = await axios.get("http://localhost:3000/api/projects", {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
+			const res = await axios.get(
+				`${import.meta.env.VITE_BASE_URL}/projects`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
 			setData(res.data);
 		} catch (error) {
 			console.log(error);
