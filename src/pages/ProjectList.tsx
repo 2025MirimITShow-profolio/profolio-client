@@ -24,7 +24,6 @@ const ProjectList = () => {
 		null
 	);
 
-	const navigate = useNavigate();
 	const isDark = useThemeStore((state) => state.isDark);
 	const token = useUserStore((store) => store.token);
 
@@ -56,6 +55,23 @@ const ProjectList = () => {
 		} catch (e) {
 			console.error("프로젝트 불러오기 실패 : ", e);
 		} finally {
+		}
+	};
+
+	const updateProject = async () => {
+		try {
+			const res = await axios.patch(
+				`${import.meta.env.VITE_BASE_URL}/projects/${
+					centerProject.id
+				}/status`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
@@ -115,7 +131,7 @@ const ProjectList = () => {
 
 	// 공유
 	const handleShare = (id: number) => {
-		alert(`프로젝트 ${id} 공유!`);
+		updateProject();
 	};
 
 	// 반원에서 인덱스 클릭 시 해당 각도로 이동

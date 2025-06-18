@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "../../style/ProjectMenuButton.module.css";
 import { useThemeStore } from "../../store/themeStore";
+import { useUserStore } from "../../store/userStore";
 
 interface ProjectMenuButtonProps {
 	onDelete: () => void;
