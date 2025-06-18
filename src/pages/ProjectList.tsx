@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from "react";
-import ProjectCircleNav from "../components/Project/ProjectCircleNav";
+import {ProjectCircleNav} from "../components/Project/ProjectCircleNav";
 import ProjectMainInfo from "../components/Project/ProjectMainInfo";
 import ProjectAddButton from "../components/Project/ProjectAddButton";
 import ProjectAddModal from "../components/Project/ProjectAddModal";
@@ -172,7 +172,7 @@ const filteredProjects = useMemo(() => {
 
    if (projectId !== null) {
       // AllProject만 보이게
-      return <AllProject projectId={projectId} onBack={handleBack} />;
+      return <AllProject key={projectId} projectId={projectId} onBack={handleBack} />;
    }
 
    return (
