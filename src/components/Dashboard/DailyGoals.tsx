@@ -18,6 +18,7 @@ const week = [
 ]
 
 type GoalProps = {
+    isDark: boolean
     goal: number
 }
 
@@ -25,9 +26,9 @@ const Goal = styled.div<GoalProps>`
     width: 100%;
     height: 100%;
     border-radius: 5px;
-    background-color: ${({goal}) => {
+    background-color: ${({goal, isDark}) => {
         if(goal === -1)
-            return '#ECEDED'
+            return isDark?'#d1d1d11a':'#ECEDED'
         if(goal < 2) 
             return '#F3EBFF'
         else if(goal < 4)
@@ -44,6 +45,7 @@ type GoalsContainerProps = DailyGoalsType & {
 }
 
 export function GoalsContainer({currentDate, updateState}: GoalsContainerProps) {
+    const isDark = useThemeStore((store) => store.isDark)
     const token = useUserStore((store) => store.token)
     const [goals, setGoals] = useState<GoalType[] | null>(null)
     const [rotated, setRotated] = useState<GoalType[]>([])
@@ -99,7 +101,7 @@ export function GoalsContainer({currentDate, updateState}: GoalsContainerProps) 
 
     return (
         <div className={styles.goalsContainer} style={{color: '#000'}}>
-            {rotated.map((g, i) => <Goal key={i} goal={g.task_count} />)}
+            {rotated.map((g, i) => <Goal key={i} isDark={isDark} goal={g.task_count} />)}
         </div>
     )
 }

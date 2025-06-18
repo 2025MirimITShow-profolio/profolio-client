@@ -39,32 +39,20 @@ const percent= [
 month.push(endDay[1].getDate())
 const msPerDay = 1000 * 60 * 60 * 24;
 
-// const data = [
-//     { project: "Alpha", start_date: "25-06-15", end_date: "25-06-20" },
-//     { project: "Beta", start_date: "25-06-28", end_date: "25-06-30" },
-//     { project: "Gamma", start_date: "25-06-10", end_date: "25-07-01" },
-//     { project: "Gamma", start_date: "25-06-01", end_date: "25-06-30" },
-//     { project: "Gamma", start_date: "25-06-01", end_date: "25-06-05" },
-//     { project: "Gamma", start_date: "25-06-02", end_date: "25-06-08" },
-//     { project: "Gamma", start_date: "25-06-02", end_date: "25-06-09" },
-//     { project: "Gamma", start_date: "25-06-03", end_date: "25-06-30" },
-//     { project: "Gamma", start_date: "25-06-02", end_date: "25-06-30" },
-//     { project: "Gamma", start_date: "25-05-01", end_date: "25-06-30" },
-// ];
-
-// const parsedData = data.map(item => {
-//     const parseDate = (str:string) => {
-//         const [yy, mm, dd] = str.split('-').map(Number);
-//         const fullYear = 2000 + yy; // "25" → 2025
-//         return new Date(fullYear, mm - 1, dd); // 월은 0부터 시작
-//     };
-
-//     return {
-//         ...item,
-//         start_date: parseDate(item.start_date),
-//         end_date: parseDate(item.end_date)
-//     };
-// });;
+const backColor = [
+    {
+        background: '#E8F0FB',
+        bar: '#BFDAFF',
+    },
+    {
+        background: '#FFEFE8',
+        bar: '#FFD6C4',
+    },
+    {
+        background: '#EAF4F6',
+        bar: '#C1E1E7',
+    },
+]
 
 type IsDarkProps = {
     isDark: boolean
@@ -128,9 +116,11 @@ type ProjectProps = {
     name: string,
     start: Date,
     end: Date,
-    timeUnit: number
+    timeUnit: number,
+    background: string,
+    bar: string,
 }
-export function Project({name, start, end, timeUnit}: ProjectProps) {
+export function Project({name, start, end, timeUnit, background, bar}: ProjectProps) {
     start.setHours(0, 0, 0, 0)
     end.setHours(0, 0, 0, 0)
     const daysWidth = (end.getTime() - start.getTime()) / msPerDay
@@ -156,9 +146,10 @@ export function Project({name, start, end, timeUnit}: ProjectProps) {
             style={{
                 width: `${containerWidth}%`,
                 left: `${containerLeft}%`,
+                backgroundColor: `${background}`
             }}
         >
-            <div className={styles.bar} />
+            <div className={styles.bar} style={{backgroundColor: `${bar}`}}/>
             <p className={styles.name}>{name}</p>
             {isHovering && (
                 <motion.div
@@ -267,11 +258,12 @@ export default function ProjectTimeline() {
 
             <div className={styles.projectContainer}>
                 <ProcessContainer isDark={isDark}>
-                    {projects.map((project, i) =>  (
-                        <Line key={i} isDark={isDark}>
-                            <Project name={project.title} start={new Date(project.start_date)} end={new Date(project.end_date)} timeUnit={timeUnit} />
-                        </Line>
-                    ))}
+                    {projects.map((project, i) =>  {
+                        const random = i%3
+                        return (<Line key={i} isDark={isDark}>
+                            <Project name={project.title} start={new Date(project.start_date)} end={new Date(project.end_date)} timeUnit={timeUnit} background={backColor[random].background} bar={backColor[random].bar} />
+                        </Line>)
+                    })}
                 </ProcessContainer>  
 
                 <UnitBox isDark={isDark}>

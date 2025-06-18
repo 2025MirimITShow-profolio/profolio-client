@@ -51,7 +51,7 @@ type ProjectType = {
     myProfile: string
 }
 
-const MAX_PROFILE = 4;
+const MAX_PROFILE = 3;
 export function Project({project, process, color, date, allMember, isDark, myProfile}:ProjectType) {
     console.log(allMember)
     const member = (allMember==null||allMember.length === 0)? [] :allMember.split(',');

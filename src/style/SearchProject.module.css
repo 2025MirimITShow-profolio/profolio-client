@@ -27,12 +27,14 @@
     border-radius: 5px;
     overflow: hidden;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .projectName {
     width: calc(100% - 34px);
     height: calc(100% - 31px);
-    margin: 15.5px 17px;
     overflow: hidden;
     white-space: nowrap;
 }
@@ -43,6 +45,8 @@
 .text {
     display: inline-block;
     transform: translateX(0);
+    font-weight: 500;
+    font-size: 19px;
 }
 
 @keyframes scrollText {
