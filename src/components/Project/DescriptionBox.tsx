@@ -9,7 +9,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { FiCalendar } from "react-icons/fi";
 import { useUserStore } from "../../store/userStore";
 
-export default function DescriptionBox({ projectId }: { projectId: number }) {
+export default function DescriptionBox({ projectId, readonly }: { projectId: number, readonly: boolean }) {
   const token = useUserStore((store) => store.token)
   const isDark = useThemeStore((store) => store.isDark)
   const [prjTitle, setPrjTitle] = useState('');
@@ -208,16 +208,27 @@ export default function DescriptionBox({ projectId }: { projectId: number }) {
                     {links}
                   </a>
               ) : (
-                <div style={{ fontSize: '19px', color: isDark? '#B886FF' : '#8734FD', textDecoration: 'underline' }}>
-                  링크 추가하기
-                </div>
+                <>
+                {readonly?(
+                  <div style={{ fontSize: '19px', color: isDark? '#B886FF' : '#8734FD', textDecoration: 'underline' }}>
+                    작성된 링크가 없습니다
+                  </div>
+                ):(
+                  <div style={{ fontSize: '19px', color: isDark? '#B886FF' : '#8734FD', textDecoration: 'underline' }}>
+                    링크 추가하기
+                  </div>
+                )}
+                </>
               )
             )}
           </div>
 
-          <div className={styles.btn} onClick={handleButtonClick}>
-            {isEditMode ? '완료하기' : '수정하기'}
-          </div>
+          {!readonly && (
+            <div className={styles.btn} onClick={handleButtonClick}>
+              {isEditMode ? '완료하기' : '수정하기'}
+            </div>
+          )}
+
 
         </div>
 

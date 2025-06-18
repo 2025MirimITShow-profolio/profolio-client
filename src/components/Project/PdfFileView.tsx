@@ -9,7 +9,7 @@ import { useThemeStore } from "../../store/themeStore";
 
 pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
 
-export default function PdfFileView({projectId} : {projectId:number}){
+export default function PdfFileView({projectId, readonly} : {projectId:number, readonly: boolean}){
   const isDark = useThemeStore((store) => store.isDark)
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
@@ -137,42 +137,45 @@ export default function PdfFileView({projectId} : {projectId:number}){
     <div>
       {pdfUrl? (
         <div>
-          <div style={{
-            position: 'relative',
-            display: 'flex',
-            justifyContent: 'flex-end',
-            marginTop: '45px'
-          }}>
-            <FiEdit size={31} color={isDark? '#999':'#777'}
-              className="log-menu-button"
-              style={{ cursor: 'pointer' }} 
-              onClick={() => {
-                setOpenedMenu(true);
-              }}/>
-            {openedMenu && (
-              <button 
-                className="log-menu-popup"
+          {!readonly&&(
+            <div style={{
+              position: 'relative',
+              display: 'flex',
+              justifyContent: 'flex-end',
+              marginTop: '45px'
+            }}>
+              <FiEdit size={31} color={isDark? '#999':'#777'}
+                className="log-menu-button"
+                style={{ cursor: 'pointer' }} 
                 onClick={() => {
-                  handleDelete()
-                }}
-                style={{
-                  position: 'absolute',
-                  right: '46px',
-                  backgroundColor: isDark? '#383843' : '#ffffff',
-                  color: isDark? 'white' : 'black',
-                  boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                  padding: '10px 26px',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                  zIndex: 10,
-                  fontSize: '16px',
-                  width: '109px'
-                }}
-              >
-                삭제하기
-              </button>
-            )}
-          </div>
+                  setOpenedMenu(true);
+                }}/>
+              {openedMenu && (
+                <button 
+                  className="log-menu-popup"
+                  onClick={() => {
+                    handleDelete()
+                  }}
+                  style={{
+                    position: 'absolute',
+                    right: '46px',
+                    backgroundColor: isDark? '#383843' : '#ffffff',
+                    color: isDark? 'white' : 'black',
+                    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                    padding: '10px 26px',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    zIndex: 10,
+                    fontSize: '16px',
+                    width: '109px'
+                  }}
+                >
+                  삭제하기
+                </button>
+              )}
+            </div>
+          )}
+          
           <div className={styles.PageContainer}>
             <Document
               file={pdfUrl}
@@ -191,16 +194,22 @@ export default function PdfFileView({projectId} : {projectId:number}){
 
       ) : (
         <div>
-          <button onClick={handleUploadClick} className={styles.addFileBtn}
+          <button onClick={readonly? ()=>{} :handleUploadClick} className={styles.addFileBtn}
             style={{
               backgroundColor: isDark? '#383843': 'white',
               border: isDark? 'dashed 1px #777777' : 'dashed 1px #eeeeee'
             }}>
-            <div style={{marginBottom: "10px"}}>
-              <FiUpload color="#999999" size={25} style={{margin:"auto", marginBottom:"20px"}}/>
-              <p>클릭하여 포트폴리오 추가하기</p>
-              <p>(PDF)</p>
-            </div>
+            {readonly?(
+              <div style={{marginBottom: "10px"}} >
+                <p>아직 포트폴리오를 등록하지 않았습니다</p>
+              </div>
+            ):(
+              <div style={{marginBottom: "10px"}} >
+                <FiUpload color="#999999" size={25} style={{margin:"auto", marginBottom:"20px"}}/>
+                <p>클릭하여 포트폴리오 추가하기</p>
+                <p>(PDF)</p>
+              </div>
+            )}
           </button>
           <input
            type="file"

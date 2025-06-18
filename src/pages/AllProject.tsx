@@ -12,11 +12,11 @@ export default function AllProject({ projectId }: { projectId: number }) {
 	return (
 		<>
 			<ProjectMenu click={menu} setClick={setMenu} />
-			{menu === 0 && <Portfolio projectId={projectId} />}
+			{menu === 0 && <Portfolio projectId={projectId} readonly={false}/>}
 
-			{menu === 1 && <ProgressLog projectId={projectId} />}
+			{menu === 1 && <ProgressLog projectId={projectId} readonly={false} />}
 
-			{menu === 2 && <ProjectDescription projectId={projectId} />}
+			{menu === 2 && <ProjectDescription projectId={projectId} readonly={false}/>}
 
 			{menu === 3 && <Feedback projectId={projectId} />}
 

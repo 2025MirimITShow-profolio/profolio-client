@@ -14,7 +14,7 @@ type LogItem = {
   createdAt: string;
 };
 
-export default function ProgressLog({ projectId }: { projectId: number }) {
+export default function ProgressLog({ projectId, readonly }: { projectId: number, readonly: boolean }) {
   const isDark = useThemeStore((store) => store.isDark)
   const [isWriting, setIsWriting] = useState(false);
   const [logs, setLogs] = useState<LogItem[]>([]);
@@ -100,75 +100,88 @@ export default function ProgressLog({ projectId }: { projectId: number }) {
             ):(
               <div style={{position: 'relative'}}>
                 <div style={{ display: "flex", flexDirection: "column", gap: "20px", padding: "20px", minWidth: '70vw' }}>
-                  {logs.map((log) => (
-                    <div key={log.id} style={{ display: "flex", gap: "50px", width: '70vw', cursor: 'pointer' }} onClick={() => setSelectedLog(log)}>
-                      <div style={{ width: "355px", height: "201px", backgroundColor: "#ccc" }}>
-                        {log.images?.[0] && (
-                          <img src={log.images[0]} alt="preview" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                        )}
-                      </div>
-                      <div style={{ flex: 1, marginTop: '15px' }}>
-                        <div style={{display: 'flex', gap: '25px', alignItems: 'center'}}>
-                          <div style={{ fontSize: "27px", fontWeight: "500", color: isDark? 'white' : 'black' }}>{log.title}</div>
-                          <div style={{ position: 'relative' }}>
-                            <RxDotsVertical size={17} color='#868686'
-                              className="log-menu-button"
-                              style={{ cursor: 'pointer' }} 
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                toggleMenu(log.id);
-                              }}/>
-                            {openedMenuId === log.id && (
-                              <button 
-                                className="log-menu-popup"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleDelete(log.id)
-                                }}
-                                style={{
-                                  position: 'absolute',
-                                  top: '-8px',
-                                  left: '24px',
-                                  backgroundColor: isDark? '#383843':'#ffffff',
-                                  color: isDark? 'white' : 'black',
-                                  boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                                  padding: '10px 26px',
-                                  borderRadius: '5px',
-                                  cursor: 'pointer',
-                                  zIndex: 10,
-                                  fontSize: '16px',
-                                  width: '109px'
-                                }}
-                              >
-                                삭제하기
-                              </button>
+                  {logs.length===0?(
+                    <div style={{color: '#777777', fontSize: '20px'}}>
+                      작성된 게시글이 없습니다
+                    </div>
+
+                  ):(
+                    <>
+                      {logs.map((log) => (
+                        <div key={log.id} style={{ display: "flex", gap: "50px", width: '70vw', cursor: 'pointer' }} onClick={() => setSelectedLog(log)}>
+                          <div style={{ width: "355px", height: "201px", backgroundColor: "#ccc" }}>
+                            {log.images?.[0] && (
+                              <img src={log.images[0]} alt="preview" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                             )}
                           </div>
+                          <div style={{ flex: 1, marginTop: '15px' }}>
+                            <div style={{display: 'flex', gap: '25px', alignItems: 'center'}}>
+                              <div style={{ fontSize: "27px", fontWeight: "500", color: isDark? 'white' : 'black' }}>{log.title}</div>
+                              {!readonly &&(
+                                <div style={{ position: 'relative' }}>
+                                <RxDotsVertical size={17} color='#868686'
+                                  className="log-menu-button"
+                                  style={{ cursor: 'pointer' }} 
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggleMenu(log.id);
+                                  }}/>
+                                {openedMenuId === log.id && (
+                                  <button 
+                                    className="log-menu-popup"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleDelete(log.id)
+                                    }}
+                                    style={{
+                                      position: 'absolute',
+                                      top: '-8px',
+                                      left: '24px',
+                                      backgroundColor: isDark? '#383843':'#ffffff',
+                                      color: isDark? 'white' : 'black',
+                                      boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                                      padding: '10px 26px',
+                                      borderRadius: '5px',
+                                      cursor: 'pointer',
+                                      zIndex: 10,
+                                      fontSize: '16px',
+                                      width: '109px'
+                                    }}
+                                  >
+                                    삭제하기
+                                  </button>
+                                )}
+                              </div>
+                             )}
+                            </div>
+                            <div style={{ color: "#999", fontSize: "20px", marginTop: "15px", fontWeight: 400 }}>{log.createdAt.slice(0, 10)}</div>
+                          </div>
                         </div>
-                        <div style={{ color: "#999", fontSize: "20px", marginTop: "15px", fontWeight: 400 }}>{log.createdAt.slice(0, 10)}</div>
-                      </div>
-                    </div>
-                  ))}
+                      ))}
+                    </>                    
+                  )}
                 </div>
                 
-                <button
-                  onClick={() => setIsWriting(true)}
-                  style={{
-                    position: 'absolute',
-                    top: '20px',
-                    right: '-20px',
-                    padding: '15px 26px',
-                    backgroundColor: '#8734FD',
-                    color: 'white',
-                    fontSize: '18px',
-                    border: 'none',
-                    borderRadius: '10px',
-                    cursor: 'pointer',
-                    zIndex: 10
-                  }}
-                >
-                  + 작성하기
-                </button>
+                {!readonly&&(
+                  <button
+                    onClick={() => setIsWriting(true)}
+                    style={{
+                      position: 'absolute',
+                      top: '20px',
+                      right: '-20px',
+                      padding: '15px 26px',
+                      backgroundColor: '#8734FD',
+                      color: 'white',
+                      fontSize: '18px',
+                      border: 'none',
+                      borderRadius: '10px',
+                      cursor: 'pointer',
+                      zIndex: 10
+                    }}
+                  >
+                    + 작성하기
+                  </button>
+                )}
               </div>
               
             )

@@ -4,6 +4,7 @@ import { useThemeStore } from "../store/themeStore";
 import styles from '../style/SharedProjects.module.css'
 import axios from "axios";
 import { useUserStore } from "../store/userStore";
+import SharedProjectDetail from "./SharedProjectDetail";
 
 interface Project {
   id: number;
@@ -15,6 +16,9 @@ export default function SharedProjects() {
   const isDark = useThemeStore((store) => store.isDark)
   const token = useUserStore((store) => store.token)
   const [projects, setProjects] = useState<Project[]>([]);
+  const [selectedProjectId, setSelectedProjectId] = useState<number | null>(
+    null
+  );
 
   useEffect(()=>{
     const fetchProject = async () => {
@@ -37,6 +41,15 @@ export default function SharedProjects() {
     const d = new Date(date);
     return `${d.getFullYear()}.${(d.getMonth() + 1).toString().padStart(2, '0')}.${d.getDate().toString().padStart(2, '0')}`;
   }
+    
+  const handleProjectClick = (id: number) => {
+    setSelectedProjectId(id);
+  };
+
+  if (selectedProjectId !== null) {
+    console.log(selectedProjectId)
+    return <SharedProjectDetail projectId={selectedProjectId}/>;
+  }
 
   return (
       <>
@@ -53,7 +66,8 @@ export default function SharedProjects() {
                 <div className={styles.card} key={project.id}
                   style={{
                     backgroundColor: isDark? '#383843':'white'
-                  }}>
+                  }}
+                  onClick={()=>{handleProjectClick(project.id)}}>
                   <div
                     className={styles.image}
                   />
