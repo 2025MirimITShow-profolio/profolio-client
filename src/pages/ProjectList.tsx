@@ -5,7 +5,6 @@ import ProjectAddButton from "../components/Project/ProjectAddButton";
 import ProjectAddModal from "../components/Project/ProjectAddModal";
 import ProjectDeleteModal from "../components/Project/ProjectDeleteModal";
 import "../style/ProjectListPage.css";
-import { useNavigate } from "react-router-dom";
 import AllProject from "./AllProject";
 import { useThemeStore } from "../store/themeStore";
 import ProfileOnly from "../components/ProfileOnly";
@@ -15,7 +14,7 @@ import { useUserStore } from "../store/userStore";
 const ProjectList = () => {
 	const [projects, setProjects] = useState<Project[]>([]);
 	const [angle, setAngle] = useState(0);
-	const [search, setSearch] = useState("");
+	const [search] = useState("");
 	const [addOpen, setAddOpen] = useState(false);
 	const wheelCooldown = useRef(false);
 	const [deleteOpen, setDeleteOpen] = useState(false);
@@ -24,8 +23,6 @@ const ProjectList = () => {
 	const setProjectId = useUserStore((store) => store.setProjectId);
 	const [centerProject, setCenterProject] = useState<Project | null>(null);
 
-
-	const navigate = useNavigate();
 	const isDark = useThemeStore((state) => state.isDark);
 	const token = useUserStore((store) => store.token);
 
@@ -65,7 +62,7 @@ const ProjectList = () => {
 		try {
 			const res = await axios.patch(
 				`${import.meta.env.VITE_BASE_URL}/projects/${
-					centerProject.id
+					centerProject?.id
 				}/status`,
 				{
 					headers: {
@@ -112,7 +109,7 @@ const ProjectList = () => {
 	useEffect(() => {
 		setCenterProject(filteredProjects[centerIdx]);
 	}, [centerIdx, filteredProjects]);
-	
+
 	// 프로젝트 추가
 	const handleCreate = (title: string, description: string) => {
 		getProjects();
@@ -167,7 +164,6 @@ const ProjectList = () => {
 		setProjectId(id);
 	};
 
-
 	if (projectId !== null) {
 		return <AllProject key={projectId} projectId={projectId} />;
 	}
@@ -208,11 +204,9 @@ const ProjectList = () => {
 								onDelete={() => handleDelete(centerProject.id)}
 								onShare={() => handleShare(centerProject.id)}
 								shared={centerProject.is_shared}
-								onTitleClick={() =>{
-									handleProjectClick(centerProject.id)
-								}
-
-								}
+								onTitleClick={() => {
+									handleProjectClick(centerProject.id);
+								}}
 							/>
 						)}
 						<ProjectDeleteModal
