@@ -28,11 +28,11 @@ const Goal = styled.div<GoalProps>`
     background-color: ${({goal}) => {
         if(goal === -1)
             return '#ECEDED'
-        if(goal < 1) 
+        if(goal < 2) 
             return '#F3EBFF'
         else if(goal < 4)
             return '#CFAEFE'
-        else if(goal < 7)
+        else if(goal < 6)
             return '#CFAEFE'
         else
             return '#8734FD'
