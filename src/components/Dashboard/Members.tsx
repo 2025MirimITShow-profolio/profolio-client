@@ -52,7 +52,10 @@ type ProjectType = {
 
 const MAX_PROFILE = 4;
 export function Project({project, process, color, date, allMember, isDark}:ProjectType) {
-    const member = allMember.split(' ')
+    console.log('allMember : ', allMember.length)
+    const member = (allMember.length === 0)? [] :allMember.split(',');
+
+    console.log('member : ', member);
     const memberProfile = () => {
         const element: ReactNode[] = []
         for(let i=0; i<member.length && i<MAX_PROFILE; i++){
