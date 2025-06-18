@@ -7,7 +7,16 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useUserStore } from "../store/userStore";
 import axios from "axios";
 
-const menusData = [
+type MenusDataType = {
+    src: string,
+    title: string,
+    more?: {
+        title: string,
+        id: number
+    }[]
+}
+
+const menusData:MenusDataType[] = [
     {
         src: 'dashboard',
         title: 'Dashboard',
@@ -21,7 +30,7 @@ const menusData = [
         src: 'sharedProjects',
         title: 'Shared projects',
         more: [],
-    }
+    },
 ]
 
 type SideBarProps = {

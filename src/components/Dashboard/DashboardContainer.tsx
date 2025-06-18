@@ -38,6 +38,7 @@ const simpleItem = [
 export default function DashboardContainer() {
     const token = useUserStore((store) => store.token)
     const [simpleBox, setSimpleBox] = useState(simpleItem)
+    const [updateState, setUpdateState] = useState(1)
 
     const getProjectCount = async() => {
         try {
@@ -80,6 +81,11 @@ export default function DashboardContainer() {
         console.log(simpleBox);
     }, [simpleBox])
 
+    useEffect(() => {
+        getProjectCount()
+        getTaskCount()
+    }, [updateState])
+
     return (
         <div className={styles.dashboardContainer}>
             <div 
@@ -92,9 +98,9 @@ export default function DashboardContainer() {
                 </div>
                 <div className={styles.gridContainer}>
                     <ProjectTimeline />
-                    <Tasks />
+                    <Tasks setUpdateState={setUpdateState}/>
                     <Members />
-                    <DailyGoals />
+                    <DailyGoals updateState={updateState}/>
                 </div>
 
             </div>

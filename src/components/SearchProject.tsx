@@ -59,7 +59,10 @@ export function ProjectName({name, idx, selectProject, setSelectProject}:Project
 }
 
 type SearchProjectProps = {
-    projects: string[],
+    projects: {
+        title: string,
+        id: number
+    }[],
     title?: string,
     clickedMenu?: string,
 }
@@ -75,7 +78,7 @@ export default function SearchProject({projects, title, clickedMenu}:SearchProje
         >
             <div className={styles.projectListContainer}>
                 {projects.map((pro, i) => (
-                    <ProjectName key={pro + i} name={pro} idx={i} selectProject={selectProject} setSelectProject={setSelectProject} />
+                    <ProjectName key={pro.id + i} name={pro.title} idx={pro.id} selectProject={selectProject} setSelectProject={setSelectProject} />
                 ))}
             </div>
         </div>

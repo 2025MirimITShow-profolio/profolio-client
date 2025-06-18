@@ -39,11 +39,11 @@ const Goal = styled.div<GoalProps>`
     }}
 `
 
-type GoalsContainerProps = {
+type GoalsContainerProps = DailyGoalsType & {
   currentDate: Date;
 }
 
-export function GoalsContainer({currentDate}: GoalsContainerProps) {
+export function GoalsContainer({currentDate, updateState}: GoalsContainerProps) {
     const token = useUserStore((store) => store.token)
     const [goals, setGoals] = useState<GoalType[] | null>(null)
     const [rotated, setRotated] = useState<GoalType[]>([])
@@ -95,7 +95,7 @@ export function GoalsContainer({currentDate}: GoalsContainerProps) {
     useEffect(() => {
         getDailyTask()
         // alert(currentDate);
-    }, [currentDate])
+    }, [currentDate, updateState])
 
     return (
         <div className={styles.goalsContainer} style={{color: '#000'}}>
@@ -104,7 +104,11 @@ export function GoalsContainer({currentDate}: GoalsContainerProps) {
     )
 }
 
-export default function DailyGoals() {
+type DailyGoalsType = {
+    updateState: number
+}
+
+export default function DailyGoals({updateState}:DailyGoalsType) {
     const isDark = useThemeStore((store) => store.isDark)
     const [currentDate, setCurrentDate] = useState<Date>(new Date())
 
@@ -148,7 +152,7 @@ export default function DailyGoals() {
                 <div className={styles.dateContainer}>
                     {date.map((d, i) => <p key={i}>{d}</p>)}
                 </div>
-                <GoalsContainer currentDate={currentDate} />
+                <GoalsContainer currentDate={currentDate} updateState={updateState}/>
                 <div />
                 <div className={styles.weekContainer}>
                     {week.map((w, i) => <p key={i}>{w}</p>)}
