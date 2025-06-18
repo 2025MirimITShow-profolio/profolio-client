@@ -19,7 +19,11 @@ export default function ProjectDetail({
 		<div className={styles.detailContainer}>
 			<div className={styles.titleRow}>
 				<h2 className={styles.name}>{name}</h2>
-				<ProjectMenuButton onDelete={onDelete} onShare={onShare} />
+				<ProjectMenuButton
+					onDelete={onDelete}
+					onShare={onShare}
+					shared={true}
+				/>
 			</div>
 			<p className={styles.description}>{description}</p>
 		</div>
