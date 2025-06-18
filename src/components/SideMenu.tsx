@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
+import { useUserStore } from '../store/userStore'
+import { useEffect } from 'react'
 
 const MenuBtn = styled.div<MenuBtnProps>`
   cursor: pointer;
@@ -68,11 +70,17 @@ export default function SideMenu({
   setMenu
 }: SideMenuProps) {
   const active = clickedMenu === title
-
+  const projectId = useUserStore((store) => store.projectId)
+  const setProjectId = useUserStore((store) => store.setProjectId)
   const handleClick = () => {
+    setProjectId(null)
     setClickedMenu(title)
     setMenu(idx)
   }
+
+  useEffect(() => {
+    console.log(projectId);
+  }, [projectId])
 
   return (
     <MenuBtn active={active} onClick={handleClick}>
