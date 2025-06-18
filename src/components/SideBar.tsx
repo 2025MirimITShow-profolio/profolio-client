@@ -5,8 +5,9 @@ import SideMenu from "./SideMenu";
 import SearchProject from "./SearchProject";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useUserStore } from "../store/userStore";
+import axios from "axios";
 
-const menus = [
+const menusData = [
     {
         src: 'dashboard',
         title: 'Dashboard',
@@ -14,30 +15,12 @@ const menus = [
     {
         src: 'allProjects',
         title: 'All projects',
-        more: [
-            '키오스크 리디자인키오스크 리디자인키오스크 리디자인 키오스크 리디자인키오스크 리디자인키오스크 리디자인',
-            '키오스크 리디자인키오스크 리디',
-            '투두리스트',
-            '프로폴리오',
-            '투두리스트',
-            '프로폴리오',
-            '키오스크 리디자인',
-            '투두리스트',
-            '프로폴리오',
-            '투두리스트',
-            '프로폴리오',
-        ],
+        more: [],
     },
     {
         src: 'sharedProjects',
         title: 'Shared projects',
-        more: [
-            '키오스크 리디자인',
-            '투두리스트',
-            '프로폴리오',
-            '투두리스트',
-            '프로폴리오',
-        ],
+        more: [],
     }
 ]
 
@@ -51,7 +34,9 @@ export default function SideBar({setMenu}:SideBarProps) {
     const isDark = useThemeStore((state) => state.isDark)
     const [clickedMenu, setClickedMenu] = useState('Dashboard')
     const [open, setOpen] = useState(false)
+    const [menus, setMenus] = useState(menusData)
     const location = useLocation();
+    const token = useUserStore((store) => store.token)
 
     useEffect(() => {
         if (location.pathname.startsWith('/project')) {
@@ -71,6 +56,40 @@ export default function SideBar({setMenu}:SideBarProps) {
         setToken('')
         navigate('/')
     }
+
+    const allProject = async() => {
+        try {
+            const res = await axios.get('http://localhost:3000/api/projects', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            let menu = [...menus]
+            menu[1].more = res.data
+            setMenus(menu)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const allSharedProject = async() => {
+        try {
+            const res = await axios.get('http://localhost:3000/api/shared-projects', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            let menu = [...menus]
+            menu[2].more = res.data
+            setMenus(menu)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        allProject()
+        allSharedProject()
+    }, [])
 
     return (
         <div 
@@ -97,7 +116,7 @@ export default function SideBar({setMenu}:SideBarProps) {
                         setMenu={setMenu}
                     />
                     {
-                        (menu.more && clickedMenu===menu.title && !open) && 
+                        (menu.more && menu.more.length > 0 && clickedMenu===menu.title && !open) && 
                         <SearchProject projects={menu.more} title={menu.title} clickedMenu={clickedMenu} />
                     }
                 </div>
