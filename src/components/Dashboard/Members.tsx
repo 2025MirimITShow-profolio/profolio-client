@@ -10,6 +10,7 @@ type dataType = {
     process: number,
     end_date: string,
     team_members: string,
+    member_profile: string,
     color: string
 }
 
@@ -47,34 +48,26 @@ type ProjectType = {
     color: string,
     date: string,
     allMember: string,
+    allProfile: string,
     isDark: boolean,
     myProfile: string
 }
 
 const MAX_PROFILE = 3;
-export function Project({project, process, color, date, allMember, isDark, myProfile}:ProjectType) {
+export function Project({project, process, color, date, allMember, isDark, allProfile}:ProjectType) {
     console.log(allMember)
     const member = (allMember==null||allMember.length === 0)? [] :allMember.split(',');
+    const profile = (allProfile==null||allMember.length===0)? [] :allProfile.split(',');
 
-    console.log('myprofile : ', myProfile)
     console.log('member : ', member);
     const memberProfile = () => {
         const element: ReactNode[] = []
-        element.push(
-            <div className={styles.profile}>
-                {/* 내 프로필 */}
-                <img 
-                    src={`/images/profile/profile${myProfile}.png`}
-                    alt='내 프로필'
-                />
-            </div>
-        )
         for(let i=0; i<member.length && i<MAX_PROFILE; i++){
             element.push(
                 <div className={styles.profile}>
                     {/* todo : 프로필 이미지로 변경 */}
                     <img 
-                        src={`/images/profile/profile${Math.floor(Math.random() * 12) + 2}.png`}
+                        src={`/images/profile/profile${profile[i]}.png`}
                         alt='프로필'
                     />
                 </div>
@@ -164,7 +157,7 @@ export default function Members() {
                 </div>
                 <ProjectContainer isDark={isDark}>
                     {data.length>0 && data.map((d, i) => (
-                        <Project key={d.title+i} project={d.title} process={d.process} color={d.color} date={d.end_date} allMember={d.team_members} isDark={isDark} myProfile={profileImg}/>
+                        <Project key={d.title+i} project={d.title} process={d.process} color={d.color} date={d.end_date} allMember={d.team_members} isDark={isDark} allProfile={d.member_profile}/>
                     ))}
                 </ProjectContainer>
             </div>

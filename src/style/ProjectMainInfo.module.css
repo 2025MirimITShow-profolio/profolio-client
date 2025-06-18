@@ -1,12 +1,12 @@
 .mainInfoContainer {
 	position: absolute;
 	left: 50%;
-	top: 65%;
+	top: 50%;
 	transform: translate(-10%, -50%);
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	gap: 24px;
+	gap: 14px;
 	z-index: 10;
 }
 .projectNumber {
@@ -18,7 +18,7 @@
 	min-width: 110px;
 }
 .projectName {
-	font-size: 72px;
+	font-size: 95px;
 	font-weight: 700;
 	cursor: pointer;
 	transition: color 0.2s;
@@ -28,7 +28,6 @@
 	font-size: 1.3rem;
 	color: #888;
 	font-weight: 400;
-	margin-top: 18px;
 	width: 100%;
 	white-space: pre-line;
 	line-height: 2;
