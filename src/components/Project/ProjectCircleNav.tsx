@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import styles from "../../style/ProjectCircleNav.module.css";
 import { useThemeStore } from "../../store/themeStore";
 
@@ -11,18 +11,18 @@ interface ProjectCircleNavProps {
 
 const SIDEBAR_WIDTH = 100;
 
-const ProjectCircleNav: React.FC<ProjectCircleNavProps> = ({
+export function ProjectCircleNav({
 	count,
 	activeIdx,
 	onChange,
 	angle,
-}) => {
+}: ProjectCircleNavProps) {
 	const isDark = useThemeStore((store) => store.isDark);
 
-	// 동적으로 화면 크기 계산 (반지름을 더 크게)
-	const { cx, cy, radius, svgW, svgH } = useMemo(() => {
+	// state로 창 크기에 따른 계산
+	const [dimensions, setDimensions] = useState(() => {
 		const h = window.innerHeight;
-		const r = (h * 1.2) / 2; // 기존 0.95에서 1.2로 확대
+		const r = (h * 1.2) / 2;
 		return {
 			cx: SIDEBAR_WIDTH,
 			cy: h / 2,
@@ -30,15 +30,33 @@ const ProjectCircleNav: React.FC<ProjectCircleNavProps> = ({
 			svgW: SIDEBAR_WIDTH + r + 200,
 			svgH: h,
 		};
+	});
+
+	useEffect(() => {
+		const handleResize = () => {
+			const h = window.innerHeight;
+			const r = (h * 1.2) / 2;
+			setDimensions({
+				cx: SIDEBAR_WIDTH,
+				cy: h / 2,
+				radius: r,
+				svgW: SIDEBAR_WIDTH + r + 200,
+				svgH: h,
+			});
+		};
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
-	// 원 전체(360도)에 균등 분배, 0번 인덱스가 270도(오른쪽 중앙)에 오도록
+	const { cx, cy, radius, svgW, svgH } = dimensions;
+
+	// 각도 계산 (원 전체 360도를 균등 분배하여 0번 인덱스가 270도에 위치)
 	const getTheta = (idx: number) => (360 / count) * idx - 270;
 
-	// 중앙(270도)에 가장 가까운 프로젝트 인덱스 계산
+	// 현재 중앙에 가까운 인덱스 계산 (centerIdx)
 	const centerIdx = useMemo(() => {
 		if (count === 0) return 0;
-		let minDiff = 9999;
+		let minDiff = Infinity;
 		let minIdx = 0;
 		for (let i = 0; i < count; i++) {
 			const theta = (360 / count) * i;
@@ -78,14 +96,12 @@ const ProjectCircleNav: React.FC<ProjectCircleNavProps> = ({
 						transformOrigin: `${cx}px ${cy}px`,
 					}}
 				/>
-				{/* 숫자와 점: 원 전체에 균등 분배 */}
+				{/* 숫자와 점 */}
 				{Array.from({ length: count }).map((_, idx) => {
 					const theta = getTheta(idx) + angle;
 					const rad = (theta * Math.PI) / 180;
-					// 점 위치: 원의 경계선 위
 					const dotX = cx + radius * Math.cos(rad);
 					const dotY = cy + radius * Math.sin(rad);
-					// 숫자 위치: 점보다 더 바깥쪽(간격 80px)
 					const x = cx + (radius + 80) * Math.cos(rad);
 					const y = cy + (radius + 80) * Math.sin(rad);
 					const isCenter = idx === activeIdx;
@@ -143,6 +159,4 @@ const ProjectCircleNav: React.FC<ProjectCircleNavProps> = ({
 			</svg>
 		</div>
 	);
-};
-
-export default ProjectCircleNav;
+}
