@@ -96,7 +96,7 @@ export default function SideMenu({
           src={`/images/${active ? 'upBtn' : 'downBtn'}.svg`}
           alt={active ? '접기' : '펼치기'}
           onClick={(e) => {
-            e.stopPropagation()
+            // e.stopPropagation()
             setClickedMenu(title)
             setOpen(!open)
           }}

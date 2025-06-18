@@ -50,7 +50,7 @@ export default function SharedProjects() {
 
   if (projectId !== null) {
     console.log(selectedProjectId)
-    return <SharedProjectDetail projectId={projectId}/>;
+    return <SharedProjectDetail key={projectId} projectId={projectId}/>;
   }
 
   return (
