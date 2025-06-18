@@ -85,13 +85,6 @@ export default function SideMenu({
     console.log(projectId);
   }, [projectId])
 
-  const handleChildClick = (e: React.MouseEvent) => {
-    if (active) 
-      e.stopPropagation();
-    setClickedMenu(title)
-    setOpen(!open)
-  };
-
   return (
     <MenuBtn active={active} onClick={handleClick}>
       <div>
@@ -103,7 +96,9 @@ export default function SideMenu({
           src={`/images/${active ? 'upBtn' : 'downBtn'}.svg`}
           alt={active ? '접기' : '펼치기'}
           onClick={(e) => {
-            handleChildClick(e)
+            e.stopPropagation()
+            setClickedMenu(title)
+            setOpen(!open)
           }}
           active={active}
           open={open}
