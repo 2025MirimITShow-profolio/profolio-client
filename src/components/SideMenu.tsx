@@ -49,7 +49,10 @@ type MenuBtnProps = {
 type SideMenuProps = {
   src: string,
   title: string,
-  more?: string[],
+  more?: {
+    title: string,
+    id: number
+  }[],
   clickedMenu: string,
   setClickedMenu: (title: string) => void,
   open: boolean,

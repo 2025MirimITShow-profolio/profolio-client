@@ -75,7 +75,11 @@ type TaskType = {
     is_done: boolean;
 }
 
-export default function Tasks() {
+type TasksProps = {
+    setUpdateState: React.Dispatch<React.SetStateAction<number>>
+}
+
+export default function Tasks({setUpdateState}:TasksProps) {
     const isDark = useThemeStore((store) => store.isDark)
     const token = useUserStore((store) => store.token)
     const [task, setTask] = useState<TaskType[]>([])
@@ -94,6 +98,7 @@ export default function Tasks() {
             let data = res.data
             console.log(data);
             setTask(data)
+            setUpdateState(pre => pre+1)
         } catch (error) {
             console.log(error);
         }

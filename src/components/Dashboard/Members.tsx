@@ -74,7 +74,7 @@ export function Project({project, process, color, date, allMember, isDark, myPro
                 <div className={styles.profile}>
                     {/* todo : 프로필 이미지로 변경 */}
                     <img 
-                        src={`/images/profile/profile${Math.floor(Math.random() * 13) + 1}.png`}
+                        src={`/images/profile/profile${Math.floor(Math.random() * 12) + 2}.png`}
                         alt='프로필'
                     />
                 </div>
