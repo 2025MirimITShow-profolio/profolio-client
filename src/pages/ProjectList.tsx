@@ -223,17 +223,6 @@ const ProjectList = () => {
 					/>
 				</div>
 			</div>
-			<ul>
-				{projects.map((project) => (
-					<li
-						key={project.id}
-						style={{ cursor: "pointer", fontWeight: 600 }}
-						onClick={() => handleProjectClick(project.id)}
-					>
-						{project.title}
-					</li>
-				))}
-			</ul>
 		</>
 	);
 };
