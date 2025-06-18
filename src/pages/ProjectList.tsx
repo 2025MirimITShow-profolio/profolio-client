@@ -20,11 +20,10 @@ const ProjectList = () => {
 	const wheelCooldown = useRef(false);
 	const [deleteOpen, setDeleteOpen] = useState(false);
 	const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
-	const [selectedProjectId, setSelectedProjectId] = useState<number | null>(
-		null
-	);
 	const projectId = useUserStore((store) => store.projectId);
 	const setProjectId = useUserStore((store) => store.setProjectId);
+	const [centerProject, setCenterProject] = useState<Project | null>(null);
+
 
 	const navigate = useNavigate();
 	const isDark = useThemeStore((state) => state.isDark);
@@ -110,10 +109,10 @@ const ProjectList = () => {
 		return minIdx;
 	}, [angle, filteredProjects.length]);
 
-	const centerProject = filteredProjects[centerIdx];
-	console.log("centerProject : ", centerProject);
-	//console.log('centerProject.is_shared : ', centerProject.is_shared)
-
+	useEffect(() => {
+		setCenterProject(filteredProjects[centerIdx]);
+	}, [centerIdx, filteredProjects]);
+	
 	// 프로젝트 추가
 	const handleCreate = (title: string, description: string) => {
 		getProjects();
@@ -165,14 +164,12 @@ const ProjectList = () => {
 
 	// 프로젝트 제목 클릭 시
 	const handleProjectClick = (id: number) => {
-		setSelectedProjectId(id);
+		setProjectId(id);
 	};
 
-	const handleBack = () => setSelectedProjectId(null);
 
 	if (projectId !== null) {
-		// AllProject만 보이게
-		return <AllProject key={projectId} projectId={projectId} onBack={handleBack} />;
+		return <AllProject key={projectId} projectId={projectId} />;
 	}
 
 	return (
@@ -205,13 +202,16 @@ const ProjectList = () => {
 						/>
 						{centerProject && (
 							<ProjectMainInfo
+								id={centerProject.id.toString()}
 								title={centerProject.title}
 								description={centerProject.description}
 								onDelete={() => handleDelete(centerProject.id)}
 								onShare={() => handleShare(centerProject.id)}
 								shared={centerProject.is_shared}
-								onTitleClick={() =>
+								onTitleClick={() =>{
 									handleProjectClick(centerProject.id)
+								}
+
 								}
 							/>
 						)}

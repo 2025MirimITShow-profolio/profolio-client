@@ -19,6 +19,8 @@ export default function SharedProjects() {
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(
     null
   );
+  const projectId = useUserStore((store) => store.projectId)
+  const setProjectId = useUserStore((store) => store.setProjectId)
 
   useEffect(()=>{
     const fetchProject = async () => {
@@ -43,12 +45,12 @@ export default function SharedProjects() {
   }
     
   const handleProjectClick = (id: number) => {
-    setSelectedProjectId(id);
+    setProjectId(id);
   };
 
-  if (selectedProjectId !== null) {
+  if (projectId !== null) {
     console.log(selectedProjectId)
-    return <SharedProjectDetail projectId={selectedProjectId}/>;
+    return <SharedProjectDetail projectId={projectId}/>;
   }
 
   return (
