@@ -78,6 +78,7 @@ export default function Header() {
 						onChange={(e) => setSearch(e.target.value)}
 						placeholder="Searching Project"
 						className={styles.searchInput}
+						style={{color: isDark?'#FFF':'#000'}}
 					/>
 				</div>
 				{click && (

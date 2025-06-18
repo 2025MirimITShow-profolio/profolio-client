@@ -45,7 +45,7 @@ export function Task({task, getTasks, edit, isDark}:TaskProps) {
     }
 
     return (
-        <div className={styles.task} style={(!edit && hovered)?{backgroundColor: '#F5F6F8', padding: '10px 13px', width: '100%', borderRadius: '6px', cursor: 'pointer'}:{}} onMouseMove={() => {setHovered(true)}} onMouseLeave={() => {setHovered(false)}}>
+        <div className={styles.task} style={(!edit && hovered)?{backgroundColor: isDark?'rgb(66 66 79)':'#F5F6F8', padding: '10px 13px', width: '100%', borderRadius: '6px', cursor: 'pointer'}:{}} onMouseMove={() => {setHovered(true)}} onMouseLeave={() => {setHovered(false)}}>
             {edit && <div 
                 className={styles.doneBtn}
                 style={{backgroundColor: task.is_done?'#8734FD':isDark?'#41414E':'#EEEEEE'}}
@@ -152,7 +152,7 @@ export default function Tasks({setUpdateState}:TasksProps) {
                     {edit!=3?(
                         <>
                             <p style={{ fontWeight: '600', fontSize: '25px'}}>Tasks</p>
-                            <div className={styles.addBtn} onClick={() => {setAdd(pre => !pre); setAddText('')}}>
+                            <div className={styles.addBtn} style={{backgroundColor: isDark?'#3A3A3A':'#F5F5F5'}} onClick={() => {setAdd(pre => !pre); setAddText('')}}>
                                 <img
                                     src='/images/plus.svg'
                                 />
@@ -181,6 +181,7 @@ export default function Tasks({setUpdateState}:TasksProps) {
                         value={addText}
                         onChange={(e) => setAddText(e.target.value)}
                         onKeyDown={handleClick}
+                        style={isDark?{backgroundColor: 'rgb(80 79 93)', border: '1px solid rgb(77 77 77)'}:{backgroundColor: '#F9F9F9', border: '1px solid #d5d5d5'}}
                     />
                 </div>
             )}

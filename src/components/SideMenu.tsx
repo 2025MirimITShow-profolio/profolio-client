@@ -26,8 +26,10 @@ const MenuBtn = styled.div<MenuBtnProps>`
     height: 30px;
   }
 
-  span {
+  & span {
     color: ${({ active }) => (active ? '#ffffff' : '#999999')};
+    font-weight: 500;
+    font-size: 19px;
   }
 `
 
