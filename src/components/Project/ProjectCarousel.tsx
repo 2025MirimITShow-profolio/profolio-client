@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "../../style/ProjectCarousel.module.css";
 
 interface Project {
@@ -21,16 +21,31 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
 	showClockNumbers,
 }) => {
 	const [angle, setAngle] = useState(0);
-	const projectCount = projects.length;
-	const radius = 340;
-	const clockRadius = 370;
+	const containerRef = useRef<HTMLDivElement>(null);
+	const [containerSize, setContainerSize] = useState(0);
 
-	// 각도와 인덱스 동기화
+	const projectCount = projects.length;
+
+	// 반응형을 위한 반지름 계산
+	useEffect(() => {
+		const updateSize = () => {
+			if (containerRef.current) {
+				const size = containerRef.current.offsetWidth;
+				setContainerSize(size);
+			}
+		};
+		updateSize();
+		window.addEventListener("resize", updateSize);
+		return () => window.removeEventListener("resize", updateSize);
+	}, []);
+
+	const radius = containerSize * 0.4;
+	const clockRadius = containerSize * 0.45;
+
 	useEffect(() => {
 		setAngle(-((360 / projectCount) * centerIdx));
 	}, [centerIdx, projectCount]);
 
-	// 휠로 회전
 	const handleWheel = (e: React.WheelEvent) => {
 		if (projectCount === 0) return;
 		if (e.deltaY > 0) {
@@ -41,17 +56,19 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
 	};
 
 	return (
-		<div className={styles.carouselContainer} onWheel={handleWheel}>
-			{showClockNumbers && (
+		<div
+			ref={containerRef}
+			className={styles.carouselContainer}
+			onWheel={handleWheel}
+		>
+			{showClockNumbers && containerSize > 0 && (
 				<svg
 					width={clockRadius * 2}
 					height={clockRadius * 2}
 					className={styles.clockSvg}
 					style={{
-						position: "absolute",
-						left: 0,
-						top: 0,
-						pointerEvents: "none",
+						left: `calc(50% - ${clockRadius}px)`,
+						top: `calc(50% - ${clockRadius}px)`,
 					}}
 				>
 					<circle
@@ -79,7 +96,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
 								y={y}
 								textAnchor="middle"
 								alignmentBaseline="middle"
-								fontSize="2.8rem"
+								fontSize="2.2rem"
 								fill="#e0dfe6"
 								fontWeight="bold"
 								style={{
