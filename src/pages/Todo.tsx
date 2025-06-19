@@ -42,7 +42,7 @@ export default function Todo({ projectId }: { projectId: number }) {
 
 		try {
 			const res = await axios.post(
-				`${import.meta.env.VITE_BASE_URL}api/tasks`,
+				`${import.meta.env.VITE_BASE_URL}/tasks`,
 				{
 					project_id: projectId,
 					title,
