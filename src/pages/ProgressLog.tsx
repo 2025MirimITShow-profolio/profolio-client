@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import LogWrite from "../components/Project/LogWrite";
 import { RxDotsVertical } from "react-icons/rx";
 import LogView from "../components/Project/LogView";
+import styles from '../style/ProgressLoog.module.css'
 
 type LogItem = {
 	id: number;
@@ -90,7 +91,10 @@ export default function ProgressLog({
 				display: "flex",
 				justifyContent: "center",
 				paddingTop: "67px",
+				height: '100%',
+				overflow: 'scroll'
 			}}
+			className={styles.logBox}
 		>
 			<div>
 				{isWriting ? (
