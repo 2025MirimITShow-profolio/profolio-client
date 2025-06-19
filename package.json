@@ -19,7 +19,7 @@
     "es-hangul": "^2.3.3",
     "framer-motion": "^12.15.0",
     "lucide-react": "^0.515.0",
-    "pdfjs-dist": "2.16.105",
+    "pdfjs-dist": "4.8.69",
     "react": "^19.1.0",
     "react-card-flip": "1.2.3",
     "react-date-range": "^2.0.1",
