@@ -116,7 +116,7 @@ export default function TodoBox({ todos, onAdd, onCheck, onDelete, onEdit }: Tod
               ) : (
                 <span style={{
                   fontWeight: '500',
-                  color: isDark? '#bbb' : 'white',
+                  color: isDark? '#bbb' : 'black',
                 }}>
                   {todo.title}
                 </span>
